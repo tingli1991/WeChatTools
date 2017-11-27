@@ -62,6 +62,7 @@ namespace WeChatTools.Web
             }
 
             context.Response.Redirect(redirectUrl);
+            context.Response.End();
             // context.Response.Write(redirectUrl);
         }
 

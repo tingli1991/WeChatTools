@@ -18,14 +18,13 @@ namespace WeChatTools.Web
         private const int DURATION = 24 * 60;
         public void ProcessRequest(HttpContext context)
         {
-            string key = GetExtenalIpAddress_0();
-            //string key = context.Request.ServerVariables.Get("Remote_Addr").ToString();
-            //  string key = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]; ;
+            string key = GetWebClientIp();
+             
             if (!IsValid(context))
             {
 
                 context.Response.Write(key + ":当天请求上限,请明天再试,需要对接接口的，请联系技术人员 QQ:308463776");
-                context.Response.End();
+              
             }
             else
             {
@@ -38,8 +37,9 @@ namespace WeChatTools.Web
                 Logger.WriteLoggger(result);
                 context.Response.ContentType = "text/plain";
                 context.Response.Write(key + ":" + result);
-                context.Response.End();
+              
             }
+            context.Response.End();
         }
 
         public bool IsReusable
@@ -103,6 +103,67 @@ namespace WeChatTools.Web
             return tempIp;
         }
 
+
+        public static string GetWebClientIp()
+        {
+            string CustomerIP = "";
+
+            try
+            {
+                if (System.Web.HttpContext.Current == null
+            || System.Web.HttpContext.Current.Request == null
+            || System.Web.HttpContext.Current.Request.ServerVariables == null)
+                    return "";
+
+
+
+                //CDN加速后取到的IP   
+                CustomerIP = System.Web.HttpContext.Current.Request.Headers["Cdn-Src-Ip"];
+                if (!string.IsNullOrEmpty(CustomerIP) && IsIP(CustomerIP))
+                {
+                    return CustomerIP;
+                }
+
+                CustomerIP = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+
+
+                if (!String.IsNullOrEmpty(CustomerIP) && IsIP(CustomerIP))
+                    return CustomerIP;
+
+                if (System.Web.HttpContext.Current.Request.ServerVariables["HTTP_VIA"] != null)
+                {
+                    CustomerIP = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                    if (CustomerIP == null)
+                        CustomerIP = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                }
+                else
+                {
+                    CustomerIP = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+
+                }
+
+                if (string.Compare(CustomerIP, "unknown", true) == 0)
+                    CustomerIP = System.Web.HttpContext.Current.Request.UserHostAddress;
+
+                if (!IsIP(CustomerIP))
+                {
+                    CustomerIP = "127.0.0.1";
+                }
+            }
+            catch { }
+
+            return CustomerIP;
+        }
+
+        /// <summary>
+        /// 检查IP地址格式
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <returns></returns>
+        public static bool IsIP(string ip)
+        {
+            return System.Text.RegularExpressions.Regex.IsMatch(ip, @"^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$");
+        }
 
         public static bool IsValid(HttpContext context)
         {
