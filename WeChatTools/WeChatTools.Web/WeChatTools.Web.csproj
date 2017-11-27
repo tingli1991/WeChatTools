@@ -39,21 +39,37 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="urlTransfer.ashx" />
+    <Content Include="Config\HostUrl.config" />
+    <Content Include="hdShowImg.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="wxUrlCheck.ashx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="hdShowImg.ashx.cs">
+      <DependentUpon>hdShowImg.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="urlTransfer.ashx.cs">
+      <DependentUpon>urlTransfer.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="wxUrlCheck.ashx.cs">
+      <DependentUpon>wxUrlCheck.ashx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WeChatTools.Core\WeChatTools.Core.csproj">
