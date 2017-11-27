@@ -47,6 +47,7 @@
   <ItemGroup>
     <Content Include="Config\HostUrl.config" />
     <Content Include="hdShowImg.ashx" />
+    <Content Include="urlTransfer.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -63,6 +64,9 @@
       <DependentUpon>hdShowImg.ashx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="urlTransfer.ashx.cs">
+      <DependentUpon>urlTransfer.ashx</DependentUpon>
+    </Compile>
     <Compile Include="wxUrlCheck.ashx.cs">
       <DependentUpon>wxUrlCheck.ashx</DependentUpon>
     </Compile>
