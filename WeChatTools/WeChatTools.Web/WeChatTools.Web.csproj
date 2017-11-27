@@ -58,6 +58,7 @@
     <Content Include="dev\urlTransfer.aspx" />
     <Content Include="pro\urlTransfer.ashx" />
     <Content Include="Config\WeiXin.config" />
+    <Content Include="dev\HandlerWeb2.ashx" />
     <None Include="Properties\PublishProfiles\publish.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -71,6 +72,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="dev\HandlerWeb2.ashx.cs">
+      <DependentUpon>HandlerWeb2.ashx</DependentUpon>
+    </Compile>
     <Compile Include="pro\hdShowImg.ashx.cs">
       <DependentUpon>hdShowImg.ashx</DependentUpon>
     </Compile>
