@@ -18,7 +18,7 @@ namespace WeChatTools.Web
             if (context.Request.UrlReferrer != null)
             {
                 string refurl = context.Request.UrlReferrer.Host.ToString();
-                string refhost = ConfigTool.ReadVerifyConfig("wxShowImg", "other");
+                string refhost = ConfigTool.ReadVerifyConfig("wxShowImg", "WeiXin");
                 if (refurl.Equals(refhost))
                 {
                     getImg(context);
