@@ -58,6 +58,7 @@
     <Content Include="test\urlTransfer.aspx" />
     <Content Include="urlTransfer.ashx" />
     <Content Include="Config\WeiXin.config" />
+    <None Include="Properties\PublishProfiles\publish.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
