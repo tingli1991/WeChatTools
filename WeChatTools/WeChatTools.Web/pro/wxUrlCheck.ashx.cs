@@ -16,14 +16,15 @@ namespace WeChatTools.Web
     {
         private ServiceApi _service = null;
         private const int DURATION = 24 * 60;
+        private static string  userIP="127.0.0.1";
         public void ProcessRequest(HttpContext context)
         {
-            string key = GetWebClientIp();
+            userIP = GetWebClientIp();
              
             if (!IsValid(context))
             {
 
-                context.Response.Write(key + ":当天请求上限,请明天再试,需要对接接口的，请联系技术人员 QQ:308463776");
+                context.Response.Write(userIP + ":当天请求上限,请明天再试,需要对接接口的，请联系技术人员 QQ:308463776");
               
             }
             else
@@ -36,7 +37,7 @@ namespace WeChatTools.Web
 
                 Logger.WriteLoggger(result);
                 context.Response.ContentType = "text/plain";
-                context.Response.Write(key + ":" + result);
+                context.Response.Write(result);
               
             }
             context.Response.End();
@@ -168,7 +169,7 @@ namespace WeChatTools.Web
         public static bool IsValid(HttpContext context)
         {
             if (context.Request.Browser.Crawler) return false;
-            string key = context.Request.UserHostAddress;
+            string key = userIP;
 
             int hit = (Int32)(context.Cache[key] ?? 0);
             if (hit > 15) return false;
