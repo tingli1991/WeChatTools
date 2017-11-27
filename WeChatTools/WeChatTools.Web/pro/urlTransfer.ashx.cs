@@ -10,7 +10,7 @@ using WeChatTools.Core;
 namespace WeChatTools.Web
 {
     /// <summary>
-    /// 域名中转工具,随机12级域名
+    /// 域名中转工具,随机切换域名，保证活动正常进行
     /// </summary>
     public class urlTransfer : IHttpHandler
     {
@@ -51,13 +51,15 @@ namespace WeChatTools.Web
                         {
                             //当前访问的用户不在黑名单
                             redirectUrl = pRedirectUrl;
-                            Logger.WriteLoggger("openid:" + pWecha_id);
+                            Logger.WriteLoggger("openid:" + pWecha_id);  //后续可以扩展，可以屏蔽一些恶意投诉的微信号
                         }
                     }
                     else
                     {
+                       
                         //修改投票状态
                         ConfigTool.WriteVerifyConfig("state", "false", "HostUrl");
+                        Logger.WriteLoggger("恶意的openid:" + pWecha_id);  //后续可以扩展，可以屏蔽一些恶意投诉的微信号
                     }
                 }
 
@@ -87,59 +89,7 @@ namespace WeChatTools.Web
             return retString;
         }
 
-
-        private static string HttpPostConnectToServer(string serverUrl, string postData)
-        {
-            var dataArray = Encoding.UTF8.GetBytes(postData);
-            //创建请求
-            var request = (HttpWebRequest)HttpWebRequest.Create(serverUrl);
-            request.Method = "POST";
-            request.ContentLength = dataArray.Length;
-            //设置上传服务的数据格式
-            request.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; MAXTHON 2.0)";
-            request.Accept = "application/x-shockwave-flash, image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, */*";
-            request.Referer = serverUrl;
-            request.ContentType = "application/x-www-form-urlencoded";
-
-            //请求的身份验证信息为默认
-            request.Credentials = CredentialCache.DefaultCredentials;
-            //请求超时时间
-            request.Timeout = 10000;
-            //创建输入流
-            Stream dataStream;
-            //using (var dataStream = request.GetRequestStream())
-            //{
-            //    dataStream.Write(dataArray, 0, dataArray.Length);
-            //    dataStream.Close();
-            //}
-            try
-            {
-                dataStream = request.GetRequestStream();
-            }
-            catch (Exception)
-            {
-                return "连接服务器失败";//连接服务器失败
-            }
-            //发送请求
-            dataStream.Write(dataArray, 0, dataArray.Length);
-            dataStream.Close();
-            //读取返回消息
-            string res;
-            try
-            {
-                var response = (HttpWebResponse)request.GetResponse();
-                var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
-                res = reader.ReadToEnd();
-                reader.Close();
-            }
-            catch (Exception ex)
-            {
-
-                return "{\"error\":\"connectToServer\",\"error_description\":\"" + ex.Message + "\"}";//连接服务器失败
-            }
-            return res;
-        }
-
+ 
 
         /// <summary>
         /// url请求里的参数
@@ -195,11 +145,13 @@ namespace WeChatTools.Web
             }
             return randUrl;
         }
+
         private static char[] constant =   
          {   
             '0','1','2','3','4','5','6','7','8','9',  
             'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'   
          };
+
         private static string GenerateRandomNumber(int Length)
         {
             System.Text.StringBuilder newRandom = new System.Text.StringBuilder(36);
