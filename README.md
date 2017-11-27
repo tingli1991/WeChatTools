@@ -21,10 +21,10 @@
 
 ## 使用
 - 域名检测试用接口 [http://wx.canyou168.com/pro/wxUrlCheck.ashx?url=http://www.teu7.cn](http://wx.canyou168.com/pro/wxUrlCheck.ashx?url=http://www.teu7.cn "域名检测试用接口")
-
-> {"State":true,"Data":"http://www.teu7.cn","Msg":"屏蔽"}
-> {"State":true,"Data":"jingdong.com","Msg":"正常"}
-
+```
+ {"State":true,"Data":"http://www.teu7.cn","Msg":"屏蔽"}
+ {"State":true,"Data":"jingdong.com","Msg":"正常"}
+```
  
 ### 顶尖技术，铸就稳定服务
 
