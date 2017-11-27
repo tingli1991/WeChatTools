@@ -21,6 +21,7 @@ namespace WeChatTools.Web
         string hmdOpenid = "";
         string stateUrl = "";
         string redirectUrl = "http://weixin.sogou.com/";
+        private ServiceApi _service = null;
         public void ProcessRequest(HttpContext context)
         {
             //GET /index.php?g=Wap&m=Vote&a=index&token=uDSrEHNs9CFGcTSC&wecha_id=ocMqvwRjzPH9eseHRc_Z9nlP-DSM&id=25&iMicms=mp.weixin.qq.com HTTP/1.1
@@ -38,32 +39,33 @@ namespace WeChatTools.Web
                 if (tokens.Contains(pToken))
                 {
                     string pRedirectUrl = "http://" + GetRandHostUrl() + "/index.php?g=Wap&m=Vote&a=index&id=" + pId + "&token=" + pToken + "&wecha_id=" + pWecha_id + "&iMicms=" + iMicms;
-                    // string hostCheck = "http://hb.wxyun.org:801/ttt.do?url=" + GetRandHostUrl();
-                    // string resultCheck = HttpPostConnectToServer(hostCheck, "1=exec('')");
 
-                    //if (!resultCheck.Contains("黑名单"))
-                    // {
-                    //域名未被微信封号
-                    hmdOpenid = ConfigTool.ReadVerifyConfig("hmdOpenid", "HostUrl");
-                    if (!hmdOpenid.Contains(pWecha_id))
+                    string json = "{\"Mode\": \"WXCheckUrl\", \"Param\": \"{\'CheckUrl\':\'" + pRedirectUrl + "\'}\"}";
+                    string resultCheck = _service.Api(json);
+
+                    if (!resultCheck.Contains("屏蔽"))
                     {
-                        //当前访问的用户不在黑名单
-                        redirectUrl = pRedirectUrl;
-                        Logger.WriteLoggger("openid:" + pWecha_id);
+                        //域名未被微信封号
+                        hmdOpenid = ConfigTool.ReadVerifyConfig("hmdOpenid", "HostUrl");
+                        if (!hmdOpenid.Contains(pWecha_id))
+                        {
+                            //当前访问的用户不在黑名单
+                            redirectUrl = pRedirectUrl;
+                            Logger.WriteLoggger("openid:" + pWecha_id);
+                        }
                     }
-                    //  }
-                    //   else
-                    //   { 
-                    //修改投票状态
-                    //      VerifyToken.WriteVerifyConfig("state","false", "HostUrl");
-                    //   }
+                    else
+                    {
+                        //修改投票状态
+                        ConfigTool.WriteVerifyConfig("state", "false", "HostUrl");
+                    }
                 }
 
             }
 
             context.Response.Redirect(redirectUrl);
-            context.Response.End();
             // context.Response.Write(redirectUrl);
+            context.Response.End();
         }
 
         /// <summary>

@@ -31,7 +31,7 @@ namespace WeChatTools.Web
             {
                 _service = new ServiceApi();
                 string domain = HttpContext.Current.Request["url"].ToString().Trim();
-                domain = domain.Replace("https://", "").Replace("http://", "");
+                
                 string json = "{\"Mode\": \"WXCheckUrl\", \"Param\": \"{\'CheckUrl\':\'" + domain + "\'}\"}";
                 string result = _service.Api(json);
 
