@@ -4,7 +4,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/gemgin/WeChatTools.svg?style=social&label=Stars)](https://github.com/gemgin/WeChatTools)
 [![GitHub forks](https://img.shields.io/github/forks/gemgin/WeChatTools.svg?style=social&label=Fork)](https://github.com/gemgin/WeChatTools)
 
-交流QQ群：41976716
+交流QQ群：41977413
 
 ## 项目介绍
 > 微信域名网址检测
