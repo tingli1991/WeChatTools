@@ -14,7 +14,7 @@ namespace WeChatTools.Web
     /// </summary>
     public class WXUrlCheck2 : IHttpHandler
     {
-        private ServiceApi _service = null;
+       
         private const int DURATION = 24 * 60;
         private static string userIP = "127.0.0.1";
         public void ProcessRequest(HttpContext context)
@@ -26,24 +26,32 @@ namespace WeChatTools.Web
             if (!string.IsNullOrEmpty(context.Request["url"]) && !string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
             {
                 string userKey = context.Request["key"]; //key ,md5值
-                //需要检测的网址
-                string urlCheck = context.Request["url"]; //检测的值
-                urlCheck = urlCheck.Replace("https://", "").Replace("http://", "");
-                string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + userKey + "\'}\"}";
 
-                ServiceApiClient SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
-                SpVoiceObj.Open();
-                string result = SpVoiceObj.Api(json);
-                SpVoiceObj.Close();
-                Logger.WriteLoggger(userIP + ":" + userKey + ":" + result);
-
-                if (!string.IsNullOrEmpty(context.Request.QueryString["callback"]))
+                if (userKey.Trim() == "341e0b5df120394ec99e517b67774399")
                 {
-                    string callBack = context.Request.QueryString["callback"].ToString(); //回调
-                    result = callBack + "(" + result + ")";
+                    context.Response.Write("参数错误,进qq群交流:41977413！");
                 }
+                else
+                {
+                    //需要检测的网址
+                    string urlCheck = context.Request["url"]; //检测的值
+                    urlCheck = urlCheck.Replace("https://", "").Replace("http://", "");
+                    string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + userKey + "\'}\"}";
 
-                context.Response.Write(result);
+                    ServiceApiClient SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
+                    SpVoiceObj.Open();
+                    string result = SpVoiceObj.Api(json);
+                    SpVoiceObj.Close();
+                    Logger.WriteLoggger(userIP + ":" + userKey + ":" + result);
+
+                    if (!string.IsNullOrEmpty(context.Request.QueryString["callback"]))
+                    {
+                        string callBack = context.Request.QueryString["callback"].ToString(); //回调
+                        result = callBack + "(" + result + ")";
+                    }
+
+                    context.Response.Write(result);
+                }
             }
             else
             {
