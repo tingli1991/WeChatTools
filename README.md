@@ -25,6 +25,7 @@
  {"State":true,"Data":"http://www.teu7.cn","Msg":"屏蔽"}
  {"State":true,"Data":"jingdong.com","Msg":"正常"}
 ```
+- 域名检测界面：http://wx.canyou168.com/
  
 ### 顶尖技术，铸就稳定服务
 
