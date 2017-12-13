@@ -43,6 +43,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.DynamicData" />
@@ -59,21 +61,31 @@
     <Content Include="pro\urlTransfer.ashx" />
     <Content Include="Config\WeiXin.config" />
     <Content Include="dev\HandlerWeb2.ashx" />
+    <Content Include="dev\ZhiHu.ashx" />
+    <Content Include="dev\WXUrlCheckTest.ashx" />
     <None Include="Properties\PublishProfiles\publish.pubxml" />
+    <Content Include="pro\wxUrlCheck2.ashx" />
+    <Content Include="pro\wxUrlCheck3.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <Content Include="pro\wxUrlCheck.ashx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="pro\wxUrlCheck.ashx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="dev\HandlerWeb2.ashx.cs">
       <DependentUpon>HandlerWeb2.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="dev\WXUrlCheckTest.ashx.cs">
+      <DependentUpon>WXUrlCheckTest.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="dev\ZhiHu.ashx.cs">
+      <DependentUpon>ZhiHu.ashx</DependentUpon>
     </Compile>
     <Compile Include="pro\hdShowImg.ashx.cs">
       <DependentUpon>hdShowImg.ashx</DependentUpon>
@@ -91,6 +103,12 @@
     </Compile>
     <Compile Include="pro\wxUrlCheck.ashx.cs">
       <DependentUpon>wxUrlCheck.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="pro\wxUrlCheck2.ashx.cs">
+      <DependentUpon>wxUrlCheck2.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="pro\wxUrlCheck3.ashx.cs">
+      <DependentUpon>wxUrlCheck3.ashx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

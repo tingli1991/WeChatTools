@@ -10,36 +10,72 @@ using WeChatTools.Core;
 namespace WeChatTools.Web
 {
     /// <summary>
-    /// 微信域名检测工具
+    /// 微信域名检测工具--公共测试
     /// </summary>
     public class WXUrlCheck : IHttpHandler
     {
-        private ServiceApi _service = null;
         private const int DURATION = 24 * 60;
-        private static string  userIP="127.0.0.1";
+        private static string userIP = "127.0.0.1";
+        string userKey = "341e0b5df120394ec99e517b67774399";
+        private TimeSpan _strWorkingDayAM = DateTime.Parse("09:00").TimeOfDay;//工作时间上午08:00
+        private TimeSpan _strWorkingDayPM = DateTime.Parse("17:00").TimeOfDay;
         public void ProcessRequest(HttpContext context)
         {
-            userIP = GetWebClientIp();
-             
-            if (!IsValid(context))
-            {
+            userIP = GetWebClientIp(context);
+            context.Response.ContentType = "text/plain";
+            TimeSpan dspNow = DateTime.Now.TimeOfDay;
+         //   if (IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM))
+         //   {
+                if (!IsValid(context))
+                {
+                    context.Response.Write(userIP + ":当天请求上限,请明天再试,需要讨论技术，进群交流 QQ群:41977413");
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(context.Request["url"]))
+                    {
 
-                context.Response.Write(userIP + ":当天请求上限,请明天再试,需要对接接口的，请联系技术人员 QQ:308463776");
-              
-            }
+                        if (!string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
+                        {
+                            userKey = context.Request["key"]; //key ,md5值
+                        }
+
+                        //需要检测的网址
+                        string urlCheck = context.Request["url"]; //检测的值
+                        urlCheck = urlCheck.Replace("https://", "").Replace("http://", "");
+                        string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + userKey + "\'}\"}";
+
+                        ServiceApiClient SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
+                        SpVoiceObj.Open();
+                        string result = SpVoiceObj.Api(json);
+                        SpVoiceObj.Close();
+                        /*
+                        Logger.WriteLoggger(urlCheck + ":HTTP_CDN_SRC_IP--" + context.Request.ServerVariables["HTTP_CDN_SRC_IP"] + ":" + result);
+                        Logger.WriteLoggger(urlCheck + ":HTTP_Cdn-Src-Ip--" + context.Request.ServerVariables["HTTP_Cdn-Src-Ip"] + ":" + result);
+                        Logger.WriteLoggger(urlCheck + ":Cdn-Src-Ip--" + context.Request.ServerVariables["Cdn-Src-Ip"] + ":" + result);
+                        Logger.WriteLoggger(urlCheck + ":HTTP_X_FORWARDED_FOR--" + context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] + ":" + result);
+                        Logger.WriteLoggger(urlCheck + ":Proxy-Client-IP--" + context.Request.ServerVariables["Proxy-Client-IP"] + ":" + result);
+                        Logger.WriteLoggger(urlCheck + ":WL-Proxy-Client-IP--" + context.Request.ServerVariables["WL-Proxy-Client-IP"] + ":" + result);
+                        Logger.WriteLoggger(urlCheck + ":HTTP_CLIENT_IP--" + context.Request.ServerVariables["HTTP_CLIENT_IP"] + ":" + result);
+                        Logger.WriteLoggger(urlCheck + ":HTTP_VIA--" + context.Request.ServerVariables["HTTP_VIA"] + ":" + result);
+                        Logger.WriteLoggger(urlCheck + ":REMOTE_ADDR--" + context.Request.ServerVariables["REMOTE_ADDR"] + ":" + result);
+                        Logger.WriteLoggger("==================================================");
+                        */
+                         Logger.WriteLoggger(userIP + ":" + result);
+                        context.Response.Write(result);
+                    }
+                    else
+                    {
+                        context.Response.Write("参数错误,进qq群交流:41977413！");
+
+                    }
+                }
+         /*   }
             else
             {
-                _service = new ServiceApi();
-                string domain = HttpContext.Current.Request["url"].ToString().Trim();
-                
-                string json = "{\"Mode\": \"WXCheckUrl\", \"Param\": \"{\'CheckUrl\':\'" + domain + "\'}\"}";
-                string result = _service.Api(json);
+                context.Response.Write(userIP + ":测试接口,请在每天(09:00-17:00)时间段进行测试,需要讨论技术,进群交流 QQ群:41977413");
 
-                Logger.WriteLoggger(result);
-                context.Response.ContentType = "text/plain";
-                context.Response.Write(result);
-              
-            }
+            } */
             context.Response.End();
         }
 
@@ -51,6 +87,22 @@ namespace WeChatTools.Web
             }
         }
 
+        private bool IsInTimeInterval(TimeSpan time, TimeSpan startTime, TimeSpan endTime)
+        {
+            //判断时间段开始时间是否小于时间段结束时间，如果不是就交换
+            if (startTime > endTime)
+            {
+                TimeSpan tempTime = startTime;
+                startTime = endTime;
+                endTime = tempTime;
+            }
+
+            if (time > startTime && time < endTime)
+            {
+                return true;
+            }
+            return false;
+        }
 
         /// <summary>  
         /// 获取外网ip地址  
@@ -105,55 +157,97 @@ namespace WeChatTools.Web
         }
 
 
-        public static string GetWebClientIp()
+        public static string GetWebClientIp(HttpContext httpContext)
         {
-            string CustomerIP = "";
+            string customerIP = "127.0.0.1";
 
-            try
+            if (httpContext == null || httpContext.Request == null || httpContext.Request.ServerVariables == null) return customerIP;
+
+            customerIP = httpContext.Request.ServerVariables["HTTP_CDN_SRC_IP"];
+
+            if (String.IsNullOrWhiteSpace(customerIP) || "unknown".Equals(customerIP.ToLower()))
             {
-                if (System.Web.HttpContext.Current == null
-            || System.Web.HttpContext.Current.Request == null
-            || System.Web.HttpContext.Current.Request.ServerVariables == null)
-                    return "";
+                customerIP = httpContext.Request.ServerVariables["Proxy-Client-IP"];
+            }
+            if (String.IsNullOrWhiteSpace(customerIP) || "unknown".Equals(customerIP.ToLower()))
+            {
+                customerIP = httpContext.Request.ServerVariables["WL-Proxy-Client-IP"];
+            }
 
+            if (String.IsNullOrWhiteSpace(customerIP) || "unknown".Equals(customerIP.ToLower()))
+            {
+                customerIP = httpContext.Request.ServerVariables["HTTP_VIA"];
+            }
 
+            if (!String.IsNullOrWhiteSpace(customerIP))
+            {
+                customerIP = httpContext.Request.ServerVariables["HTTP_CLIENT_IP"].Split(new char[] { ',' })[0];
+               // customerIP = httpContext.Request.ServerVariables["HTTP_X_FORWARDED_FOR"].Split(new char[] { ',' })[0];
+            }
+            else
+            {
+                customerIP = httpContext.Request.ServerVariables["REMOTE_ADDR"];
+            }
+            if (!IsIP(customerIP))
+            {
+                customerIP = "127.0.0.1";
+            }
+            return customerIP;
+        }
 
-                //CDN加速后取到的IP   
-                CustomerIP = System.Web.HttpContext.Current.Request.Headers["Cdn-Src-Ip"];
-                if (!string.IsNullOrEmpty(CustomerIP) && IsIP(CustomerIP))
+        public static string GetRealIP(string CustomerIP)
+        {
+            string result = String.Empty;
+
+            result = CustomerIP;
+
+            //可能有代理   
+            if (!string.IsNullOrWhiteSpace(result))
+            {
+                //没有"." 肯定是非IP格式  
+                if (result.IndexOf(".") == -1)
                 {
-                    return CustomerIP;
-                }
-
-                CustomerIP = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-
-
-                if (!String.IsNullOrEmpty(CustomerIP) && IsIP(CustomerIP))
-                    return CustomerIP;
-
-                if (System.Web.HttpContext.Current.Request.ServerVariables["HTTP_VIA"] != null)
-                {
-                    CustomerIP = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-                    if (CustomerIP == null)
-                        CustomerIP = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                    result = null;
                 }
                 else
                 {
-                    CustomerIP = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                    //有","，估计多个代理。取第一个不是内网的IP。  
+                    if (result.IndexOf(",") != -1)
+                    {
+                        result = result.Replace(" ", string.Empty).Replace("\"", string.Empty);
 
-                }
+                        string[] temparyip = result.Split(",;".ToCharArray());
 
-                if (string.Compare(CustomerIP, "unknown", true) == 0)
-                    CustomerIP = System.Web.HttpContext.Current.Request.UserHostAddress;
-
-                if (!IsIP(CustomerIP))
-                {
-                    CustomerIP = "127.0.0.1";
+                        if (temparyip != null && temparyip.Length > 0)
+                        {
+                            for (int i = 0; i < temparyip.Length; i++)
+                            {
+                                //找到不是内网的地址  
+                                if (IsIP(temparyip[i])
+                                    && temparyip[i].Substring(0, 3) != "10."
+                                    && temparyip[i].Substring(0, 7) != "192.168"
+                                    && temparyip[i].Substring(0, 7) != "172.16.")
+                                {
+                                    return temparyip[i];
+                                }
+                            }
+                        }
+                    }
+                    //代理即是IP格式  
+                    else if (IsIP(result))
+                    {
+                        return result;
+                    }
+                    //代理中的内容非IP  
+                    else
+                    {
+                        result = "";
+                    }
                 }
             }
-            catch { }
 
-            return CustomerIP;
+
+            return result;
         }
 
         /// <summary>
@@ -164,6 +258,7 @@ namespace WeChatTools.Web
         public static bool IsIP(string ip)
         {
             return System.Text.RegularExpressions.Regex.IsMatch(ip, @"^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$");
+
         }
 
         public static bool IsValid(HttpContext context)
@@ -172,7 +267,7 @@ namespace WeChatTools.Web
             string key = userIP;
 
             int hit = (Int32)(context.Cache[key] ?? 0);
-            if (hit > 15) return false;
+            if (hit > 14) return false;
             else hit++;
 
             if (hit == 1)

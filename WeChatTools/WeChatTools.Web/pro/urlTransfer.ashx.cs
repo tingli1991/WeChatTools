@@ -41,8 +41,8 @@ namespace WeChatTools.Web
                     string pRedirectUrl = "http://" + GetRandHostUrl() + "/index.php?g=Wap&m=Vote&a=index&id=" + pId + "&token=" + pToken + "&wecha_id=" + pWecha_id + "&iMicms=" + iMicms;
 
                     string json = "{\"Mode\": \"WXCheckUrl\", \"Param\": \"{\'CheckUrl\':\'" + pRedirectUrl + "\'}\"}";
-                     _service = new ServiceApi();
-                   string resultCheck = _service.Api(json);
+                    _service = new ServiceApi();
+                    string resultCheck = _service.Api(json);
 
                     if (!resultCheck.Contains("屏蔽"))
                     {
