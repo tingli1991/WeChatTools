@@ -56,6 +56,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\HostUrl.config" />
+    <Content Include="css\hm.js" />
+    <Content Include="css\home_step_icos.png" />
+    <Content Include="css\icon.png" />
+    <Content Include="css\jquery.min.js" />
+    <Content Include="css\layer.css" />
+    <Content Include="css\layer.js" />
+    <Content Include="css\loading-1.gif" />
+    <Content Include="css\style.css" />
+    <Content Include="css\t1.png" />
+    <Content Include="default.html" />
     <Content Include="pro\hdShowImg.ashx" />
     <Content Include="dev\urlTransfer.aspx" />
     <Content Include="pro\urlTransfer.ashx" />
@@ -128,7 +138,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>2180</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

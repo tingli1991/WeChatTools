@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>微信域名检测接口-域名停止访问检测-域名安全检测工具</title>
+<meta name="keywords" content="微信停止访问，微信域名检测api，已停止访问该网页，分享被举报，域名被微信拦截检测，QQ管家网址检测，微信拦截，域名安全检测">
+<meta name="description" content="太阳湾提供微信域名拦截（停止访问）监测接口服务，我们的监控系统能快速及时地把已被拦截的域名通知对方，为了灵活性地与第三方平台无缝对接特别地提供专业API接口实时监控着域名的状态，贵平台可通过此接口回调数据快速切换有效域名，大大减少人力物理给平台正常运转带来好福音，堪称微信分享平台的好助手，欢迎使用！">
+<link rel="stylesheet" href="/css/style.css" media="screen" title="no title">
+<script src="/css/hm.js"></script><script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?8725b48a0fb3a1ea616a634b6ef6409b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<link rel="stylesheet" href="/css/layer.css" id="layui_layer_skinlayercss" style=""></head>
+<body class="csbody">
+    <div>
+        <div style="height: 50px;">
+        </div>
+        <div class="cs2"></div>
+        
+        <div style="height: 40px;text-align: center;"></div>
+        <div style="text-align: center">
+            <span style="height: 40px; line-height: 40px; color: white; font-size: 24px;">网址：
+            </span>
+            <span id="s_kw_wrap" class="bg s_ipt_wr quickdelete-wrap" style="display: inline-block; zoom: 1; vertical-align: top;">
+                <input id="kw" autocomplete="off" class="s_ipt" maxlength="50" name="wd" placeholder="如：wwww.weixin.com" style="margin: 0px; padding: 9px 7px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: arial; width: 400px; height: 20px; border-width: 1px 0px 1px 1px; border-top-style: solid; border-left-style: solid; border-top-color: rgb(184, 184, 184); border-left-color: rgb(184, 184, 184); border-bottom-style: solid; border-bottom-color: rgb(204, 204, 204); vertical-align: top; outline: none; box-shadow: none;" type="text" onkeydown="qingkong();">
+            </span>
+           
+            <br>
+            <br>
+            <p style="color:#FFC400">广告：短期流量暴力变现，微信直充，高分成，日结，寻求大流量主合作。联系QQ2365370565</p>
+            <label id="txtShow">&nbsp;</label>
+        </div>
+        <div class="joinus-step">
+            <div class="step-inner">
+                <div class="col-md-3">
+                    <span class="ico-signup" style="box-sizing: border-box; display: block; width: 75px; padding-top: 75px; margin: 0px auto; text-align: center; color: rgb(255, 255, 255); background-image: url(/css/home_step_icos.png); background-position: 2px 0px; background-repeat: no-repeat;">
+                        <b style="box-sizing: border-box; font-weight: 400; font-size: 20px;">全 天</b>
+                        <br style="box-sizing: border-box;">
+                        <i style="box-sizing: border-box; font-style: normal; color: rgb(220, 229, 249);">7*24小时</i></span>
+                </div>
+                <div class="col-md-3">
+                    <span class="ico-need" style="box-sizing: border-box; display: block; width: 75px; padding-top: 75px; margin: 0px auto; text-align: center; color: rgb(255, 255, 255); background-image: url(/css/home_step_icos.png); background-position: -90px 0px; background-repeat: no-repeat;">
+                        <b style="box-sizing: border-box; font-weight: 400; font-size: 20px;">准 确</b>
+                        <br style="box-sizing: border-box;">
+                        <i style="box-sizing: border-box; font-style: normal; color: rgb(220, 229, 249);">多次验证</i></span>
+                </div>
+                <div class="col-md-3">
+                    <span class="ico ico-findgreatguy" style="box-sizing: border-box; display: block; width: 75px; padding-top: 75px; margin: 0px auto; text-align: center; color: rgb(255, 255, 255); background-image: url(/css/home_step_icos.png); background-position: -182px 0px; background-repeat: no-repeat;"><b style="box-sizing: border-box; font-weight: 400; font-size: 20px;">简&nbsp;单</b><br style="box-sizing: border-box;">
+                        <i style="box-sizing: border-box; font-style: normal; color: rgb(220, 229, 249);">轻松使用</i></span>
+                </div>
+                <div class="col-md-3">
+                    <span class="ico ico-cooprate" style="box-sizing: border-box; display: block; width: 75px; padding-top: 75px; margin: 0px auto; text-align: center; color: rgb(255, 255, 255); background-image: url(/css/home_step_icos.png); background-position: -279px 0px; background-repeat: no-repeat;"><b style="box-sizing: border-box; font-weight: 400; font-size: 20px;">直&nbsp;接</b><br style="box-sizing: border-box;">
+                        <i style="box-sizing: border-box; font-style: normal; color: rgb(220, 229, 249);">沟通合作</i></span>
+                </div>
+            </div>
+         
+        </div>
+    </div>
+<script src="/css/jquery.min.js"></script>
+<script src="/css/layer.js"></script>
+<script type="text/javascript">
+$(document).keyup(function(event){
+  if(event.keyCode ==13){
+    sub();
+  }
+});
+    function sub() {
+        $("#su").attr("disabled", "disabled");
+        $("#su").val("验证中...");
+        $("#txtShow").html("&nbsp;");     //设置值
+        var myvalue = $("#kw").val();   //取值
+    if (IsURL(myvalue)) {
+        var index = layer.load(1, {
+          shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
+		$.ajax({
+		    async: false,
+			url: "http://wx.canyou168.com/pro/wxUrlCheck.ashx",
+			type: "GET",
+            dataType: 'jsonp',
+            jsonp: 'callback',
+		    data: {
+                url: myvalue,
+            },
+            timeout: 2000,
+			success: function (data) {
+			  
+			    layer.closeAll();
+				if(data.Msg==="正常"){
+					layer.msg('恭喜！该域名没被拦截', {icon: 6});
+				}else if(data.Msg=="屏蔽"){
+					layer.msg('该域名已被拦截', {icon: 5});
+				}else{
+                layer.msg(data.Msg, {icon: 4});
+				}
+				$("#su").removeAttr("disabled");
+				$("#su").val("免费检测");
+            }
+         });
+    } else {
+        layer.alert( '请输入正确网址哦！',{
+          skin: 'layui-layer-molv' //样式类名
+          ,closeBtn: 0
+          }, function(){
+            $("#su").removeAttr("disabled");
+            $("#su").val("免费检测");
+           layer.closeAll();
+        })
+            
+    }
+    }
+    function qingkong() {
+        $("#txtShow").html("&nbsp;");     //设置值
+    }
+function IsURL(str_url){
+        var strRegex = "^((https|http|ftp|rtsp|mms)?://)"
+        + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" //ftp的user@
+        + "(([0-9]{1,3}\.){3}[0-9]{1,3}" // IP形式的URL- 199.194.52.184
+        + "|" // 允许IP和DOMAIN（域名）
+        + "([0-9a-z_!~*'()-]+\.)*" // 域名- www.
+        + "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\." // 二级域名
+        + "[a-z]{2,6})" // first level domain- .com or .museum
+        + "(:[0-9]{1,4})?" // 端口- :80
+        + "((/?)|" // a slash isn't required if there is no file name
+        + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$";
+        var re=new RegExp(strRegex);
+        //re.test()
+        if (re.test(str_url)){
+            return (true);
+        }else{
+            return (false);
+        }
+}
+</script>
+</body></html>
