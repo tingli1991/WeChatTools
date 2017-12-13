@@ -23,7 +23,7 @@ namespace WeChatTools.Web
             userIP = GetWebClientIp();
             context.Response.ContentType = "text/plain";
 
-            if (!string.IsNullOrEmpty(context.Request["url"]) && !string.IsNullOrEmpty(context.Request["key"]) &&  context.Request["key"].Length ==32)
+            if (!string.IsNullOrEmpty(context.Request["url"]) && !string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
             {
                 string userKey = context.Request["key"]; //key ,md5值
                 //需要检测的网址
@@ -35,8 +35,14 @@ namespace WeChatTools.Web
                 SpVoiceObj.Open();
                 string result = SpVoiceObj.Api(json);
                 SpVoiceObj.Close();
-                Logger.WriteLoggger(userIP + ":" + userKey+":"+result);
-                result = "jsonp" + ConvertDateTimeToInt() + "(" + result + ")";
+                Logger.WriteLoggger(userIP + ":" + userKey + ":" + result);
+
+                if (!string.IsNullOrEmpty(context.Request.QueryString["callback"]))
+                {
+                    string callBack = context.Request.QueryString["callback"].ToString(); //回调
+                    result = callBack + "(" + result + ")";
+                }
+
                 context.Response.Write(result);
             }
             else
@@ -70,7 +76,7 @@ namespace WeChatTools.Web
             System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1, 0, 0, 0, 0));
             long t = (time.Ticks - startTime.Ticks) / 10000;   //除10000调整为13位      
             return t;
-        }  
+        }
 
 
 

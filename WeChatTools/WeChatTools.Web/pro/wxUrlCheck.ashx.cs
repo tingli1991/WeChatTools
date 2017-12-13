@@ -61,8 +61,12 @@ namespace WeChatTools.Web
                         Logger.WriteLoggger(urlCheck + ":REMOTE_ADDR--" + context.Request.ServerVariables["REMOTE_ADDR"] + ":" + result);
                         Logger.WriteLoggger("==================================================");
                         */
-                         Logger.WriteLoggger(userIP + ":" + result);
-                         result = "jsonp" + ConvertDateTimeToInt() + "(" + result + ")";
+                        Logger.WriteLoggger(userIP + ":" + result);
+                        if (!string.IsNullOrEmpty(context.Request.QueryString["callback"]))
+                        {
+                            string callBack = context.Request.QueryString["callback"].ToString(); //回调
+                            result = callBack + "(" + result + ")";
+                        }
                         context.Response.Write(result);
                     }
                     else
