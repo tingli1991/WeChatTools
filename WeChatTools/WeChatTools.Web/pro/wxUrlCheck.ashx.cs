@@ -62,6 +62,7 @@ namespace WeChatTools.Web
                         Logger.WriteLoggger("==================================================");
                         */
                          Logger.WriteLoggger(userIP + ":" + result);
+                         result = "jsonp" + ConvertDateTimeToInt() + "(" + result + ")";
                         context.Response.Write(result);
                     }
                     else
@@ -86,6 +87,19 @@ namespace WeChatTools.Web
                 return false;
             }
         }
+
+        /// <summary>  
+        /// 将c# DateTime时间格式转换为Unix时间戳格式  
+        /// </summary>  
+        /// <param name="time">时间</param>  
+        /// <returns>long</returns>  
+        public static long ConvertDateTimeToInt()
+        {
+            System.DateTime time =  DateTime.Now;
+            System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1, 0, 0, 0, 0));
+            long t = (time.Ticks - startTime.Ticks) / 10000;   //除10000调整为13位      
+            return t;
+        }  
 
         private bool IsInTimeInterval(TimeSpan time, TimeSpan startTime, TimeSpan endTime)
         {
