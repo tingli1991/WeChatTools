@@ -66,6 +66,7 @@ namespace WeChatTools.Web.dev
                     if (string.IsNullOrEmpty(sArray[RandKey1]))
                     {
                         randUrl = "";
+                        isBlacklist = false;
                     }
                     else
                     {
