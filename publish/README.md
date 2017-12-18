@@ -13,7 +13,7 @@
   <add key="wxCheckApiKey" value="341e0b5df120394ec99e517b67774399" />
 ```
 
-> 4.访问 http://www.aaa.com/dev/urlTransfer.ashx?url={用户传当前推广的网址}&domain={用户传当前推广的域名(url=网址里面的域名，主要是url用的)}
+> 4.访问 http://www.aaa.com/dev/urlTransfer.ashx?url={传用户当前推广的网址}&domain={传用户当前推广的域名(url=网址里面的域名，主要是分割url用的)}
 ```
 例如：
 http://www.aaa.com/dev/urlTransfer.ashx?domain=www.bbb.com&url=http%3a%2f%2fwww.bbb.com%2findex.php%3fg%3dWap%26m%3dVote%26a%3dindex%26token%3duDSrEHNs9CFGcTSC%26wecha_id%3docMqvwRjzPH9eseHRc_Z9nlP-DSM%26id%3d25%26iMicms%3dmp.weixin.qq.com
