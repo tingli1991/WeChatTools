@@ -15,7 +15,8 @@ namespace WeChatTools.Web.dev
     /// </summary>
     public class urlTransfer : IHttpHandler
     {
-
+        private string wxCheckApi = "http://wx.canyou168.com/pro/wxUrlCheck.ashx";//微信域名检测api
+        private string wxCheckApiKey = "341e0b5df120394ec99e517b67774399";//微信域名检测授权key
 
         private string gotoRedirectUrl = "http://weixin.sogou.com/";//最终用户访问的网址
         public void ProcessRequest(HttpContext context)
@@ -23,8 +24,8 @@ namespace WeChatTools.Web.dev
             //http://localhost:2180/dev/urlTransfer.ashx?domain=www.bbb.com&url=http%3a%2f%2fwww.bbb.com%2findex.php%3fg%3dWap%26m%3dVote%26a%3dindex%26token%3duDSrEHNs9CFGcTSC%26wecha_id%3docMqvwRjzPH9eseHRc_Z9nlP-DSM%26id%3d25%26iMicms%3dmp.weixin.qq.com
             //http://www.aaa.com/dev/urlTransfer.ashx?url=http://wwww.bbb.com/index.php?g=Wap&m=Vote&a=index&token=uDSrEHNs9CFGcTSC&wecha_id=ocMqvwRjzPH9eseHRc_Z9nlP-DSM&id=25&iMicms=mp.weixin.qq.com 
             context.Response.ContentType = "text/plain";
-            string getUrl = QueryString("url");//参数1：用户传当前推广的域名
-            string getDomain = QueryString("domain");//参数2：用户传当前推广的网址 
+            string getUrl = QueryString("url");//参数1：用户传当前推广的网址 
+            string getDomain = QueryString("domain");//参数2：用户传当前推广的域名(也是getUrl网址里面的域名，主要是分割getUrl用的)
 
             string[] sArray = Regex.Split(getUrl, getDomain, RegexOptions.IgnoreCase);
             string domainLeft = sArray[0];
@@ -54,7 +55,7 @@ namespace WeChatTools.Web.dev
             {
                 try
                 {
-                    string hosturl = ConfigTool.ReadVerifyConfig("Host", "HostUrl");
+                    string hosturl = ConfigTool.ReadVerifyConfig("Host", "HostUrl");//这些域名都需要指向用户最终要访问的站点
                     string[] sArray = hosturl.Split(',');
                     Random ran1 = new Random();
                     int RandKey1 = ran.Next(0, sArray.Length);//随机选中域名
@@ -71,7 +72,10 @@ namespace WeChatTools.Web.dev
                         randUrl = randUrl + "." + sArray[RandKey1] + "";
                     }
 
-                    WebRequest wr = (HttpWebRequest)WebRequest.Create("http://wx.canyou168.com/pro/wxUrlCheck.ashx?url=http://" + randUrl);
+                     wxCheckApi = ConfigTool.ReadVerifyConfig("wxCheckApi", "WeiXin"); ;
+                     wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeiXin");
+
+                    WebRequest wr = (HttpWebRequest)WebRequest.Create(wxCheckApi + "?key=" + wxCheckApiKey + "url=http://" + randUrl);
                     var stream = wr.GetResponse().GetResponseStream();
                     var sr = new StreamReader(stream, Encoding.GetEncoding("UTF-8"));
                     var all = sr.ReadToEnd();
