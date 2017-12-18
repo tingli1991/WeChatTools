@@ -26,7 +26,7 @@ namespace WeChatTools.Web.dev
             string getUrl = QueryString("url");//参数1：用户传当前推广的域名
             string getDomain = QueryString("domain");//参数2：用户传当前推广的网址 
 
-            string[] sArray = Regex.Split(gotoRedirectUrl, getDomain, RegexOptions.IgnoreCase);
+            string[] sArray = Regex.Split(getUrl, getDomain, RegexOptions.IgnoreCase);
             string domainLeft = sArray[0];
             string domainRight = sArray[1];
 
