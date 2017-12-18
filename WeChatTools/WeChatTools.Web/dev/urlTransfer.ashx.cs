@@ -50,8 +50,8 @@ namespace WeChatTools.Web.dev
             string randUrl = "";
 
             bool isBlacklist = true;
-
-            while (isBlacklist)
+            int xx = 0;//没有做剔除操作，暂时限制循环次数。
+            while (isBlacklist && xx<20)
             {
                 try
                 {
@@ -90,6 +90,7 @@ namespace WeChatTools.Web.dev
                     }
                     sr.Close();
                     stream.Close();
+                    xx++;
 
                 }
                 catch (Exception ex)
