@@ -50,8 +50,8 @@ namespace WeChatTools.Web.dev
             string randUrl = "";
 
             bool isBlacklist = true;
-            int xx = 0;//没有做剔除操作，暂时限制循环次数。
-            while (isBlacklist && xx<20)
+           // int xx = 0;//没有做剔除操作，暂时限制循环次数。
+            while (isBlacklist)
             {
                 try
                 {
@@ -67,14 +67,15 @@ namespace WeChatTools.Web.dev
                     {
                         randUrl = "";
                         isBlacklist = false;
+                        return randUrl;
                     }
                     else
                     {
                         randUrl = randUrl + "." + sArray[RandKey1] + "";
                     }
 
-                     wxCheckApi = ConfigTool.ReadVerifyConfig("wxCheckApi", "WeiXin"); ;
-                     wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeiXin");
+                    wxCheckApi = ConfigTool.ReadVerifyConfig("wxCheckApi", "WeiXin"); ;
+                    wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeiXin");
 
                     WebRequest wr = (HttpWebRequest)WebRequest.Create(wxCheckApi + "?key=" + wxCheckApiKey + "url=http://" + randUrl);
                     var stream = wr.GetResponse().GetResponseStream();
@@ -88,10 +89,20 @@ namespace WeChatTools.Web.dev
                     else
                     {
                         //剔除域名
+                        if (hosturl.Contains(sArray[RandKey1] + ","))
+                        {
+                            hosturl = hosturl.Replace(sArray[RandKey1] + ",", "");
+                        }
+                        if (hosturl.Contains("," + sArray[RandKey1]))
+                        {
+                            hosturl = hosturl.Replace("," + sArray[RandKey1], "");
+                        }
+                        ConfigTool.WriteVerifyConfig("Host",hosturl,"HostUrl");//剔除黑名单域名
+
                     }
                     sr.Close();
                     stream.Close();
-                    xx++;
+                    
 
                 }
                 catch (Exception ex)
