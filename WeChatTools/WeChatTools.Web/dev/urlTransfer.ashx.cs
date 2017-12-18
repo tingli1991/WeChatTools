@@ -30,10 +30,10 @@ namespace WeChatTools.Web.dev
             string[] sArray = Regex.Split(getUrl, getDomain, RegexOptions.IgnoreCase);
             string domainLeft = sArray[0];
             string domainRight = sArray[1];
-
-            if (!string.IsNullOrEmpty(GetRandHostUrl()))
+            string domainCenter = GetRandHostUrl();
+            if (!string.IsNullOrEmpty(domainCenter))
             {
-                gotoRedirectUrl = domainLeft + GetRandHostUrl() + domainRight;
+                gotoRedirectUrl = domainLeft + domainCenter + domainRight;
             }
 
             context.Response.Redirect(gotoRedirectUrl);
