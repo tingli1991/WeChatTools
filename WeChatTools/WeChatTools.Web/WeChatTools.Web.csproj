@@ -74,7 +74,6 @@
     <Content Include="dev\ZhiHu.ashx" />
     <Content Include="dev\WXUrlCheckTest.ashx" />
     <Content Include="dev\urlTransfer.ashx" />
-    <None Include="Properties\PublishProfiles\publish.pubxml" />
     <Content Include="pro\wxUrlCheck2.ashx" />
     <Content Include="pro\wxUrlCheck3.ashx" />
     <None Include="Web.Debug.config">
@@ -123,6 +122,9 @@
       <Project>{c5f32fc8-4863-437a-ac5c-80d94b6354c4}</Project>
       <Name>WeChatTools.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
