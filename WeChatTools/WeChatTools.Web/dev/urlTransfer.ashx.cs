@@ -36,8 +36,8 @@ namespace WeChatTools.Web.dev
                 gotoRedirectUrl = domainLeft + domainCenter + domainRight;
             }
 
-            context.Response.Redirect(gotoRedirectUrl);
-            // context.Response.Write(gotoRedirectUrl);
+           // context.Response.Redirect(gotoRedirectUrl);
+             context.Response.Write(gotoRedirectUrl);
             context.Response.End();
         }
 
@@ -77,19 +77,14 @@ namespace WeChatTools.Web.dev
                     wxCheckApi = ConfigTool.ReadVerifyConfig("wxCheckApi", "WeiXin"); ;
                     wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeiXin");
 
-                    WebRequest wr = (HttpWebRequest)WebRequest.Create(wxCheckApi + "?key=" + wxCheckApiKey + "url=http://" + randUrl);
+                    WebRequest wr = (HttpWebRequest)WebRequest.Create(wxCheckApi + "?key=" + wxCheckApiKey + "&url=http://" + randUrl);
                     var stream = wr.GetResponse().GetResponseStream();
                     var sr = new StreamReader(stream, Encoding.GetEncoding("UTF-8"));
                     var all = sr.ReadToEnd();
                     sr.Close();
                     stream.Close();
                     //读取网站的数据
-                    if (all.Contains("正常") || all.Contains("当天请求上限"))
-                    {
-                        isBlacklist = false;
-                        return randUrl;
-                    }
-                    else
+                    if (all.Contains("屏蔽"))
                     {
                         //剔除域名
                         if (hosturl.Contains(sArray[RandKey1] + ","))
@@ -100,9 +95,14 @@ namespace WeChatTools.Web.dev
                         {
                             hosturl = hosturl.Replace("," + sArray[RandKey1], "");
                         }
-                        ConfigTool.WriteVerifyConfig("Host",hosturl,"HostUrl");//剔除黑名单域名
-
+                        ConfigTool.WriteVerifyConfig("Host", hosturl, "HostUrl");//剔除黑名单域名
                     }
+                    else
+                    {
+                        isBlacklist = false;
+                        return randUrl;
+                    }
+                    
                    
                     
 
