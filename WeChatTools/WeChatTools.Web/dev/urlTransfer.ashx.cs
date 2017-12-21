@@ -36,8 +36,8 @@ namespace WeChatTools.Web.dev
                 gotoRedirectUrl = domainLeft + domainCenter + domainRight;
             }
 
-           // context.Response.Redirect(gotoRedirectUrl);
-             context.Response.Write(gotoRedirectUrl);
+            context.Response.Redirect(gotoRedirectUrl);
+           //  context.Response.Write(gotoRedirectUrl);
             context.Response.End();
         }
 
