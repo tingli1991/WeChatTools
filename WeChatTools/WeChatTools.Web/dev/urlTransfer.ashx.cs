@@ -81,10 +81,13 @@ namespace WeChatTools.Web.dev
                     var stream = wr.GetResponse().GetResponseStream();
                     var sr = new StreamReader(stream, Encoding.GetEncoding("UTF-8"));
                     var all = sr.ReadToEnd();
+                    sr.Close();
+                    stream.Close();
                     //读取网站的数据
                     if (all.Contains("正常") || all.Contains("当天请求上限"))
                     {
                         isBlacklist = false;
+                        return randUrl;
                     }
                     else
                     {
@@ -100,8 +103,7 @@ namespace WeChatTools.Web.dev
                         ConfigTool.WriteVerifyConfig("Host",hosturl,"HostUrl");//剔除黑名单域名
 
                     }
-                    sr.Close();
-                    stream.Close();
+                   
                     
 
                 }
