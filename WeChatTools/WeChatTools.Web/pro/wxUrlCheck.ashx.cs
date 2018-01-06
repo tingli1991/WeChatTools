@@ -203,8 +203,12 @@ namespace WeChatTools.Web
 
             if (!String.IsNullOrWhiteSpace(customerIP))
             {
-                customerIP = httpContext.Request.ServerVariables["HTTP_CLIENT_IP"].Split(new char[] { ',' })[0];
-                // customerIP = httpContext.Request.ServerVariables["HTTP_X_FORWARDED_FOR"].Split(new char[] { ',' })[0];
+               customerIP = httpContext.Request.ServerVariables["HTTP_CLIENT_IP"].Split(new char[] { ',' })[0];
+               if (String.IsNullOrWhiteSpace(customerIP) || "unknown".Equals(customerIP.ToLower()))
+               {
+                   customerIP = httpContext.Request.ServerVariables["HTTP_X_FORWARDED_FOR"].Split(new char[] { ',' })[0];
+               }
+               
             }
             else
             {
