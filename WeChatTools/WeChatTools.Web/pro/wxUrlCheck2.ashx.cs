@@ -20,7 +20,7 @@ namespace WeChatTools.Web
         public void ProcessRequest(HttpContext context)
         {
             //正式用
-            userIP = GetWebClientIp();
+            userIP = GetWebClientIp(context);
             context.Response.ContentType = "text/plain";
 
             if (!string.IsNullOrEmpty(context.Request["url"]) && !string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
@@ -141,55 +141,62 @@ namespace WeChatTools.Web
         }
 
 
-        public static string GetWebClientIp()
+        public static string GetWebClientIp(HttpContext httpContext)
         {
-            string CustomerIP = "";
+            string customerIP = "127.0.0.1";
 
-            try
+            if (httpContext == null || httpContext.Request == null || httpContext.Request.ServerVariables == null) return customerIP;
+
+            customerIP = httpContext.Request.ServerVariables["HTTP_CDN_SRC_IP"];
+
+            if (String.IsNullOrWhiteSpace(customerIP) || "unknown".Equals(customerIP.ToLower()))
             {
-                if (System.Web.HttpContext.Current == null
-            || System.Web.HttpContext.Current.Request == null
-            || System.Web.HttpContext.Current.Request.ServerVariables == null)
-                    return "";
 
+                customerIP = httpContext.Request.ServerVariables["Proxy-Client-IP"];
+            }
+            if (String.IsNullOrWhiteSpace(customerIP) || "unknown".Equals(customerIP.ToLower()))
+            {
 
+                customerIP = httpContext.Request.ServerVariables["WL-Proxy-Client-IP"];
+            }
 
-                //CDN加速后取到的IP   
-                CustomerIP = System.Web.HttpContext.Current.Request.Headers["Cdn-Src-Ip"];
-                if (!string.IsNullOrEmpty(CustomerIP) && IsIP(CustomerIP))
+            if (String.IsNullOrWhiteSpace(customerIP) || "unknown".Equals(customerIP.ToLower()))
+            {
+
+                customerIP = httpContext.Request.ServerVariables["HTTP_VIA"];
+            }
+
+            if (String.IsNullOrWhiteSpace(customerIP))
+            {
+
+                customerIP = httpContext.Request.ServerVariables["HTTP_CLIENT_IP"];
+                if (!String.IsNullOrWhiteSpace(customerIP) && customerIP.Contains(","))
                 {
-                    return CustomerIP;
-                }
-
-                CustomerIP = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-
-
-                if (!String.IsNullOrWhiteSpace(GetRealIP(CustomerIP)) && IsIP(CustomerIP))
-                    return CustomerIP;
-
-                if (System.Web.HttpContext.Current.Request.ServerVariables["HTTP_VIA"] != null)
-                {
-                    CustomerIP = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-                    if (CustomerIP == null)
-                        CustomerIP = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-                }
-                else
-                {
-                    CustomerIP = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-
-                }
-
-                if (string.Compare(CustomerIP, "unknown", true) == 0)
-                    CustomerIP = System.Web.HttpContext.Current.Request.UserHostAddress;
-
-                if (!IsIP(CustomerIP))
-                {
-                    CustomerIP = "127.0.0.1";
+                    customerIP = customerIP.Split(new char[] { ',' })[0];
                 }
             }
-            catch { }
 
-            return CustomerIP;
+            if (String.IsNullOrWhiteSpace(customerIP) || "unknown".Equals(customerIP.ToLower()))
+            {
+
+                customerIP = httpContext.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                if (!String.IsNullOrWhiteSpace(customerIP) && customerIP.Contains(","))
+                {
+                    customerIP = customerIP.Split(new char[] { ',' })[0];
+                }
+            }
+            else
+            {
+
+                customerIP = httpContext.Request.ServerVariables["REMOTE_ADDR"];
+
+            }
+
+            if (!IsIP(customerIP))
+            {
+                customerIP = "127.0.0.1";
+            }
+            return customerIP;
         }
 
         public static string GetRealIP(string CustomerIP)
