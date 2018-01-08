@@ -20,7 +20,7 @@ namespace WeChatTools.Web
         public void ProcessRequest(HttpContext context)
         {
            
-            context.Response.Write("优化服务端性能,在【10：00-16：00】进行服务升级。<br />");
+            context.Response.Write("购买了接口的，zz.canjr.com 请统一更换 wx.canyou168.com。<br />");
             context.Response.Write("码云地址：https://gitee.com/qqWebChat/WeChatTools <br />");
             context.Response.Write("需要测试接口进群留言， QQ群:41977413,谢谢配合!");
             context.Response.End();
