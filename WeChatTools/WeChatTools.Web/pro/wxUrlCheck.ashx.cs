@@ -62,7 +62,7 @@ namespace WeChatTools.Web
                     Logger.WriteLoggger(urlCheck + ":REMOTE_ADDR--" + context.Request.ServerVariables["REMOTE_ADDR"] + ":" + result);
                     Logger.WriteLoggger("==================================================");
                     */
-                    Logger.WriteLoggger(userIP + ":" + result);
+                    Logger.WriteLoggger(userIP + ":" + userKey + ":" + result);
 
 
                 }
