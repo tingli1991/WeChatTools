@@ -67,7 +67,21 @@
     <Content Include="css\t1.png" />
     <Content Include="default.html" />
     <Content Include="dev\get-weixin-code.html" />
+    <Content Include="doc.html" />
     <Content Include="favicon.ico" />
+    <Content Include="index.html" />
+    <Content Include="js\base.js" />
+    <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\jquery.min.js" />
+    <Content Include="js\layer - 副本.js" />
+    <Content Include="js\layer.js" />
+    <Content Include="js\skin\layer.css" />
+    <Content Include="libs\bootstrap\3.2.0\css\bootstrap.min.css" />
+    <Content Include="libs\bootstrap\3.2.0\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="libs\fontawesome\4.4.0\css\font-awesome.css" />
+    <Content Include="libs\fontawesome\4.4.0\css\font-awesome.min.css" />
+    <Content Include="libs\fontawesome\4.4.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="price.html" />
     <Content Include="pro\hdShowImg.ashx" />
     <Content Include="pro\urlTransfer.ashx" />
     <Content Include="Config\WeiXin.config" />
@@ -77,6 +91,42 @@
     <Content Include="dev\urlTransfer.ashx" />
     <Content Include="pro\wxUrlCheck2.ashx" />
     <Content Include="pro\wxUrlCheck3.ashx" />
+    <Content Include="libs\bootstrap\3.2.0\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="libs\bootstrap\3.2.0\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="libs\bootstrap\3.2.0\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="libs\fontawesome\4.4.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="libs\fontawesome\4.4.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="libs\fontawesome\4.4.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="libs\fontawesome\4.4.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="libs\fontawesome\4.4.0\fonts\FontAwesome.otf" />
+    <Content Include="libs\fontawesome\4.4.0\less\animated.less" />
+    <Content Include="libs\fontawesome\4.4.0\less\bordered-pulled.less" />
+    <Content Include="libs\fontawesome\4.4.0\less\core.less" />
+    <Content Include="libs\fontawesome\4.4.0\less\fixed-width.less" />
+    <Content Include="libs\fontawesome\4.4.0\less\font-awesome.less" />
+    <Content Include="libs\fontawesome\4.4.0\less\icons.less" />
+    <Content Include="libs\fontawesome\4.4.0\less\larger.less" />
+    <Content Include="libs\fontawesome\4.4.0\less\list.less" />
+    <Content Include="libs\fontawesome\4.4.0\less\mixins.less" />
+    <Content Include="libs\fontawesome\4.4.0\less\path.less" />
+    <Content Include="libs\fontawesome\4.4.0\less\rotated-flipped.less" />
+    <Content Include="libs\fontawesome\4.4.0\less\screen-reader.less" />
+    <Content Include="libs\fontawesome\4.4.0\less\stacked.less" />
+    <Content Include="libs\fontawesome\4.4.0\less\variables.less" />
+    <Content Include="libs\fontawesome\4.4.0\scss\font-awesome.scss" />
+    <Content Include="libs\fontawesome\4.4.0\scss\_animated.scss" />
+    <Content Include="libs\fontawesome\4.4.0\scss\_bordered-pulled.scss" />
+    <Content Include="libs\fontawesome\4.4.0\scss\_core.scss" />
+    <Content Include="libs\fontawesome\4.4.0\scss\_fixed-width.scss" />
+    <Content Include="libs\fontawesome\4.4.0\scss\_icons.scss" />
+    <Content Include="libs\fontawesome\4.4.0\scss\_larger.scss" />
+    <Content Include="libs\fontawesome\4.4.0\scss\_list.scss" />
+    <Content Include="libs\fontawesome\4.4.0\scss\_mixins.scss" />
+    <Content Include="libs\fontawesome\4.4.0\scss\_path.scss" />
+    <Content Include="libs\fontawesome\4.4.0\scss\_rotated-flipped.scss" />
+    <Content Include="libs\fontawesome\4.4.0\scss\_screen-reader.scss" />
+    <Content Include="libs\fontawesome\4.4.0\scss\_stacked.scss" />
+    <Content Include="libs\fontawesome\4.4.0\scss\_variables.scss" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -86,6 +136,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="pro\wxUrlCheck.ashx" />
+    <Content Include="static\ic1.png" />
+    <Content Include="static\ic2.png" />
+    <Content Include="static\ic3.png" />
+    <Content Include="static\ic4.png" />
+    <Content Include="static\icon.png" />
+    <Content Include="static\images\bg_00.jpg" />
+    <Content Include="static\layer.css" />
+    <Content Include="static\loading-1.gif" />
+    <Content Include="static\logo.png" />
+    <Content Include="static\styles\base.css" />
+    <Content Include="static\styles\inn.css" />
+    <Content Include="static\styles\jquery.min.js" />
+    <Content Include="static\styles\layer.css" />
+    <Content Include="static\w1.png" />
+    <Content Include="static\w2.png" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
