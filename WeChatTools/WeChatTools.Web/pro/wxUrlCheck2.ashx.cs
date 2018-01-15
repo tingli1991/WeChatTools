@@ -17,6 +17,8 @@ namespace WeChatTools.Web
        
         private const int DURATION = 24 * 60;
         private static string userIP = "127.0.0.1";
+        private string wxCheckApiKey = "341e0b5df120394ec99e517b67774399";
+
         public void ProcessRequest(HttpContext context)
         {
             //正式用
@@ -26,8 +28,8 @@ namespace WeChatTools.Web
             if (!string.IsNullOrEmpty(context.Request["url"]) && !string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
             {
                 string userKey = context.Request["key"]; //key ,md5值
-
-                if (userKey.Trim() == "341e0b5df120394ec99e517b67774399")
+                wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeiXin");
+                if (userKey.Trim() == wxCheckApiKey)
                 {
                     context.Response.Write("参数错误,进qq群交流:41977413！");
                 }

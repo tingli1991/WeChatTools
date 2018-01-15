@@ -16,7 +16,7 @@ namespace WeChatTools.Web
     {
         private const int DURATION = 24 * 60;
         private static string userIP = "127.0.0.1";
-        string userKey = "341e0b5df120394ec99e517b67774399";
+        private string wxCheckApiKey = "341e0b5df120394ec99e517b67774399";
         private TimeSpan _strWorkingDayAM = DateTime.Parse("09:00").TimeOfDay;//工作时间上午08:00
         private TimeSpan _strWorkingDayPM = DateTime.Parse("17:00").TimeOfDay;
         public void ProcessRequest(HttpContext context)
@@ -38,13 +38,17 @@ namespace WeChatTools.Web
 
                     if (!string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
                     {
-                        userKey = context.Request["key"]; //key ,md5值
+                        wxCheckApiKey = context.Request["key"]; //key ,md5值
+                    }
+                    else
+                    {
+                        wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeiXin");
                     }
 
                     //需要检测的网址
                     string urlCheck = context.Request["url"]; //检测的值
                     urlCheck = urlCheck.Replace("https://", "").Replace("http://", "");
-                    string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + userKey + "\'}\"}";
+                    string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
 
                     ServiceApiClient SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
                     SpVoiceObj.Open();
@@ -62,7 +66,7 @@ namespace WeChatTools.Web
                     Logger.WriteLoggger(urlCheck + ":REMOTE_ADDR--" + context.Request.ServerVariables["REMOTE_ADDR"] + ":" + result);
                     Logger.WriteLoggger("==================================================");
                     */
-                    Logger.WriteLoggger(userIP + ":" + userKey + ":" + result);
+                    Logger.WriteLoggger(userIP + ":" + wxCheckApiKey + ":" + result);
 
 
                 }
