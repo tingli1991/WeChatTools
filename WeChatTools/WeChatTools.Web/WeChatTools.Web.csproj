@@ -67,6 +67,7 @@
     <Content Include="css\t1.png" />
     <Content Include="default.html" />
     <Content Include="dev\get-weixin-code.html" />
+    <Content Include="dev\sply.html" />
     <Content Include="doc.html" />
     <Content Include="favicon.ico" />
     <Content Include="index.html" />
@@ -127,6 +128,7 @@
     <Content Include="libs\fontawesome\4.4.0\scss\_screen-reader.scss" />
     <Content Include="libs\fontawesome\4.4.0\scss\_stacked.scss" />
     <Content Include="libs\fontawesome\4.4.0\scss\_variables.scss" />
+    <Content Include="dev\HandlerSply.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -154,6 +156,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="dev\HandlerSply.ashx.cs">
+      <DependentUpon>HandlerSply.ashx</DependentUpon>
+    </Compile>
     <Compile Include="dev\HandlerWeb2.ashx.cs">
       <DependentUpon>HandlerWeb2.ashx</DependentUpon>
     </Compile>
