@@ -24,21 +24,27 @@ namespace WeChatTools.Web.dev
         {
             context.Response.ContentType = "text/html";
             string getJump = QueryString("jump");//参数1：用户传当前推广的网址 
-             Random ran = new Random();
+            Random ran = new Random();
             int RandKey = ran.Next(00, 99);
             getJump = getJump + "i" + RandKey;
 
-     
+
             string domainCenter = GetRandHostUrl();
             gotoRedirectUrl = "http://" + domainCenter + "/home/about";
-           // string xxx =PostHtml(gotoRedirectUrl, getJump);
+            // string xxx =PostHtml(gotoRedirectUrl, getJump);
 
             string html = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "dev/sply.html");
             html = html.Replace("$actionUrl", gotoRedirectUrl).Replace("$jumpValue", getJump);
 
+            if (string.IsNullOrEmpty(getJump))
+            {
 
-           // context.Response.Redirect(gotoRedirectUrl);
-            context.Response.Write(html);
+                context.Response.Redirect("http://weixin.sogou.com/");
+            }
+            else
+            {
+                context.Response.Write(html);
+            }
             context.Response.End();
         }
 
@@ -70,11 +76,11 @@ namespace WeChatTools.Web.dev
             // httpWebRequest.TransferEncoding = "gzip, deflate";
 
             httpWebRequest.ContentLength = data.Length;
-            httpWebRequest.ContentType = "application/x-www-form-urlencoded; charset=UTF-8";      
-          //  httpWebRequest.Host = "183.6.175.51:8000";
-          //  httpWebRequest.UserAgent = GetUserAgent();
+            httpWebRequest.ContentType = "application/x-www-form-urlencoded; charset=UTF-8";
+            //  httpWebRequest.Host = "183.6.175.51:8000";
+            //  httpWebRequest.UserAgent = GetUserAgent();
             httpWebRequest.Method = "POST";
-           // httpWebRequest.AllowAutoRedirect = true;
+            // httpWebRequest.AllowAutoRedirect = true;
             Stream pReqStream = httpWebRequest.GetRequestStream();
             // Send the data.
             pReqStream.Write(data, 0, data.Length);
@@ -98,7 +104,7 @@ namespace WeChatTools.Web.dev
         private string GetRandHostUrl()
         {
             Random ran = new Random();
-           
+
             string randUrl = "";
 
             bool isBlacklist = true;
@@ -109,10 +115,10 @@ namespace WeChatTools.Web.dev
                 {
                     string hosturl = ConfigTool.ReadVerifyConfig("Host", "HostUrl");//这些域名都需要指向用户最终要访问的站点
                     string[] sArray = hosturl.Split(',');
-                   
+
                     int RandKey1 = ran.Next(0, sArray.Length);//随机选中域名
                     randUrl = sArray[RandKey1];
-                         
+
 
                     wxCheckApi = ConfigTool.ReadVerifyConfig("wxCheckApi", "WeiXin"); ;
                     wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeiXin");
@@ -194,6 +200,6 @@ namespace WeChatTools.Web.dev
 
             return ret;
         }
-         
+
     }
 }
