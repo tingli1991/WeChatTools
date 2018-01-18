@@ -24,18 +24,6 @@ namespace WeChatTools.Web.dev
         {
             context.Response.ContentType = "text/html";
             string getJump = QueryString("jump");//参数1：用户传当前推广的网址 
-            Random ran = new Random();
-            int RandKey = ran.Next(00, 99);
-            getJump = getJump + "i" + RandKey;
-
-
-            string domainCenter = GetRandHostUrl();
-            gotoRedirectUrl = "http://" + domainCenter + "/home/about";
-            // string xxx =PostHtml(gotoRedirectUrl, getJump);
-
-            string html = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "dev/sply.html");
-            html = html.Replace("$actionUrl", gotoRedirectUrl).Replace("$jumpValue", getJump);
-
             if (string.IsNullOrEmpty(getJump))
             {
 
@@ -43,6 +31,19 @@ namespace WeChatTools.Web.dev
             }
             else
             {
+                Random ran = new Random();
+                int RandKey = ran.Next(00, 99);
+                getJump = getJump + "i" + RandKey;
+
+
+                string domainCenter = GetRandHostUrl();
+                gotoRedirectUrl = "http://" + domainCenter + "/home/about";
+                // string xxx =PostHtml(gotoRedirectUrl, getJump);
+
+                string html = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "dev/sply.html");
+                html = html.Replace("$actionUrl", gotoRedirectUrl).Replace("$jumpValue", getJump);
+
+
                 context.Response.Write(html);
             }
             context.Response.End();
