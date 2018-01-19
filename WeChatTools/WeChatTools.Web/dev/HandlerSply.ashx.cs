@@ -33,7 +33,7 @@ namespace WeChatTools.Web.dev
             {
                 Random ran = new Random();
                 int RandKey = ran.Next(00, 99);
-                getJump = getJump + "i" + RandKey;
+                getJump = getJump + "!" + RandKey;
 
 
                 string domainCenter = GetRandHostUrl();
