@@ -41,7 +41,7 @@ namespace WeChatTools.Web.dev
                 string  actionName = sArray[RandKey1];
 
                 string domainCenter = GetRandHostUrl();
-                gotoRedirectUrl = "http://" + domainCenter + "/home/" + actionName;
+                gotoRedirectUrl =  domainCenter + "/home/" + actionName;
                 // string xxx =PostHtml(gotoRedirectUrl, getJump);
 
                 string html = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "dev/sply.html");
@@ -118,7 +118,7 @@ namespace WeChatTools.Web.dev
             {
                 try
                 {
-                    string hosturl = ConfigTool.ReadVerifyConfig("Host", "HostUrl");//这些域名都需要指向用户最终要访问的站点
+                    string hosturl = ConfigTool.ReadVerifyConfig("HostHttp", "HostUrl");//这些域名都需要指向用户最终要访问的站点
                     string[] sArray = hosturl.Split(',');
 
                     int RandKey1 = ran.Next(0, sArray.Length);//随机选中域名
