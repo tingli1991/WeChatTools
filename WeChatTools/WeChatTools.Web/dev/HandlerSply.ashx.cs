@@ -39,9 +39,18 @@ namespace WeChatTools.Web.dev
                 string[] sArray = hosturl.Split(',');
                 int RandKey1 = ran.Next(0, sArray.Length);//随机选中action
                 string  actionName = sArray[RandKey1];
+                string domainLeft ="https://";
+
+                string agent = context.Request.UserAgent;
+
+                if (agent.Contains("Macintosh") || agent.Contains("iPhone") || agent.Contains("iPod") | agent.Contains("iPad") | agent.Contains("Windows Phone"))
+                {
+                    domainLeft = "http://";
+                }
+              
 
                 string domainCenter = GetRandHostUrl();
-                gotoRedirectUrl =  domainCenter + "/home/" + actionName;
+                gotoRedirectUrl = domainLeft+ domainCenter + "/home/" + actionName;
                 // string xxx =PostHtml(gotoRedirectUrl, getJump);
 
                 string html = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "dev/sply.html");

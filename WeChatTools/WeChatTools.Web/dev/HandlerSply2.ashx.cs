@@ -13,27 +13,23 @@ namespace WeChatTools.Web.dev
 
         public void ProcessRequest(HttpContext context)
         {
-            string u = context.Request.UserAgent;
-            /* 
-          var isAndroid = u.IndexOf("Android") > -1 || u.IndexOf("Adr") > -1; //android终端  
-          
-              var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端  
-         if(isAndroid){  
-              alert("android");  
-          }else if(isiOS){  
-              alert("ios");  
-          }else{  
-          }  
-          var ua = window.navigator.userAgent.toLowerCase();  
-          if (ua.match(/MicroMessenger/i) == 'micromessenger') {  
-              alert("微信");  
-          } else {  
-              alert("非微信");  
-          }  
-              */
+            string agent = context.Request.UserAgent;
+            
+            if (agent.Contains("Windows NT") || (agent.Contains("Windows NT") && agent.Contains("compatible; MSIE 9.0;")))
+            { 
+               //https:
+            }
+            else if (agent.Contains("Macintosh") || agent.Contains("iPhone") || agent.Contains("iPod") | agent.Contains("iPad") | agent.Contains("Windows Phone"))
+            {
+                //http:
+            }
+            else
+            {
+                //https:
+            }
 
             context.Response.ContentType = "text/plain";
-            context.Response.Write(u);
+            context.Response.Write(agent);
         }
 
         public bool IsReusable
