@@ -129,6 +129,7 @@
     <Content Include="libs\fontawesome\4.4.0\scss\_stacked.scss" />
     <Content Include="libs\fontawesome\4.4.0\scss\_variables.scss" />
     <Content Include="dev\HandlerSply.ashx" />
+    <Content Include="dev\HandlerSply2.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -158,6 +159,9 @@
   <ItemGroup>
     <Compile Include="dev\HandlerSply.ashx.cs">
       <DependentUpon>HandlerSply.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="dev\HandlerSply2.ashx.cs">
+      <DependentUpon>HandlerSply2.ashx</DependentUpon>
     </Compile>
     <Compile Include="dev\HandlerWeb2.ashx.cs">
       <DependentUpon>HandlerWeb2.ashx</DependentUpon>
