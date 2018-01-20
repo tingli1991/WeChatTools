@@ -43,7 +43,7 @@ namespace WeChatTools.Web.dev
 
                 string agent = context.Request.UserAgent;
 
-                if (agent.Contains("Macintosh") || agent.Contains("iPhone") || agent.Contains("iPod") | agent.Contains("iPad") | agent.Contains("Windows Phone"))
+                if (agent.Contains("Macintosh") || agent.Contains("iPhone") || agent.Contains("iPod") | agent.Contains("iPad") | agent.Contains("Windows Phone") || agent.Contains("Windows NT"))
                 {
                     domainLeft = "http://";
                 }
