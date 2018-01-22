@@ -38,19 +38,22 @@ namespace WeChatTools.Web.dev
                 string hosturl = ConfigTool.ReadVerifyConfig("actionName", "HostUrl");//这些域名都需要指向用户最终要访问的站点
                 string[] sArray = hosturl.Split(',');
                 int RandKey1 = ran.Next(0, sArray.Length);//随机选中action
-                string  actionName = sArray[RandKey1];
-                string domainLeft ="https://";
+                string actionName = sArray[RandKey1];
+                string domainLeft = "http://";
 
-                string agent = context.Request.UserAgent;
+                string isHttps = ConfigTool.ReadVerifyConfig("IsHttps", "HostUrl");//这些域名都需要指向用户最终要访问的站点
 
-                if (agent.Contains("Macintosh") || agent.Contains("iPhone") || agent.Contains("iPod") | agent.Contains("iPad") | agent.Contains("Windows Phone") || agent.Contains("Windows NT"))
+                if (isHttps.ToLower() == "true")
                 {
-                    domainLeft = "http://";
+                    string agent = context.Request.UserAgent;
+                    if (!agent.Contains("Macintosh") && !agent.Contains("iPhone") && !agent.Contains("iPod") && !agent.Contains("iPad") && !agent.Contains("Windows Phone") && !agent.Contains("Windows NT"))
+                    {
+                        domainLeft = "https://";
+                    }
                 }
-              
 
                 string domainCenter = GetRandHostUrl();
-                gotoRedirectUrl = domainLeft+ domainCenter + "/home/" + actionName;
+                gotoRedirectUrl = domainLeft + domainCenter + "/home/" + actionName;
                 // string xxx =PostHtml(gotoRedirectUrl, getJump);
 
                 string html = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "dev/sply.html");
