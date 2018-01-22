@@ -24,7 +24,7 @@ namespace WeChatTools.Web.dev
         {
             context.Response.ContentType = "text/html";
             string getJump = QueryString("jump");//参数1：用户传当前推广的网址 
-            if (string.IsNullOrEmpty(getJump) || !context.Request.UrlReferrer.AbsoluteUri.Contains("http://t.cn/"))
+            if (string.IsNullOrEmpty(getJump))
             {
 
                 context.Response.Redirect("http://weixin.sogou.com/");

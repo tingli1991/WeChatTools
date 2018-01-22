@@ -14,7 +14,7 @@ namespace WeChatTools.Web.dev
         public void ProcessRequest(HttpContext context)
         {
             string agent = context.Request.UserAgent;
-            
+            string  xxx= context.Request.UrlReferrer.AbsoluteUri;
             if (agent.Contains("Windows NT") || (agent.Contains("Windows NT") && agent.Contains("compatible; MSIE 9.0;")))
             { 
                //https:
@@ -29,7 +29,9 @@ namespace WeChatTools.Web.dev
             }
 
             context.Response.ContentType = "text/plain";
-            context.Response.Write(agent);
+            context.Response.Write(agent+"\n");
+            context.Response.Write(xxx);
+            context.Response.End();
         }
 
         public bool IsReusable
