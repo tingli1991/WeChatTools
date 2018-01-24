@@ -70,6 +70,8 @@
     <Content Include="dev\sply.html" />
     <Content Include="doc.html" />
     <Content Include="favicon.ico" />
+    <Content Include="img\alipay.jpg" />
+    <Content Include="img\wechat.png" />
     <Content Include="index.html" />
     <Content Include="js\base.js" />
     <Content Include="js\bootstrap.min.js" />
@@ -199,7 +201,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="img\" />
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <PropertyGroup>
