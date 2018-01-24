@@ -25,63 +25,63 @@ namespace WeChatTools.Web
             context.Response.ContentType = "text/plain";
             TimeSpan dspNow = DateTime.Now.TimeOfDay;
             string result = string.Empty;
-            //   if (IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM))
-            //   {
-            if (!IsValid(context))
+            if (IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM))
             {
-                result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术，进群交流 QQ群:41977413!\"}";
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(context.Request["url"]))
+                if (!IsValid(context))
                 {
-
-                    if (!string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
-                    {
-                        wxCheckApiKey = context.Request["key"]; //key ,md5值
-                    }
-                    else
-                    {
-                        wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeiXin");
-                    }
-
-                    //需要检测的网址
-                    string urlCheck = context.Request["url"]; //检测的值
-                    urlCheck = urlCheck.Replace("https://", "").Replace("http://", "");
-                    string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
-
-                    ServiceApiClient SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
-                    SpVoiceObj.Open();
-                    result = SpVoiceObj.Api(json);
-                    SpVoiceObj.Close();
-                    /*
-                    Logger.WriteLoggger(urlCheck + ":HTTP_CDN_SRC_IP--" + context.Request.ServerVariables["HTTP_CDN_SRC_IP"] + ":" + result);
-                    Logger.WriteLoggger(urlCheck + ":HTTP_Cdn-Src-Ip--" + context.Request.ServerVariables["HTTP_Cdn-Src-Ip"] + ":" + result);
-                    Logger.WriteLoggger(urlCheck + ":Cdn-Src-Ip--" + context.Request.ServerVariables["Cdn-Src-Ip"] + ":" + result);
-                    Logger.WriteLoggger(urlCheck + ":HTTP_X_FORWARDED_FOR--" + context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] + ":" + result);
-                    Logger.WriteLoggger(urlCheck + ":Proxy-Client-IP--" + context.Request.ServerVariables["Proxy-Client-IP"] + ":" + result);
-                    Logger.WriteLoggger(urlCheck + ":WL-Proxy-Client-IP--" + context.Request.ServerVariables["WL-Proxy-Client-IP"] + ":" + result);
-                    Logger.WriteLoggger(urlCheck + ":HTTP_CLIENT_IP--" + context.Request.ServerVariables["HTTP_CLIENT_IP"] + ":" + result);
-                    Logger.WriteLoggger(urlCheck + ":HTTP_VIA--" + context.Request.ServerVariables["HTTP_VIA"] + ":" + result);
-                    Logger.WriteLoggger(urlCheck + ":REMOTE_ADDR--" + context.Request.ServerVariables["REMOTE_ADDR"] + ":" + result);
-                    Logger.WriteLoggger("==================================================");
-                    */
-                    Logger.WriteLoggger(userIP + ":" + wxCheckApiKey + ":" + result);
-
-
+                    result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术，进群交流 QQ群:41977413!\"}";
                 }
                 else
                 {
-                    result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"参数错误,进qq群交流:41977413！\"}";
+                    if (!string.IsNullOrEmpty(context.Request["url"]))
+                    {
 
+                        if (!string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
+                        {
+                            wxCheckApiKey = context.Request["key"]; //key ,md5值
+                        }
+                        else
+                        {
+                            wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeiXin");
+                        }
+
+                        //需要检测的网址
+                        string urlCheck = context.Request["url"]; //检测的值
+                        urlCheck = urlCheck.Replace("https://", "").Replace("http://", "");
+                        string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
+
+                        ServiceApiClient SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
+                        SpVoiceObj.Open();
+                        result = SpVoiceObj.Api(json);
+                        SpVoiceObj.Close();
+                        /*
+                        Logger.WriteLoggger(urlCheck + ":HTTP_CDN_SRC_IP--" + context.Request.ServerVariables["HTTP_CDN_SRC_IP"] + ":" + result);
+                        Logger.WriteLoggger(urlCheck + ":HTTP_Cdn-Src-Ip--" + context.Request.ServerVariables["HTTP_Cdn-Src-Ip"] + ":" + result);
+                        Logger.WriteLoggger(urlCheck + ":Cdn-Src-Ip--" + context.Request.ServerVariables["Cdn-Src-Ip"] + ":" + result);
+                        Logger.WriteLoggger(urlCheck + ":HTTP_X_FORWARDED_FOR--" + context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] + ":" + result);
+                        Logger.WriteLoggger(urlCheck + ":Proxy-Client-IP--" + context.Request.ServerVariables["Proxy-Client-IP"] + ":" + result);
+                        Logger.WriteLoggger(urlCheck + ":WL-Proxy-Client-IP--" + context.Request.ServerVariables["WL-Proxy-Client-IP"] + ":" + result);
+                        Logger.WriteLoggger(urlCheck + ":HTTP_CLIENT_IP--" + context.Request.ServerVariables["HTTP_CLIENT_IP"] + ":" + result);
+                        Logger.WriteLoggger(urlCheck + ":HTTP_VIA--" + context.Request.ServerVariables["HTTP_VIA"] + ":" + result);
+                        Logger.WriteLoggger(urlCheck + ":REMOTE_ADDR--" + context.Request.ServerVariables["REMOTE_ADDR"] + ":" + result);
+                        Logger.WriteLoggger("==================================================");
+                        */
+                        Logger.WriteLoggger(userIP + ":" + wxCheckApiKey + ":" + result);
+
+
+                    }
+                    else
+                    {
+                        result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"参数错误,进qq群交流:41977413！\"}";
+
+                    }
                 }
             }
-            /*   }
-               else
-               {
-                   context.Response.Write(userIP + ":测试接口,请在每天(09:00-17:00)时间段进行测试,需要讨论技术,进群交流 QQ群:41977413");
+            else
+            {
+                context.Response.Write(userIP + ":测试接口,请在每天(09:00-17:00)时间段进行测试,需要讨论技术,进群交流 QQ群:41977413");
 
-               } */
+            }
             if (!string.IsNullOrEmpty(context.Request.QueryString["callback"]))
             {
                 string callBack = context.Request.QueryString["callback"].ToString(); //回调
@@ -193,24 +193,24 @@ namespace WeChatTools.Web
 
             if (String.IsNullOrWhiteSpace(customerIP) || "unknown".Equals(customerIP.ToLower()))
             {
-             
+
                 customerIP = httpContext.Request.ServerVariables["Proxy-Client-IP"];
             }
             if (String.IsNullOrWhiteSpace(customerIP) || "unknown".Equals(customerIP.ToLower()))
             {
-              
+
                 customerIP = httpContext.Request.ServerVariables["WL-Proxy-Client-IP"];
             }
 
             if (String.IsNullOrWhiteSpace(customerIP) || "unknown".Equals(customerIP.ToLower()))
             {
-             
+
                 customerIP = httpContext.Request.ServerVariables["HTTP_VIA"];
             }
 
             if (String.IsNullOrWhiteSpace(customerIP))
             {
-               
+
                 customerIP = httpContext.Request.ServerVariables["HTTP_CLIENT_IP"];
                 if (!String.IsNullOrWhiteSpace(customerIP) && customerIP.Contains(","))
                 {
@@ -220,7 +220,7 @@ namespace WeChatTools.Web
 
             if (String.IsNullOrWhiteSpace(customerIP) || "unknown".Equals(customerIP.ToLower()))
             {
-                
+
                 customerIP = httpContext.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
                 if (!String.IsNullOrWhiteSpace(customerIP) && customerIP.Contains(","))
                 {
@@ -229,11 +229,11 @@ namespace WeChatTools.Web
             }
             else
             {
-                
+
                 customerIP = httpContext.Request.ServerVariables["REMOTE_ADDR"];
 
             }
-            
+
             if (!IsIP(customerIP))
             {
                 customerIP = "127.0.0.1";
@@ -313,7 +313,7 @@ namespace WeChatTools.Web
             string key = userIP;
 
             int hit = (Int32)(context.Cache[key] ?? 0);
-            if (hit > 14) return false;
+            if (hit > 8) return false;
             else hit++;
 
             if (hit == 1)
