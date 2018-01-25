@@ -21,7 +21,7 @@
   
 > 3.打开config/WeiXin.config, 配置微信域名检测的api和key，默认采用测试的api和key.
 ```
-  <add key="wxCheckApi" value="http://wx.canyou168.com/pro/wxUrlCheck.ashx" />
+  <add key="wxCheckApi" value="http://wx.rrbay.com/pro/wxUrlCheck.ashx" />
   <add key="wxCheckApiKey" value="341e0b5df120394ec99e517b67774399" />
 ```
 

@@ -20,7 +20,7 @@
 
 ### 套餐方案
 
-- 微信域名新防封系统价格表：http://wx.canyou168.com/price.html
+- 微信域名新防封系统价格表：http://wx.rrbay.com/price.html
  
 ### 系统特点
 
