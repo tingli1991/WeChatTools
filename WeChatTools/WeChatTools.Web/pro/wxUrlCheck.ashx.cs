@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -45,29 +46,46 @@ namespace WeChatTools.Web
                             wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeiXin");
                         }
 
-                        //需要检测的网址
-                        string urlCheck = context.Request["url"]; //检测的值
-                        urlCheck = urlCheck.Replace("https://", "").Replace("http://", "");
-                        string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
+                        try
+                        {
+                            //需要检测的网址
+                            string urlCheck = context.Request["url"]; //检测的值
+                            urlCheck = urlCheck.Replace("https://", "").Replace("http://", "");
+                            string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
 
-                        ServiceApiClient SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
-                        SpVoiceObj.Open();
-                        result = SpVoiceObj.Api(json);
-                        SpVoiceObj.Close();
-                        /*
-                        Logger.WriteLoggger(urlCheck + ":HTTP_CDN_SRC_IP--" + context.Request.ServerVariables["HTTP_CDN_SRC_IP"] + ":" + result);
-                        Logger.WriteLoggger(urlCheck + ":HTTP_Cdn-Src-Ip--" + context.Request.ServerVariables["HTTP_Cdn-Src-Ip"] + ":" + result);
-                        Logger.WriteLoggger(urlCheck + ":Cdn-Src-Ip--" + context.Request.ServerVariables["Cdn-Src-Ip"] + ":" + result);
-                        Logger.WriteLoggger(urlCheck + ":HTTP_X_FORWARDED_FOR--" + context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] + ":" + result);
-                        Logger.WriteLoggger(urlCheck + ":Proxy-Client-IP--" + context.Request.ServerVariables["Proxy-Client-IP"] + ":" + result);
-                        Logger.WriteLoggger(urlCheck + ":WL-Proxy-Client-IP--" + context.Request.ServerVariables["WL-Proxy-Client-IP"] + ":" + result);
-                        Logger.WriteLoggger(urlCheck + ":HTTP_CLIENT_IP--" + context.Request.ServerVariables["HTTP_CLIENT_IP"] + ":" + result);
-                        Logger.WriteLoggger(urlCheck + ":HTTP_VIA--" + context.Request.ServerVariables["HTTP_VIA"] + ":" + result);
-                        Logger.WriteLoggger(urlCheck + ":REMOTE_ADDR--" + context.Request.ServerVariables["REMOTE_ADDR"] + ":" + result);
-                        Logger.WriteLoggger("==================================================");
-                        */
-                        Logger.WriteLoggger(userIP + ":" + wxCheckApiKey + ":" + result);
+                            ServiceApiClient SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi2");
+                            SpVoiceObj2.Open();
+                            result = SpVoiceObj2.Api(json2);
+                            SpVoiceObj2.Close();
+                            JsonObject.Parameters ps = JsonConvert.DeserializeObject<JsonObject.Parameters>(result);
+                            JsonObject.Results aup = JsonConvert.DeserializeObject<JsonObject.Results>(ps.Param);
 
+                            if (aup.State == true)
+                            {
+                                string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
+                                ServiceApiClient SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
+                                SpVoiceObj.Open();
+                                result = SpVoiceObj.Api(json);
+                                SpVoiceObj.Close();
+                            }
+                            /*
+                            Logger.WriteLoggger(urlCheck + ":HTTP_CDN_SRC_IP--" + context.Request.ServerVariables["HTTP_CDN_SRC_IP"] + ":" + result);
+                            Logger.WriteLoggger(urlCheck + ":HTTP_Cdn-Src-Ip--" + context.Request.ServerVariables["HTTP_Cdn-Src-Ip"] + ":" + result);
+                            Logger.WriteLoggger(urlCheck + ":Cdn-Src-Ip--" + context.Request.ServerVariables["Cdn-Src-Ip"] + ":" + result);
+                            Logger.WriteLoggger(urlCheck + ":HTTP_X_FORWARDED_FOR--" + context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] + ":" + result);
+                            Logger.WriteLoggger(urlCheck + ":Proxy-Client-IP--" + context.Request.ServerVariables["Proxy-Client-IP"] + ":" + result);
+                            Logger.WriteLoggger(urlCheck + ":WL-Proxy-Client-IP--" + context.Request.ServerVariables["WL-Proxy-Client-IP"] + ":" + result);
+                            Logger.WriteLoggger(urlCheck + ":HTTP_CLIENT_IP--" + context.Request.ServerVariables["HTTP_CLIENT_IP"] + ":" + result);
+                            Logger.WriteLoggger(urlCheck + ":HTTP_VIA--" + context.Request.ServerVariables["HTTP_VIA"] + ":" + result);
+                            Logger.WriteLoggger(urlCheck + ":REMOTE_ADDR--" + context.Request.ServerVariables["REMOTE_ADDR"] + ":" + result);
+                            Logger.WriteLoggger("==================================================");
+                            */
+                            Logger.WriteLoggger(userIP + ":" + wxCheckApiKey + ":" + result);
+                        }
+                        catch (Exception ex)
+                        {
+                            result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"" + ex.Message + "\"}";
+                        }
 
                     }
                     else

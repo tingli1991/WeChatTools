@@ -39,6 +39,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -84,6 +88,8 @@
     <Content Include="libs\fontawesome\4.4.0\css\font-awesome.css" />
     <Content Include="libs\fontawesome\4.4.0\css\font-awesome.min.css" />
     <Content Include="libs\fontawesome\4.4.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="libs\Newtonsoft.Json.dll" />
+    <Content Include="Lib\Newtonsoft.Json.dll" />
     <Content Include="price.html" />
     <Content Include="pro\hdShowImg.ashx" />
     <Content Include="pro\urlTransfer.ashx" />
