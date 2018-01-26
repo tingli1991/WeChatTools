@@ -88,7 +88,6 @@
     <Content Include="libs\fontawesome\4.4.0\css\font-awesome.css" />
     <Content Include="libs\fontawesome\4.4.0\css\font-awesome.min.css" />
     <Content Include="libs\fontawesome\4.4.0\fonts\fontawesome-webfont.svg" />
-    <Content Include="libs\Newtonsoft.Json.dll" />
     <Content Include="Lib\Newtonsoft.Json.dll" />
     <Content Include="price.html" />
     <Content Include="pro\hdShowImg.ashx" />

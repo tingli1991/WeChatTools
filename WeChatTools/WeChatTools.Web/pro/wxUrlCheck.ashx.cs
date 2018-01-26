@@ -57,9 +57,8 @@ namespace WeChatTools.Web
                             SpVoiceObj2.Open();
                             result = SpVoiceObj2.Api(json2);
                             SpVoiceObj2.Close();
-                            JsonObject.Parameters ps = JsonConvert.DeserializeObject<JsonObject.Parameters>(result);
-                            JsonObject.Results aup = JsonConvert.DeserializeObject<JsonObject.Results>(ps.Param);
-
+                            JsonObject.Results aup = JsonConvert.DeserializeObject<JsonObject.Results>(result);
+                            
                             if (aup.State == true)
                             {
                                 string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
@@ -67,6 +66,7 @@ namespace WeChatTools.Web
                                 SpVoiceObj.Open();
                                 result = SpVoiceObj.Api(json);
                                 SpVoiceObj.Close();
+                           
                             }
                             /*
                             Logger.WriteLoggger(urlCheck + ":HTTP_CDN_SRC_IP--" + context.Request.ServerVariables["HTTP_CDN_SRC_IP"] + ":" + result);
