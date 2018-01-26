@@ -331,7 +331,7 @@ namespace WeChatTools.Web
             string key = userIP;
 
             int hit = (Int32)(context.Cache[key] ?? 0);
-            if (hit > 8) return false;
+            if (hit > 15) return false;
             else hit++;
 
             if (hit == 1)
