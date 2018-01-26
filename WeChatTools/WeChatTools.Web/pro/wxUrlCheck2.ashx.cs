@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace WeChatTools.Web
             //正式用
             userIP = GetWebClientIp(context);
             context.Response.ContentType = "text/plain";
-
+            string result = string.Empty;
             if (!string.IsNullOrEmpty(context.Request["url"]) && !string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
             {
                 string userKey = context.Request["key"]; //key ,md5值
@@ -38,12 +39,24 @@ namespace WeChatTools.Web
                     //需要检测的网址
                     string urlCheck = context.Request["url"]; //检测的值
                     urlCheck = urlCheck.Replace("https://", "").Replace("http://", "");
-                    string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + userKey + "\'}\"}";
+                    string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
 
-                    ServiceApiClient SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
-                    SpVoiceObj.Open();
-                    string result = SpVoiceObj.Api(json);
-                    SpVoiceObj.Close();
+                    ServiceApiClient SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi2");
+                    SpVoiceObj2.Open();
+                    result = SpVoiceObj2.Api(json2);
+                    SpVoiceObj2.Close();
+                    JsonObject.Results aup = JsonConvert.DeserializeObject<JsonObject.Results>(result);
+
+                    if (aup.State == true)
+                    {
+                        string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
+                        ServiceApiClient SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
+                        SpVoiceObj.Open();
+                        result = SpVoiceObj.Api(json);
+                        SpVoiceObj.Close();
+
+                    }
+
                     Logger.WriteLoggger(userIP + ":" + userKey + ":" + result);
 
                     if (!string.IsNullOrEmpty(context.Request.QueryString["callback"]))
