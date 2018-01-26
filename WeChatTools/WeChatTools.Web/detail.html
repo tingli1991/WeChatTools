@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <link href="libs/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="static/styles/base.css" rel="stylesheet" />
+    <link href="libs/fontawesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="static/layer.css" id="layui_layer_skinlayercss" style="">
+    <link href="static/styles/base.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/favicon.ico" rel="icon" type="image/x-icon" />
+    <link href="service/css/service.css" rel="stylesheet" />
+    <link href="libs/fontawesome/4.4.0/css/font-awesome.css" rel="stylesheet" />
+    <style type="text/css">
+        body {background: none repeat scroll 0 0 #eeeeee;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="toper" style="background-color: #2E363F">
+        <div class="wp" style="margin:unset">
+            <a href="/"><img class="logo pl" src="static/logo.png" /></a>
+            <div class="navs pl">
+                <ul>
+                    <li><a href="http://localhost:2180/HomePage.html">首页</a></li>
+                    <li><a href="#product">研发项目</a></li>
+                    <li><a href="#case">成功案例</a></li>
+                    <li><a href="http://localhost:2180/contact.html#">联系我们</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content" >
+        <div class="sidebar">
+            <ul>
+                <li class="index"><a href="http://localhost:2180/detail.html#"><i class="fa fa-star "></i> <span>微信域名检测</span></a></li>
+                <li class="index"><a href="#"><i class="fa fa-star "></i> <span>微信域名检测</span></a></li>    
+                <li class="index"><a href="#"><i class="fa fa-star "></i> <span>微信域名检测</span></a></li>    
+                <li class="index"><a href="#"><i class="fa fa-star "></i> <span>微信域名检测</span></a></li>    
+                <li class="index"><a href="#"><i class="fa fa-star "></i> <span>微信域名检测</span></a></li>    
+                <li class="index"><a href="#"><i class="fa fa-star "></i> <span>微信域名检测</span></a></li>    
+                <li class="index"><a href="#"><i class="fa fa-star "></i> <span>微信域名检测</span></a></li>    
+                <li class="index"><a href="#"><i class="fa fa-star "></i> <span>微信域名检测</span></a></li>    
+                <li class="index"><a href="#"><i class="fa fa-star "></i> <span>微信域名检测</span></a></li>    
+                <li class="index"><a href="#"><i class="fa fa-star "></i> <span>微信域名检测</span></a></li>    
+                <li class="index"><a href="#"><i class="fa fa-star "></i> <span>微信域名检测</span></a></li>    
+                <li class="index"><a href="#"><i class="fa fa-star "></i> <span>微信域名检测</span></a></li>    
+                <li class="index"><a href="#"><i class="fa fa-star "></i> <span>微信域名检测</span></a></li>    
+                <li class="index"><a href="http://localhost:2180/contact.html#"><i class="fa fa-star "></i> <span>联系方式</span></a></li>                   
+              
+            </ul>
+        </div>
+        <div class="left_main">
+            <div id="content-header">
+                <div id="breadcrumb">
+                    <a href="http://localhost:2180/HomePage.html" title="回到首页" class="tip-bottom"><i class="fa fa-linkedin-square"></i> 首页</a><span>></span>  <a href="#" class="tip-bottom">微信域名检测</a>
+                </div>
+            </div>
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon"> <i class="fa fa-bars"></i> </span>
+                    <h5>接口帮助</h5>
+                </div>
+                <div class="widget-content">
+                    <div class="control-group">
+                        <h5>接口地址：</h5>
+                        <p></p><code>http://vip.weixin139.com/weixin/wx_domain.php?user=您的用户名&amp;key=您的KEY&amp;domain=域名</code>
+                        <p></p>
+                        <h5>查询日志：</h5>
+                        <p></p><code>http://www.weixin139.com/weixin/log?user=您的用户名</code>
+                        <p></p>
+                        <h5>接口返回参数：</h5>
+                        <p>
+                            <code>
+                                {"from":"node.js","status":0,"errmsg":"域名正常","user":"xxx","domain":"www.baidu.com","endtime":"2038-01-19"}
+                            </code>
+                        </p>
+
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>名称</th>
+                                    <th>释义</th>
+                                    <th>说明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>domain</td>
+                                    <td>域名</td>
+                                    <td>被检测的域名，不带http://，不支持URL</td>
+                                </tr>
+                                <tr>
+                                    <td>user</td>
+                                    <td>用户名</td>
+                                    <td>接口用户名</td>
+                                </tr>
+                                <tr>
+                                    <td>status</td>
+                                    <td>检测结果</td>
+                                    <td>0为正常，1为被转码，2为被封，3查询失败，-1接口到期。注意：频率过高默认返回3状态</td>
+                                </tr>
+
+                                <tr>
+                                    <td>errmsg</td>
+                                    <td>提示</td>
+                                    <td>中文提示信息</td>
+                                </tr>
+                                <tr>
+                                    <td>endtime</td>
+                                    <td>接口有效期</td>
+                                    <td>该接口的有效截止日期时间</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>
+                            <a href="demo.zip" target="_blank" class="btn btn-info">PHP版DEMO代码</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+   
+
+</body>
+</html>
