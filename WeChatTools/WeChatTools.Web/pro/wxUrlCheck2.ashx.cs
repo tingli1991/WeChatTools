@@ -39,7 +39,7 @@ namespace WeChatTools.Web
                     //需要检测的网址
                     string urlCheck = context.Request["url"]; //检测的值
                     urlCheck = urlCheck.Replace("https://", "").Replace("http://", "");
-                    string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
+                    string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + userKey + "\'}\"}";
 
                     ServiceApiClient SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi2");
                     SpVoiceObj2.Open();
@@ -49,7 +49,7 @@ namespace WeChatTools.Web
 
                     if (aup.State == true)
                     {
-                        string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
+                        string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + userKey + "\'}\"}";
                         ServiceApiClient SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
                         SpVoiceObj.Open();
                         result = SpVoiceObj.Api(json);
