@@ -28,7 +28,7 @@
  {"State":false,"Data":"jingdong.com","Msg":"歇一歇,访问太快了,进qq群交流:41977413"}
  {"State":false,"Data":"jingdong.com","Msg":"服务暂停,请联系管理员!"}
 ```
-- 域名检测界面：http://wx.canyou168.com/
+- 域名检测界面：http://wx.rrbay.com/
  
 ### 顶尖技术，铸就稳定服务
 
