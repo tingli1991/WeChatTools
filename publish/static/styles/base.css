@@ -163,7 +163,7 @@
 
 .pageicon{width:1000px;margin:0 auto;text-align: center;padding:80px 0}
 .pageicon ul li{width:24%;display: inline-block;text-align: center;}
-.pageicon ul li img{width:120px;}
+.pageicon ul li img{width:180px;}
 .pageicon ul li span{display: block;padding:10px 0 5px;font-size:16px;}
 .pageicon ul li p{color:#888;font-size:14px;}
 .pageicon ul li a{cursor: pointer;display: inline-block;color:#555}
