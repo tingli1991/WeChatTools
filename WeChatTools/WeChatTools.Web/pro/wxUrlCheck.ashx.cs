@@ -97,7 +97,8 @@ namespace WeChatTools.Web
             }
             else
             {
-                context.Response.Write(userIP + ":测试接口,请在每天(09:00-17:00)时间段进行测试,需要讨论技术,进群交流 QQ群:41977413");
+                result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"测试接口,请在每天(09:00-17:00)时间段进行测试,需要讨论技术,进群交流 QQ群:41977413.\"}";
+              
 
             }
             if (!string.IsNullOrEmpty(context.Request.QueryString["callback"]))
