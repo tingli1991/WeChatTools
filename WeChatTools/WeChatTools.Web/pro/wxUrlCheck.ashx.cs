@@ -18,8 +18,8 @@ namespace WeChatTools.Web
         private const int DURATION = 24 * 60;
         private static string userIP = "127.0.0.1";
         private string wxCheckApiKey = "341e0b5df120394ec99e517b67774399";
-        private TimeSpan _strWorkingDayAM = DateTime.Parse("09:00").TimeOfDay;//工作时间上午08:00
-        private TimeSpan _strWorkingDayPM = DateTime.Parse("17:00").TimeOfDay;
+        private TimeSpan _strWorkingDayAM = DateTime.Parse("07:00").TimeOfDay;//工作时间上午08:00
+        private TimeSpan _strWorkingDayPM = DateTime.Parse("23:00").TimeOfDay;
         public void ProcessRequest(HttpContext context)
         {
             userIP = GetWebClientIp(context);
@@ -97,7 +97,7 @@ namespace WeChatTools.Web
             }
             else
             {
-                result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"测试接口,请在每天(09:00-17:00)时间段进行测试,需要讨论技术,进群交流 QQ群:41977413.\"}";
+                result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"测试接口,请在每天(07:00-23:00)时间段进行测试,需要讨论技术,进群交流 QQ群:41977413.\"}";
               
 
             }
