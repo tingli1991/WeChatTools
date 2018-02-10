@@ -123,19 +123,20 @@ namespace WeChatTools.Web.dev
             Random ran = new Random();
 
             string randUrl = "";
-
+            /*
             bool isBlacklist = true;
             // int xx = 0;//没有做剔除操作，暂时限制循环次数。
             while (isBlacklist)
             {
                 try
                 {
+                    */
                     string hosturl = ConfigTool.ReadVerifyConfig("HostHttp", "HostUrl");//这些域名都需要指向用户最终要访问的站点
                     string[] sArray = hosturl.Split(',');
 
                     int RandKey1 = ran.Next(0, sArray.Length);//随机选中域名
                     randUrl = sArray[RandKey1];
-
+/*
 
                     wxCheckApi = ConfigTool.ReadVerifyConfig("wxCheckApi", "WeiXin"); ;
                     wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeiXin");
@@ -177,6 +178,7 @@ namespace WeChatTools.Web.dev
                     return randUrl;
                 }
             }
+*/
             return randUrl;
         }
 
