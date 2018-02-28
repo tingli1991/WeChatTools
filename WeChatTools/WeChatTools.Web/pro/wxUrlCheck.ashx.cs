@@ -220,13 +220,13 @@ namespace WeChatTools.Web
 
                 customerIP = httpContext.Request.ServerVariables["WL-Proxy-Client-IP"];
             }
-
+            /*
             if (String.IsNullOrWhiteSpace(customerIP) || "unknown".Equals(customerIP.ToLower()))
             {
 
                 customerIP = httpContext.Request.ServerVariables["HTTP_VIA"];
             }
-
+            */
             if (String.IsNullOrWhiteSpace(customerIP))
             {
 
