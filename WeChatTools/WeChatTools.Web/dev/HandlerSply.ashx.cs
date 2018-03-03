@@ -18,7 +18,7 @@ namespace WeChatTools.Web.dev
         private string wxCheckApi = "http://wx.rrbay.com/pro/wxUrlCheck.ashx";//微信域名检测api
         private string wxCheckApiKey = "341e0b5df120394ec99e517b67774399";//微信域名检测授权key
 
-        private string gotoRedirectUrl = "http://weixin.sogou.com/";//最终用户访问的网址
+        private string gotoRedirectUrl = "http://www.rrbay.com/";//最终用户访问的网址
 
         public void ProcessRequest(HttpContext context)
         {
@@ -27,7 +27,7 @@ namespace WeChatTools.Web.dev
             if (string.IsNullOrEmpty(getJump))
             {
 
-                context.Response.Redirect("http://weixin.sogou.com/");
+                context.Response.Redirect(gotoRedirectUrl);
             }
             else
             {
