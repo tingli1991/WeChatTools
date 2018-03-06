@@ -74,6 +74,7 @@
     <Content Include="dev\get-weixin-code.html" />
     <Content Include="dev\sply.html" />
     <Content Include="doc.html" />
+    <Content Include="doc2.html" />
     <Content Include="favicon.ico" />
     <Content Include="img\alipay.jpg" />
     <Content Include="img\webchat.png" />
@@ -91,6 +92,7 @@
     <Content Include="libs\fontawesome\4.4.0\fonts\fontawesome-webfont.svg" />
     <Content Include="Lib\Newtonsoft.Json.dll" />
     <Content Include="price.html" />
+    <Content Include="price2.html" />
     <Content Include="pro\hdShowImg.ashx" />
     <Content Include="pro\urlTransfer.ashx" />
     <Content Include="Config\WeiXin.config" />
