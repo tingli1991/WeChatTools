@@ -143,6 +143,7 @@
     <Content Include="Config\WeChatCheck.config" />
     <Content Include="Config\WeChatAnti.config" />
     <Content Include="Config\Other.config" />
+    <Content Include="Config\JumpDomain.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

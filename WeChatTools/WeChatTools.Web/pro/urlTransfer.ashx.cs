@@ -20,7 +20,7 @@ namespace WeChatTools.Web
         string iMicms = "mp.weixin.qq.com";
         string hmdOpenid = "";
         string stateUrl = "";
-        string redirectUrl = "http://weixin.sogou.com/";
+        string redirectUrl = ConfigTool.ReadVerifyConfig("DefaultUrl", "Other");
         private ServiceApi _service = null;
         public void ProcessRequest(HttpContext context)
         {
@@ -31,11 +31,11 @@ namespace WeChatTools.Web
             pId = QueryString("id");
             iMicms = QueryString("iMicms");
 
-            stateUrl = ConfigTool.ReadVerifyConfig("state", "HostUrl");
+            stateUrl = ConfigTool.ReadVerifyConfig("state", "Other");
 
             if (stateUrl.Equals("true"))
             {
-                string tokens = ConfigTool.ReadVerifyConfig("tokens", "HostUrl");
+                string tokens = ConfigTool.ReadVerifyConfig("tokens", "Other");
                 if (tokens.Contains(pToken))
                 {
                     string pRedirectUrl = "http://" + GetRandHostUrl() + "/index.php?g=Wap&m=Vote&a=index&id=" + pId + "&token=" + pToken + "&wecha_id=" + pWecha_id + "&iMicms=" + iMicms;
@@ -47,7 +47,7 @@ namespace WeChatTools.Web
                     if (!resultCheck.Contains("屏蔽"))
                     {
                         //域名未被微信封号
-                        hmdOpenid = ConfigTool.ReadVerifyConfig("hmdOpenid", "HostUrl");
+                        hmdOpenid = ConfigTool.ReadVerifyConfig("hmdOpenid", "Other");
                         if (!hmdOpenid.Contains(pWecha_id))
                         {
                             //当前访问的用户不在黑名单
@@ -59,7 +59,7 @@ namespace WeChatTools.Web
                     {
                        
                         //修改投票状态
-                        ConfigTool.WriteVerifyConfig("state", "false", "HostUrl");
+                        ConfigTool.WriteVerifyConfig("state", "false", "Other");
                         Logger.WriteLoggger("恶意的openid:" + pWecha_id);  //后续可以扩展，可以屏蔽一些恶意投诉的微信号
                     }
                 }
@@ -120,7 +120,7 @@ namespace WeChatTools.Web
 
             try
             {
-                string hosturl = ConfigTool.ReadVerifyConfig("Host", "HostUrl");
+                string hosturl = ConfigTool.ReadVerifyConfig("Host", "Other");
                 string[] sArray = hosturl.Split(',');
                 Random ran1 = new Random();
                 int RandKey1 = ran.Next(0, sArray.Length);//随机选中域名
@@ -130,7 +130,7 @@ namespace WeChatTools.Web
 
                 if (string.IsNullOrEmpty(sArray[RandKey1]))
                 {
-                    randUrl = randUrl + "." + ConfigTool.ReadVerifyConfig("exp", "HostUrl");
+                    randUrl = randUrl + "." + ConfigTool.ReadVerifyConfig("exp", "Other");
                 }
                 else
                 {
@@ -140,7 +140,7 @@ namespace WeChatTools.Web
             }
             catch (Exception ex)
             {
-                randUrl = "abc." + ConfigTool.ReadVerifyConfig("exp", "HostUrl");
+                randUrl = "abc." + ConfigTool.ReadVerifyConfig("exp", "Other");
                 //randUrl = ex.Message.ToString();
                 return randUrl;
             }

@@ -15,10 +15,10 @@ namespace WeChatTools.Web.dev
     /// </summary>
     public class urlTransfer : IHttpHandler
     {
-        private string wxCheckApi = "http://wx.rrbay.com/pro/wxUrlCheck.ashx";//微信域名检测api
-        private string wxCheckApiKey = "341e0b5df120394ec99e517b67774399";//微信域名检测授权key
+        private string wxCheckApi = ConfigTool.ReadVerifyConfig("wxCheckApi", "WeChatCheck");//微信域名检测api
+        private string wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeChatCheck");//微信域名检测授权key
 
-        private string gotoRedirectUrl = "http://weixin.sogou.com/";//最终用户访问的网址
+        private string gotoRedirectUrl =ConfigTool.ReadVerifyConfig("DefaultUrl", "Other");//最终用户访问的网址
         public void ProcessRequest(HttpContext context)
         {
             //http://localhost:2180/dev/urlTransfer.ashx?domain=www.bbb.com&url=http%3a%2f%2fwww.bbb.com%2findex.php%3fg%3dWap%26m%3dVote%26a%3dindex%26token%3duDSrEHNs9CFGcTSC%26wecha_id%3docMqvwRjzPH9eseHRc_Z9nlP-DSM%26id%3d25%26iMicms%3dmp.weixin.qq.com
@@ -55,7 +55,7 @@ namespace WeChatTools.Web.dev
             {
                 try
                 {
-                    string hosturl = ConfigTool.ReadVerifyConfig("Host", "HostUrl");//这些域名都需要指向用户最终要访问的站点
+                    string hosturl = ConfigTool.ReadVerifyConfig("Host", "Other");//这些域名都需要指向用户最终要访问的站点
                     string[] sArray = hosturl.Split(',');
                     Random ran1 = new Random();
                     int RandKey1 = ran.Next(0, sArray.Length);//随机选中域名
@@ -74,9 +74,7 @@ namespace WeChatTools.Web.dev
                         randUrl = randUrl + "." + sArray[RandKey1] + "";
                     }
 
-                    wxCheckApi = ConfigTool.ReadVerifyConfig("wxCheckApi", "WeiXin"); ;
-                    wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeiXin");
-
+                  
                     WebRequest wr = (HttpWebRequest)WebRequest.Create(wxCheckApi + "?key=" + wxCheckApiKey + "&url=http://" + randUrl);
                     var stream = wr.GetResponse().GetResponseStream();
                     var sr = new StreamReader(stream, Encoding.GetEncoding("UTF-8"));
@@ -95,7 +93,7 @@ namespace WeChatTools.Web.dev
                         {
                             hosturl = hosturl.Replace("," + sArray[RandKey1], "");
                         }
-                        ConfigTool.WriteVerifyConfig("Host", hosturl, "HostUrl");//剔除黑名单域名
+                        ConfigTool.WriteVerifyConfig("Host", hosturl, "Other");//剔除黑名单域名
                     }
                     else
                     {
