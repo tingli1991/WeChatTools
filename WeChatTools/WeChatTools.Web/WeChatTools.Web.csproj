@@ -142,6 +142,8 @@
     <Content Include="dev\HandlerSply2.ashx" />
     <Content Include="dev\HandlerSply3.ashx" />
     <Content Include="Config\WapToWeiXin.config" />
+    <Content Include="Config\WeChatCheck.config" />
+    <Content Include="Config\WeChatAnti.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

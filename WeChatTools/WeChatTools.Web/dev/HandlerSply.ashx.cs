@@ -11,14 +11,13 @@ using WeChatTools.Core;
 namespace WeChatTools.Web.dev
 {
     /// <summary>
-    /// HandlerSply 的摘要说明
+    ///  微信域名防封功能  
     /// </summary>
     public class HandlerSply : IHttpHandler
     {
-        private string wxCheckApi = "http://wx.rrbay.com/pro/wxUrlCheck.ashx";//微信域名检测api
-        private string wxCheckApiKey = "341e0b5df120394ec99e517b67774399";//微信域名检测授权key
-
-        private string gotoRedirectUrl = "http://www.rrbay.com/";//最终用户访问的网址
+        private string wxCheckApi = ConfigTool.ReadVerifyConfig("wxCheckApi", "WeChatCheck");//微信域名检测api
+        private string wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeChatCheck");//微信域名检测授权key
+        private string gotoRedirectUrl = ConfigTool.ReadVerifyConfig("DefaultUrl", "WeChatAnti");//最终用户访问的网址
 
         public void ProcessRequest(HttpContext context)
         {
@@ -35,13 +34,13 @@ namespace WeChatTools.Web.dev
                 int RandKey = ran.Next(00, 99);
                 getJump = getJump + "!" + RandKey;
 
-                string hosturl = ConfigTool.ReadVerifyConfig("actionName", "HostUrl");//这些域名都需要指向用户最终要访问的站点
+                string hosturl = ConfigTool.ReadVerifyConfig("ActionName", "WeChatAnti");//这些域名都需要指向用户最终要访问的站点
                 string[] sArray = hosturl.Split(',');
                 int RandKey1 = ran.Next(0, sArray.Length);//随机选中action
                 string actionName = sArray[RandKey1];
                 string domainLeft = "http://";
 
-                string isHttps = ConfigTool.ReadVerifyConfig("IsHttps", "HostUrl");//这些域名都需要指向用户最终要访问的站点
+                string isHttps = ConfigTool.ReadVerifyConfig("IsSSL", "WeChatAnti");//这些域名都需要指向用户最终要访问的站点
 
                 if (isHttps.ToLower() == "true")
                 {
@@ -53,14 +52,20 @@ namespace WeChatTools.Web.dev
                 }
 
                 string domainCenter = GetRandHostUrl();
-                gotoRedirectUrl = domainLeft + domainCenter + "/home/" + actionName;
-                // string xxx =PostHtml(gotoRedirectUrl, getJump);
+                if (string.IsNullOrEmpty(domainCenter))
+                {
+                    context.Response.Redirect(gotoRedirectUrl);
+                }
+                else
+                {
+                    gotoRedirectUrl = domainLeft + domainCenter + "/home/" + actionName;
+                    // string xxx =PostHtml(gotoRedirectUrl, getJump);
 
-                string html = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "dev/sply.html");
-                html = html.Replace("$actionUrl", gotoRedirectUrl).Replace("$jumpValue", getJump);
+                    string html = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "dev/sply.html");
+                    html = html.Replace("$actionUrl", gotoRedirectUrl).Replace("$jumpValue", getJump);
 
-
-                context.Response.Write(html);
+                    context.Response.Write(html);
+                }
             }
             context.Response.End();
         }
@@ -120,65 +125,44 @@ namespace WeChatTools.Web.dev
 
         private string GetRandHostUrl()
         {
-            Random ran = new Random();
-
             string randUrl = "";
-            /*
-            bool isBlacklist = true;
-            // int xx = 0;//没有做剔除操作，暂时限制循环次数。
-            while (isBlacklist)
+            try
             {
-                try
-                {
-                    */
-                    string hosturl = ConfigTool.ReadVerifyConfig("HostHttp", "HostUrl");//这些域名都需要指向用户最终要访问的站点
-                    string[] sArray = hosturl.Split(',');
+                string hosturl = ConfigTool.ReadVerifyConfig("Domain", "WeChatAnti");//这些域名都需要指向用户最终要访问的站点
+                string[] sArray = hosturl.Split(',');
+                Random ran = new Random();
+                int RandKey1 = ran.Next(0, sArray.Length);//随机选中域名
+                randUrl = sArray[RandKey1];
 
-                    int RandKey1 = ran.Next(0, sArray.Length);//随机选中域名
-                    randUrl = sArray[RandKey1];
-/*
+                WebRequest wr = (HttpWebRequest)WebRequest.Create(wxCheckApi + "?key=" + wxCheckApiKey + "&url=http://" + randUrl);
+                var stream = wr.GetResponse().GetResponseStream();
+                var sr = new StreamReader(stream, Encoding.GetEncoding("UTF-8"));
+                var all = sr.ReadToEnd();
+                sr.Close();
+                stream.Close();
 
-                    wxCheckApi = ConfigTool.ReadVerifyConfig("wxCheckApi", "WeiXin"); ;
-                    wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeiXin");
-
-                    WebRequest wr = (HttpWebRequest)WebRequest.Create(wxCheckApi + "?key=" + wxCheckApiKey + "&url=http://" + randUrl);
-                    var stream = wr.GetResponse().GetResponseStream();
-                    var sr = new StreamReader(stream, Encoding.GetEncoding("UTF-8"));
-                    var all = sr.ReadToEnd();
-                    sr.Close();
-                    stream.Close();
-                    //读取网站的数据
-                    if (all.Contains("屏蔽"))
-                    {
-                        //剔除域名
-                        if (hosturl.Contains(sArray[RandKey1] + ","))
-                        {
-                            hosturl = hosturl.Replace(sArray[RandKey1] + ",", "");
-                        }
-                        if (hosturl.Contains("," + sArray[RandKey1]))
-                        {
-                            hosturl = hosturl.Replace("," + sArray[RandKey1], "");
-                        }
-                        ConfigTool.WriteVerifyConfig("Host", hosturl, "HostUrl");//剔除黑名单域名
-                    }
-                    else
-                    {
-                        isBlacklist = false;
-                        return randUrl;
-                    }
-
-
-
-
-                }
-                catch (Exception ex)
+                //读取网站的数据
+                if (all.Contains("屏蔽"))
                 {
                     randUrl = "";
-                    //randUrl = ex.Message.ToString();
+                }
+                else
+                {
+
                     return randUrl;
                 }
+
+
+
+
             }
-*/
+            catch (Exception ex)
+            {
+                randUrl = "";
+                return randUrl;
+            }
+
+
             return randUrl;
         }
 
