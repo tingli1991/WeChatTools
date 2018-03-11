@@ -34,7 +34,7 @@ namespace WeChatTools.Core
         /// <remarks/>
         public ServiceApi()
         {
-            string apiUrl = ConfigTool.ReadVerifyConfig("api", "WeiXin");
+            string apiUrl = ConfigTool.ReadVerifyConfig("wxCheckService", "WeChatCheck");
             this.Url = apiUrl;
         }
 

@@ -15,10 +15,9 @@ namespace WeChatTools.Web
     /// </summary>
     public class WXUrlCheck2 : IHttpHandler
     {
-       
         private const int DURATION = 24 * 60;
         private static string userIP = "127.0.0.1";
-        private string wxCheckApiKey = "341e0b5df120394ec99e517b67774399";
+        private string wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeChatCheck");
 
         public void ProcessRequest(HttpContext context)
         {
@@ -29,42 +28,48 @@ namespace WeChatTools.Web
             if (!string.IsNullOrEmpty(context.Request["url"]) && !string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
             {
                 string userKey = context.Request["key"]; //key ,md5值
-                wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeiXin");
+                
                 if (userKey.Trim() == wxCheckApiKey)
                 {
                     context.Response.Write("参数错误,进qq群交流:41977413！");
                 }
                 else
                 {
-                    //需要检测的网址
-                    string urlCheck = context.Request["url"]; //检测的值
-                    urlCheck = urlCheck.Replace("https://", "").Replace("http://", "");
-                    string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + userKey + "\'}\"}";
-
-                    ServiceApiClient SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi2");
-                    SpVoiceObj2.Open();
-                    result = SpVoiceObj2.Api(json2);
-                    SpVoiceObj2.Close();
-                    JsonObject.Results aup = JsonConvert.DeserializeObject<JsonObject.Results>(result);
-
-                    if (aup.State == true)
+                    try
                     {
-                        string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + userKey + "\'}\"}";
-                        ServiceApiClient SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
-                        SpVoiceObj.Open();
-                        result = SpVoiceObj.Api(json);
-                        SpVoiceObj.Close();
+                        //需要检测的网址
+                        string urlCheck = context.Request["url"]; //检测的值
+                        urlCheck = urlCheck.Replace("https://", "").Replace("http://", "");
+                        string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + userKey + "\'}\"}";
 
+                        ServiceApiClient SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi2");
+                        SpVoiceObj2.Open();
+                        result = SpVoiceObj2.Api(json2);
+                        SpVoiceObj2.Close();
+                        JsonObject.Results aup = JsonConvert.DeserializeObject<JsonObject.Results>(result);
+
+                        if (aup.State == true)
+                        {
+                            string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + userKey + "\'}\"}";
+                            ServiceApiClient SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
+                            SpVoiceObj.Open();
+                            result = SpVoiceObj.Api(json);
+                            SpVoiceObj.Close();
+
+                        }
+
+                        Logger.WriteLoggger(userIP + ":" + userKey + ":" + result);
+
+                        if (!string.IsNullOrEmpty(context.Request.QueryString["callback"]))
+                        {
+                            string callBack = context.Request.QueryString["callback"].ToString(); //回调
+                            result = callBack + "(" + result + ")";
+                        }
                     }
-
-                    Logger.WriteLoggger(userIP + ":" + userKey + ":" + result);
-
-                    if (!string.IsNullOrEmpty(context.Request.QueryString["callback"]))
+                    catch (Exception ex)
                     {
-                        string callBack = context.Request.QueryString["callback"].ToString(); //回调
-                        result = callBack + "(" + result + ")";
+                        result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"" + ex.Message + "\"}";
                     }
-
                     context.Response.Write(result);
                 }
             }

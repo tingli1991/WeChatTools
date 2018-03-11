@@ -17,7 +17,7 @@ namespace WeChatTools.Web
     {
         private const int DURATION = 24 * 60;
         private static string userIP = "127.0.0.1";
-        private string wxCheckApiKey = "341e0b5df120394ec99e517b67774399";
+        private string wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeChatCheck");
         private TimeSpan _strWorkingDayAM = DateTime.Parse("07:00").TimeOfDay;//工作时间上午08:00
         private TimeSpan _strWorkingDayPM = DateTime.Parse("23:00").TimeOfDay;
         public void ProcessRequest(HttpContext context)
@@ -41,10 +41,7 @@ namespace WeChatTools.Web
                         {
                             wxCheckApiKey = context.Request["key"]; //key ,md5值
                         }
-                        else
-                        {
-                            wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeiXin");
-                        }
+                        
 
                         try
                         {
