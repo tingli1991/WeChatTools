@@ -10,7 +10,7 @@ namespace WeChatTools.Core
     public class ConfigTool
     {
         public static string xmlRootPath = System.Web.HttpRuntime.AppDomainAppPath.ToString() + "/Config";
- 
+
         /// <summary>
         /// 检查配置文件是否存在
         /// </summary>
@@ -37,11 +37,14 @@ namespace WeChatTools.Core
             for (int i = 0; i < xnl.Count; i++)
             {
                 XmlNode c = xnl[i];
-                Temp = c.Attributes["key"].Value;
-                string Value = c.Attributes["value"].Value;
-                if (Temp == key)
+                if (c.Attributes != null)
                 {
-                    return (Value.ToString() == null || Value.ToString() == "") ? "" : Value;
+                    Temp = c.Attributes["key"].Value;
+                    string Value = c.Attributes["value"].Value;
+                    if (Temp == key)
+                    {
+                        return (Value.ToString() == null || Value.ToString() == "") ? "" : Value;
+                    }
                 }
             }
             return "";
@@ -67,12 +70,16 @@ namespace WeChatTools.Core
             bool isExist = false;
             for (int i = 0; i < xnl.Count; i++)
             {
+
                 XmlNode c = xnl[i];
-                Temp = c.Attributes["key"].Value;
-                if (Temp == key)
+                if (c.Attributes != null)
                 {
-                    isExist = true;
-                    c.Attributes["value"].Value = values;
+                    Temp = c.Attributes["key"].Value;
+                    if (Temp == key)
+                    {
+                        isExist = true;
+                        c.Attributes["value"].Value = values;
+                    }
                 }
             }
             //如果不存在该节点，抛出异常
@@ -85,7 +92,7 @@ namespace WeChatTools.Core
         }
         #endregion
 
-         
-    
+
+
     }
 }
