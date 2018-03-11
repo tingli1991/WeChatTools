@@ -141,6 +141,7 @@
     <Content Include="dev\HandlerSply.ashx" />
     <Content Include="dev\HandlerSply2.ashx" />
     <Content Include="dev\HandlerSply3.ashx" />
+    <Content Include="Config\WapToWeiXin.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
