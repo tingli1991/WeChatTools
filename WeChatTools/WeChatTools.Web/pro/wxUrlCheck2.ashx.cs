@@ -23,12 +23,13 @@ namespace WeChatTools.Web
         {
             //正式用
             userIP = GetWebClientIp(context);
+            string urlCheck = string.Empty;
             context.Response.ContentType = "text/plain";
             string result = string.Empty;
             if (!string.IsNullOrEmpty(context.Request["url"]) && !string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
             {
                 string userKey = context.Request["key"]; //key ,md5值
-                
+
                 if (userKey.Trim() == wxCheckApiKey)
                 {
                     context.Response.Write("参数错误,进qq群交流:41977413！");
@@ -38,7 +39,7 @@ namespace WeChatTools.Web
                     try
                     {
                         //需要检测的网址
-                        string urlCheck = context.Request["url"]; //检测的值
+                        urlCheck = context.Request["url"]; //检测的值
                         urlCheck = urlCheck.Replace("https://", "").Replace("http://", "");
                         string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + userKey + "\'}\"}";
 
@@ -68,7 +69,7 @@ namespace WeChatTools.Web
                     }
                     catch (Exception ex)
                     {
-                        result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"" + ex.Message + "\"}";
+                        result = "{\"State\":false,\"Data\":\"" + urlCheck + "\",\"Msg\":\"某服务暂停,请联系管理员!\"}";
                     }
                     context.Response.Write(result);
                 }
@@ -281,7 +282,14 @@ namespace WeChatTools.Web
         /// <returns></returns>
         public static bool IsIP(string ip)
         {
-            return System.Text.RegularExpressions.Regex.IsMatch(ip, @"^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$");
+            if (!String.IsNullOrWhiteSpace(ip))
+            {
+                return System.Text.RegularExpressions.Regex.IsMatch(ip, @"^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$");
+            }
+            else
+            {
+                return false;
+            }
 
         }
 

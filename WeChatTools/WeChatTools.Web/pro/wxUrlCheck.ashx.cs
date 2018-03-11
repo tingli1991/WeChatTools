@@ -26,6 +26,7 @@ namespace WeChatTools.Web
             context.Response.ContentType = "text/plain";
             TimeSpan dspNow = DateTime.Now.TimeOfDay;
             string result = string.Empty;
+            string urlCheck = string.Empty;
             if (IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM))
             {
                 if (!IsValid(context))
@@ -46,7 +47,7 @@ namespace WeChatTools.Web
                         try
                         {
                             //需要检测的网址
-                            string urlCheck = context.Request["url"]; //检测的值
+                            urlCheck = context.Request["url"]; //检测的值
                             urlCheck = urlCheck.Replace("https://", "").Replace("http://", "");
                             string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
 
@@ -81,7 +82,7 @@ namespace WeChatTools.Web
                         }
                         catch (Exception ex)
                         {
-                            result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"" + ex.Message + "\"}";
+                            result = "{\"State\":false,\"Data\":\"" + urlCheck + "\",\"Msg\":\"某服务暂停,请联系管理员!\"}";
                         }
 
                     }
@@ -319,7 +320,14 @@ namespace WeChatTools.Web
         /// <returns></returns>
         public static bool IsIP(string ip)
         {
-            return System.Text.RegularExpressions.Regex.IsMatch(ip, @"^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$");
+            if (!String.IsNullOrWhiteSpace(ip))
+            {
+                return System.Text.RegularExpressions.Regex.IsMatch(ip, @"^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$");
+            }
+            else
+            {
+                return false;
+            }
 
         }
 
