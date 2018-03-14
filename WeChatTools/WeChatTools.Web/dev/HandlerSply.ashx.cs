@@ -126,44 +126,60 @@ namespace WeChatTools.Web.dev
         private string GetRandHostUrl()
         {
             string randUrl = "";
-            try
-            {
-                string hosturl = ConfigTool.ReadVerifyConfig("Domain", "WeChatAnti");//这些域名都需要指向用户最终要访问的站点
-                string[] sArray = hosturl.Split(',');
-                Random ran = new Random();
-                int RandKey1 = ran.Next(0, sArray.Length);//随机选中域名
-                randUrl = sArray[RandKey1];
+          //  bool isBlacklist = true;
+          //  while (isBlacklist)
+          //  {
+                try
+                {
+                    string hosturl = ConfigTool.ReadVerifyConfig("Domain", "WeChatAnti");//这些域名都需要指向用户最终要访问的站点
+                    string[] sArray = hosturl.Split(',');
+                    Random ran = new Random();
+                    int RandKey1 = ran.Next(0, sArray.Length);//随机选中域名
+                    randUrl = sArray[RandKey1];
 
-                WebRequest wr = (HttpWebRequest)WebRequest.Create(wxCheckApi + "?key=" + wxCheckApiKey + "&url=http://" + randUrl);
-                var stream = wr.GetResponse().GetResponseStream();
-                var sr = new StreamReader(stream, Encoding.GetEncoding("UTF-8"));
-                var all = sr.ReadToEnd();
-                sr.Close();
-                stream.Close();
+                    WebRequest wr = (HttpWebRequest)WebRequest.Create(wxCheckApi + "?key=" + wxCheckApiKey + "&url=http://" + randUrl);
+                    var stream = wr.GetResponse().GetResponseStream();
+                    var sr = new StreamReader(stream, Encoding.GetEncoding("UTF-8"));
+                    var all = sr.ReadToEnd();
+                    sr.Close();
+                    stream.Close();
 
-                //读取网站的数据
-                if (all.Contains("屏蔽"))
+                    //读取网站的数据
+                    if (all.Contains("屏蔽"))
+                    {
+                        /*
+                        //剔除域名
+                        if (hosturl.Contains(sArray[RandKey1] + ","))
+                        {
+                            hosturl = hosturl.Replace(sArray[RandKey1] + ",", "");
+                        }
+                        if (hosturl.Contains("," + sArray[RandKey1]))
+                        {
+                            hosturl = hosturl.Replace("," + sArray[RandKey1], "");
+                        }
+                        ConfigTool.WriteVerifyConfig("Domain", hosturl, "WeChatAnti");//剔除黑名单域名
+                        */
+                        randUrl = "";
+                    }
+                    else
+                    {
+                       // isBlacklist = false;
+                        return randUrl;
+                    }
+
+
+
+
+                }
+                catch (Exception ex)
                 {
                     randUrl = "";
-                }
-                else
-                {
-
                     return randUrl;
                 }
-
-
-
-
-            }
-            catch (Exception ex)
-            {
-                randUrl = "";
-                return randUrl;
-            }
-
+           // }
 
             return randUrl;
+
         }
 
 
