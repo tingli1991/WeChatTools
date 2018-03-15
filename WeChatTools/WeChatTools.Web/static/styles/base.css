@@ -3442,7 +3442,7 @@ div.struct-class {box-shadow: 0 7px 21px rgba(0, 0, 0, .1)}
 .con_left ul li{
     float:left;
     width:120px;
-    padding:5px 13px;
+    padding:5px 10px;
 }
 .con_mid{
     width:200px;
@@ -3456,7 +3456,9 @@ div.struct-class {box-shadow: 0 7px 21px rgba(0, 0, 0, .1)}
 }
 .con_mid ul li{
     float:left;
-    padding:5px 50px;
+    width:180px;
+    text-align:center;
+    padding:5px 0;
 }
 .con_right{
     width:200px;
@@ -3465,7 +3467,8 @@ div.struct-class {box-shadow: 0 7px 21px rgba(0, 0, 0, .1)}
 }
 .con_right ul li{
     float:left;
-    padding:5px 50px;
+    width:180px;
+    padding:5px 0;
 }
 .main_top_right{
     float:right;
@@ -3477,4 +3480,7 @@ div.struct-class {box-shadow: 0 7px 21px rgba(0, 0, 0, .1)}
     text-align:center;
     margin-top:5px;
     font-size:1rem;
+}
+.foot a{
+    padding:0 !important;
 }
