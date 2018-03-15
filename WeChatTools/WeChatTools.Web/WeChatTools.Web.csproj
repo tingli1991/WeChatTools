@@ -163,6 +163,7 @@
     <Content Include="static\layer.css" />
     <Content Include="static\loading-1.gif" />
     <Content Include="static\logo.png" />
+    <Content Include="static\logo_f.png" />
     <Content Include="static\styles\base.css" />
     <Content Include="static\styles\inn.css" />
     <Content Include="static\styles\jquery.min.js" />
