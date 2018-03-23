@@ -3398,7 +3398,7 @@ div.struct-class {box-shadow: 0 7px 21px rgba(0, 0, 0, .1)}
 
 /*底部菜单*/
 .foot_main{
-    width:1200px;
+    max-width:1200px;
     margin:0 auto;
     font-size:1.5rem;
 }
@@ -3410,19 +3410,16 @@ div.struct-class {box-shadow: 0 7px 21px rgba(0, 0, 0, .1)}
     width:220px;
 }
 .main_top_title{
-    text-align:left;
-    margin-left:30px;
     height:50px;
 }
 .main_top_left{
-    width:220px;
     float:left;
-    
+    width:20%;
     text-align:center;
 }
 .main_top_mid{
     float:left;
-    width:800px;
+    width:60%;
     text-align:center;
 }
 .main_top_right{
@@ -3430,7 +3427,7 @@ div.struct-class {box-shadow: 0 7px 21px rgba(0, 0, 0, .1)}
     text-align:center;
 }
 .con_left{
-    width:400px;
+    width:60%;
     float:left;
     padding:20px 10px;
     
@@ -3441,11 +3438,11 @@ div.struct-class {box-shadow: 0 7px 21px rgba(0, 0, 0, .1)}
     }
 .con_left ul li{
     float:left;
-    width:120px;
-    padding:5px 10px;
+    width:33%;
+    padding:5px 5px;
 }
 .con_mid{
-    width:200px;
+    width:20%;
     float:left;
     padding:20px 10px;
 }
@@ -3456,18 +3453,18 @@ div.struct-class {box-shadow: 0 7px 21px rgba(0, 0, 0, .1)}
 }
 .con_mid ul li{
     float:left;
-    width:180px;
+    width:100%;
     text-align:center;
     padding:5px 0;
 }
 .con_right{
-    width:200px;
+    width:20%;
     float:left;
     padding:20px 10px;
 }
 .con_right ul li{
     float:left;
-    width:180px;
+    width:100%;
     padding:5px 0;
 }
 .main_top_right{
