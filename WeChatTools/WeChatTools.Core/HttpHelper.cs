@@ -1,6 +1,6 @@
 ﻿/// <summary>
-/// 类说明：HttpHelper类，用来实现Http访问，Post或者Get方式的，直接访问，带Cookie的，带证书的等方式，可以设置代理
-/// 重要提示：请不要自行修改本类，如果因为你自己修改后将无法升级到新版本。如果确实有什么问题请到官方网站提建议，
+/// 类说明：HttpHelper类,用来实现Http访问,Post或者Get方式的,直接访问,带Cookie的,带证书的等方式,可以设置代理
+/// 重要提示：请不要自行修改本类,如果因为你自己修改后将无法升级到新版本。如果确实有什么问题请到官方网站提建议,
 /// 我们一定会及时修改
 /// 编码日期：2011-09-20
 /// 编 码 人：苏飞
@@ -36,7 +36,7 @@ namespace WeChatTools.Core
         //获取影响流的数据对象
         private HttpWebResponse response = null;
         /// <summary>
-        /// 根据相传入的数据，得到相应页面数据
+        /// 根据相传入的数据,得到相应页面数据
         /// </summary>
         /// <param name="objhttpitem">参数类对象</param>
         /// <returns>返回HttpResult类型</returns>
@@ -171,7 +171,7 @@ namespace WeChatTools.Core
             request.Accept = objhttpItem.Accept;
             //ContentType返回类型
             request.ContentType = objhttpItem.ContentType;
-            //UserAgent客户端的访问类型，包括浏览器版本和操作系统信息
+            //UserAgent客户端的访问类型,包括浏览器版本和操作系统信息
             request.UserAgent = objhttpItem.UserAgent;
             // 编码
             encoding = objhttpItem.Encoding;
@@ -196,7 +196,7 @@ namespace WeChatTools.Core
             {
                 //这一句一定要写在创建连接的前面。使用回调的方法进行证书验证。
                 ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(CheckValidationResult);
-                //初始化对像，并设置请求的URL地址
+                //初始化对像,并设置请求的URL地址
                 request = (HttpWebRequest)WebRequest.Create(objhttpItem.URL);
                 SetCerList(objhttpItem);
                 //将证书添加到请求里
@@ -204,7 +204,7 @@ namespace WeChatTools.Core
             }
             else
             {
-                //初始化对像，并设置请求的URL地址
+                //初始化对像,并设置请求的URL地址
                 request = (HttpWebRequest)WebRequest.Create(objhttpItem.URL);
                 SetCerList(objhttpItem);
             }
@@ -463,7 +463,7 @@ namespace WeChatTools.Core
         }
         string _Referer = string.Empty;
         /// <summary>
-        /// 来源地址，上次访问地址
+        /// 来源地址,上次访问地址
         /// </summary>
         public string Referer
         {
@@ -481,7 +481,7 @@ namespace WeChatTools.Core
         }
         private Boolean isToLower = false;
         /// <summary>
-        /// 是否设置为全文小写，默认为不转化
+        /// 是否设置为全文小写,默认为不转化
         /// </summary>
         public Boolean IsToLower
         {
@@ -490,7 +490,7 @@ namespace WeChatTools.Core
         }
         private Boolean allowautoredirect = false;
         /// <summary>
-        /// 支持跳转页面，查询结果将是跳转后的页面，默认是不跳转
+        /// 支持跳转页面,查询结果将是跳转后的页面,默认是不跳转
         /// </summary>
         public Boolean Allowautoredirect
         {
@@ -557,7 +557,7 @@ namespace WeChatTools.Core
         public Version ProtocolVersion { get; set; }
         private Boolean _expect100continue = true;
         /// <summary>
-        ///  获取或设置一个 System.Boolean 值，该值确定是否使用 100-Continue 行为。如果 POST 请求需要 100-Continue 响应，则为 true；否则为 false。默认值为 true。
+        ///  获取或设置一个 System.Boolean 值,该值确定是否使用 100-Continue 行为。如果 POST 请求需要 100-Continue 响应,则为 true；否则为 false。默认值为 true。
         /// </summary>
         public Boolean Expect100Continue
         {
@@ -591,11 +591,11 @@ namespace WeChatTools.Core
         /// </summary>
         public CookieCollection CookieCollection { get; set; }
         /// <summary>
-        /// 返回的String类型数据 只有ResultType.String时才返回数据，其它情况为空
+        /// 返回的String类型数据 只有ResultType.String时才返回数据,其它情况为空
         /// </summary>
         public string Html { get; set; }
         /// <summary>
-        /// 返回的Byte数组 只有ResultType.Byte时才返回数据，其它情况为空
+        /// 返回的Byte数组 只有ResultType.Byte时才返回数据,其它情况为空
         /// </summary>
         public byte[] ResultByte { get; set; }
         /// <summary>
@@ -631,15 +631,15 @@ namespace WeChatTools.Core
     public enum PostDataType
     {
         /// <summary>
-        /// 字符串类型，这时编码Encoding可不设置
+        /// 字符串类型,这时编码Encoding可不设置
         /// </summary>
         String,
         /// <summary>
-        /// Byte类型，需要设置PostdataByte参数的值编码Encoding可设置为空
+        /// Byte类型,需要设置PostdataByte参数的值编码Encoding可设置为空
         /// </summary>
         Byte,
         /// <summary>
-        /// 传文件，Postdata必须设置为文件的绝对路径，必须设置Encoding的值
+        /// 传文件,Postdata必须设置为文件的绝对路径,必须设置Encoding的值
         /// </summary>
         FilePath
     }

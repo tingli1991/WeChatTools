@@ -31,7 +31,7 @@ namespace WeChatTools.Web
             {
                 if (!IsValid(context))
                 {
-                    result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术，进群交流 QQ群:41977413!\"}";
+                    result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术,进群交流 QQ群:41977413!\"}";
                 }
                 else
                 {
@@ -132,7 +132,7 @@ namespace WeChatTools.Web
 
         private bool IsInTimeInterval(TimeSpan time, TimeSpan startTime, TimeSpan endTime)
         {
-            //判断时间段开始时间是否小于时间段结束时间，如果不是就交换
+            //判断时间段开始时间是否小于时间段结束时间,如果不是就交换
             if (startTime > endTime)
             {
                 TimeSpan tempTime = startTime;
@@ -274,7 +274,7 @@ namespace WeChatTools.Web
                 }
                 else
                 {
-                    //有","，估计多个代理。取第一个不是内网的IP。  
+                    //有",",估计多个代理。取第一个不是内网的IP。  
                     if (result.IndexOf(",") != -1)
                     {
                         result = result.Replace(" ", string.Empty).Replace("\"", string.Empty);

@@ -27,15 +27,15 @@ namespace WeChatTools.Web
             if (!IsValid(context))
             {
 
-                context.Response.Write(userIP + ":当天请求上限,请明天再试,需要讨论技术，进群交流 QQ群:41977413");
+                context.Response.Write(userIP + ":当天请求上限,请明天再试,需要讨论技术,进群交流 QQ群:41977413");
 
             }
             else
             {
 
-                context.Response.Write(userIP + ":服务器压力太大，需要测试接口去码云留言，谢谢配合<br />");
+                context.Response.Write(userIP + ":服务器压力太大,需要测试接口去码云留言,谢谢配合<br />");
                 context.Response.Write("码云地址：https://gitee.com/qqWebChat/WeChatTools <br />");
-                context.Response.Write("需要讨论技术，进群交流 QQ群:41977413");
+                context.Response.Write("需要讨论技术,进群交流 QQ群:41977413");
                  
 
             }
@@ -171,7 +171,7 @@ namespace WeChatTools.Web
                 }
                 else
                 {
-                    //有","，估计多个代理。取第一个不是内网的IP。  
+                    //有",",估计多个代理。取第一个不是内网的IP。  
                     if (result.IndexOf(",") != -1)
                     {
                         result = result.Replace(" ", string.Empty).Replace("\"", string.Empty);

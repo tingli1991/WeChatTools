@@ -56,7 +56,7 @@
                 var redirectUri;
 
                 if (!code) {
-                    //第一步，没有拿到code，跳转至微信授权页面获取code
+                    //第一步,没有拿到code,跳转至微信授权页面获取code
                     redirectUri = GWC.appendParams('https://open.weixin.qq.com/connect/oauth2/authorize#wechat_redirect', {
                         'appid': appId,
                         'redirect_uri': encodeURIComponent(location.href),
@@ -65,7 +65,7 @@
                         'state': state,
                     });
                 } else {
-                    //第二步，从微信授权页面跳转回来，已经获取到了code，再次跳转到实际所需页面
+                    //第二步,从微信授权页面跳转回来,已经获取到了code,再次跳转到实际所需页面
                     redirectUri = GWC.appendParams(GWC.urlParams['redirect_uri'], {
                         'code': code,
                         'state': state

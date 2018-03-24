@@ -20,9 +20,9 @@ namespace WeChatTools.Web
         public void ProcessRequest(HttpContext context)
         {
            
-            context.Response.Write("购买了接口的，zz.canjr.com 请统一更换 wx.rrbay.com。<br />");
+            context.Response.Write("购买了接口的,zz.canjr.com 请统一更换 wx.rrbay.com。<br />");
             context.Response.Write("码云地址：https://gitee.com/qqWebChat/WeChatTools <br />");
-            context.Response.Write("需要测试接口进群留言， QQ群:41977413,谢谢配合!");
+            context.Response.Write("需要测试接口进群留言, QQ群:41977413,谢谢配合!");
             context.Response.End();
 
 
@@ -158,7 +158,7 @@ namespace WeChatTools.Web
                 }
                 else
                 {
-                    //有","，估计多个代理。取第一个不是内网的IP。  
+                    //有",",估计多个代理。取第一个不是内网的IP。  
                     if (result.IndexOf(",") != -1)
                     {
                         result = result.Replace(" ", string.Empty).Replace("\"", string.Empty);

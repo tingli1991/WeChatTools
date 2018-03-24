@@ -25,7 +25,7 @@ namespace WeChatTools.Web.dev
             //http://www.aaa.com/dev/urlTransfer.ashx?url=http://wwww.bbb.com/index.php?g=Wap&m=Vote&a=index&token=uDSrEHNs9CFGcTSC&wecha_id=ocMqvwRjzPH9eseHRc_Z9nlP-DSM&id=25&iMicms=mp.weixin.qq.com 
             context.Response.ContentType = "text/plain";
             string getUrl = QueryString("url");//参数1：用户传当前推广的网址 
-            string getDomain = QueryString("domain");//参数2：用户传当前推广的域名(也是getUrl网址里面的域名，主要是分割getUrl用的)
+            string getDomain = QueryString("domain");//参数2：用户传当前推广的域名(也是getUrl网址里面的域名,主要是分割getUrl用的)
 
             string[] sArray = Regex.Split(getUrl, getDomain, RegexOptions.IgnoreCase);
             string domainLeft = sArray[0];
@@ -50,7 +50,7 @@ namespace WeChatTools.Web.dev
             string randUrl = "";
 
             bool isBlacklist = true;
-           // int xx = 0;//没有做剔除操作，暂时限制循环次数。
+           // int xx = 0;//没有做剔除操作,暂时限制循环次数。
             while (isBlacklist)
             {
                 try

@@ -10,7 +10,7 @@ using WeChatTools.Core;
 namespace WeChatTools.Web
 {
     /// <summary>
-    /// 域名中转工具,随机切换域名，保证活动正常进行
+    /// 域名中转工具,随机切换域名,保证活动正常进行
     /// </summary>
     public class urlTransfer : IHttpHandler
     {
@@ -52,7 +52,7 @@ namespace WeChatTools.Web
                         {
                             //当前访问的用户不在黑名单
                             redirectUrl = pRedirectUrl;
-                            Logger.WriteLoggger("openid:" + pWecha_id);  //后续可以扩展，可以屏蔽一些恶意投诉的微信号
+                            Logger.WriteLoggger("openid:" + pWecha_id);  //后续可以扩展,可以屏蔽一些恶意投诉的微信号
                         }
                     }
                     else
@@ -60,7 +60,7 @@ namespace WeChatTools.Web
                        
                         //修改投票状态
                         ConfigTool.WriteVerifyConfig("state", "false", "Other");
-                        Logger.WriteLoggger("恶意的openid:" + pWecha_id);  //后续可以扩展，可以屏蔽一些恶意投诉的微信号
+                        Logger.WriteLoggger("恶意的openid:" + pWecha_id);  //后续可以扩展,可以屏蔽一些恶意投诉的微信号
                     }
                 }
 
