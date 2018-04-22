@@ -175,7 +175,7 @@ namespace WeChatTools.Web
             double max_value = Math.Pow(36, len);
             if (max_value > long.MaxValue)
             {
-                //(string.Format("Math.Pow(36, {0}) 超出 long最大值！", len));
+                //(string.Format("Math.Pow(36, {0}) 超出 long最大值!", len));
                 return null;
 
             }
@@ -184,7 +184,7 @@ namespace WeChatTools.Web
             long stepLong = all_count / count;
             if (stepLong > int.MaxValue)
             {
-                // ShowError(string.Format("stepLong ({0}) 超出 int最大值！", stepLong));
+                // ShowError(string.Format("stepLong ({0}) 超出 int最大值!", stepLong));
                 return null;
             }
             int step = (int)stepLong;

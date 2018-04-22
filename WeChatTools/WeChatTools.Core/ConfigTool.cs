@@ -85,7 +85,7 @@ namespace WeChatTools.Core
             //如果不存在该节点,抛出异常
             if (!isExist)
             {
-                throw new Exception("不存在该配置节点！");
+                throw new Exception("不存在该配置节点!");
             }
             //保存
             xmldoc.Save(xmlRootPath + "/" + verifyName + ".config");

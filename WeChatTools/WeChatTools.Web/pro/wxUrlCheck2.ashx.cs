@@ -32,7 +32,7 @@ namespace WeChatTools.Web
 
                 if (userKey.Trim() == wxCheckApiKey)
                 {
-                    context.Response.Write("参数错误,进qq群交流:41977413！");
+                    context.Response.Write("参数错误,进qq群交流:41977413!");
                 }
                 else
                 {
@@ -76,7 +76,7 @@ namespace WeChatTools.Web
             }
             else
             {
-                context.Response.Write("参数错误,进qq群交流:41977413！");
+                context.Response.Write("参数错误,进qq群交流:41977413!");
 
             }
 
@@ -236,7 +236,7 @@ namespace WeChatTools.Web
                 }
                 else
                 {
-                    //有",",估计多个代理。取第一个不是内网的IP。  
+                    //有",",估计多个代理.取第一个不是内网的IP.  
                     if (result.IndexOf(",") != -1)
                     {
                         result = result.Replace(" ", string.Empty).Replace("\"", string.Empty);

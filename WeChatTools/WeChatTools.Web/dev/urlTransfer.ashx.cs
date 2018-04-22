@@ -50,7 +50,7 @@ namespace WeChatTools.Web.dev
             string randUrl = "";
 
             bool isBlacklist = true;
-           // int xx = 0;//没有做剔除操作,暂时限制循环次数。
+           // int xx = 0;//没有做剔除操作,暂时限制循环次数.
             while (isBlacklist)
             {
                 try

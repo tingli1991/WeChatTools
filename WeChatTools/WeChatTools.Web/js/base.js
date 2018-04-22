@@ -79,9 +79,9 @@ $("[changepassword]").on("click",function () {
     }
 })
 
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-})
+//$(function () {
+//    $('[data-toggle="tooltip"]').tooltip()
+//})
 
 $("#gobt").on("click", function () {
     $(this).addClass("disabled").html("正在保存...");

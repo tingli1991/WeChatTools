@@ -88,7 +88,7 @@ namespace WeChatTools.Web
                     }
                     else
                     {
-                        result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"参数错误,进qq群交流:41977413！\"}";
+                        result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"参数错误,进qq群交流:41977413!\"}";
 
                     }
                 }
@@ -274,7 +274,7 @@ namespace WeChatTools.Web
                 }
                 else
                 {
-                    //有",",估计多个代理。取第一个不是内网的IP。  
+                    //有",",估计多个代理.取第一个不是内网的IP.  
                     if (result.IndexOf(",") != -1)
                     {
                         result = result.Replace(" ", string.Empty).Replace("\"", string.Empty);

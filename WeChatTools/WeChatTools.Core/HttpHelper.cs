@@ -1,6 +1,6 @@
 ﻿/// <summary>
 /// 类说明：HttpHelper类,用来实现Http访问,Post或者Get方式的,直接访问,带Cookie的,带证书的等方式,可以设置代理
-/// 重要提示：请不要自行修改本类,如果因为你自己修改后将无法升级到新版本。如果确实有什么问题请到官方网站提建议,
+/// 重要提示：请不要自行修改本类,如果因为你自己修改后将无法升级到新版本.如果确实有什么问题请到官方网站提建议,
 /// 我们一定会及时修改
 /// 编码日期：2011-09-20
 /// 编 码 人：苏飞
@@ -194,7 +194,7 @@ namespace WeChatTools.Core
         {
             if (!string.IsNullOrEmpty(objhttpItem.CerPath))
             {
-                //这一句一定要写在创建连接的前面。使用回调的方法进行证书验证。
+                //这一句一定要写在创建连接的前面.使用回调的方法进行证书验证.
                 ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(CheckValidationResult);
                 //初始化对像,并设置请求的URL地址
                 request = (HttpWebRequest)WebRequest.Create(objhttpItem.URL);
@@ -552,12 +552,12 @@ namespace WeChatTools.Core
             set { header = value; }
         }
         /// <summary>
-        //     获取或设置用于请求的 HTTP 版本。返回结果:用于请求的 HTTP 版本。默认为 System.Net.HttpVersion.Version11。
+        //     获取或设置用于请求的 HTTP 版本.返回结果:用于请求的 HTTP 版本.默认为 System.Net.HttpVersion.Version11.
         /// </summary>
         public Version ProtocolVersion { get; set; }
         private Boolean _expect100continue = true;
         /// <summary>
-        ///  获取或设置一个 System.Boolean 值,该值确定是否使用 100-Continue 行为。如果 POST 请求需要 100-Continue 响应,则为 true；否则为 false。默认值为 true。
+        ///  获取或设置一个 System.Boolean 值,该值确定是否使用 100-Continue 行为.如果 POST 请求需要 100-Continue 响应,则为 true；否则为 false.默认值为 true.
         /// </summary>
         public Boolean Expect100Continue
         {

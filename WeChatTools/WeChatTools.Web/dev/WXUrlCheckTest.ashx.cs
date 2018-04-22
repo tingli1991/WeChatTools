@@ -171,7 +171,7 @@ namespace WeChatTools.Web
                 }
                 else
                 {
-                    //有",",估计多个代理。取第一个不是内网的IP。  
+                    //有",",估计多个代理.取第一个不是内网的IP.  
                     if (result.IndexOf(",") != -1)
                     {
                         result = result.Replace(" ", string.Empty).Replace("\"", string.Empty);
