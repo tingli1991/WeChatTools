@@ -170,6 +170,7 @@
     <Content Include="static\styles\layer.css" />
     <Content Include="static\w1.png" />
     <Content Include="static\w2.png" />
+    <Content Include="wap2wx.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
