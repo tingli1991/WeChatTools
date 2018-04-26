@@ -22,7 +22,7 @@ namespace WeChatTools.Web
         private TimeSpan _strWorkingDayPM = DateTime.Parse("21:00").TimeOfDay;
         public void ProcessRequest(HttpContext context)
         {
-            PostHtml();
+            //PostHtml();
             userIP = GetWebClientIp(context);
             context.Response.ContentType = "text/plain";
             TimeSpan dspNow = DateTime.Now.TimeOfDay;
