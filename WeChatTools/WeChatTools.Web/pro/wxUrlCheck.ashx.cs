@@ -18,10 +18,11 @@ namespace WeChatTools.Web
         private const int DURATION = 24 * 60;
         private static string userIP = "127.0.0.1";
         private string wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeChatCheck");
-        private TimeSpan _strWorkingDayAM = DateTime.Parse("09:00").TimeOfDay;//工作时间上午08:00
-        private TimeSpan _strWorkingDayPM = DateTime.Parse("18:00").TimeOfDay;
+        private TimeSpan _strWorkingDayAM = DateTime.Parse("08:00").TimeOfDay;//工作时间上午08:00
+        private TimeSpan _strWorkingDayPM = DateTime.Parse("21:00").TimeOfDay;
         public void ProcessRequest(HttpContext context)
         {
+            PostHtml();
             userIP = GetWebClientIp(context);
             context.Response.ContentType = "text/plain";
             TimeSpan dspNow = DateTime.Now.TimeOfDay;
@@ -42,7 +43,7 @@ namespace WeChatTools.Web
                         {
                             wxCheckApiKey = context.Request["key"]; //key ,md5值
                         }
-                        
+
 
                         try
                         {
@@ -56,7 +57,7 @@ namespace WeChatTools.Web
                             result = SpVoiceObj2.Api(json2);
                             SpVoiceObj2.Close();
                             JsonObject.Results aup = JsonConvert.DeserializeObject<JsonObject.Results>(result);
-                            
+
                             if (aup.State == true)
                             {
                                 string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
@@ -64,24 +65,24 @@ namespace WeChatTools.Web
                                 SpVoiceObj.Open();
                                 result = SpVoiceObj.Api(json);
                                 SpVoiceObj.Close();
-                           
+
                             }
                             Logger.WriteLogggerTest("#################################################");
                             Logger.WriteLogggerTest(userIP + ":" + wxCheckApiKey + ":" + result);
 
                             Logger.WriteLogggerTest(urlCheck + ":HTTP_CDN_SRC_IP--" + context.Request.ServerVariables["HTTP_CDN_SRC_IP"]);
                             Logger.WriteLogggerTest(urlCheck + ":HTTP_Cdn-Src-Ip--" + context.Request.ServerVariables["HTTP_Cdn-Src-Ip"]);
-                            Logger.WriteLogggerTest(urlCheck + ":Cdn-Src-Ip--" + context.Request.ServerVariables["Cdn-Src-Ip"] );
+                            Logger.WriteLogggerTest(urlCheck + ":Cdn-Src-Ip--" + context.Request.ServerVariables["Cdn-Src-Ip"]);
                             Logger.WriteLogggerTest(urlCheck + ":HTTP_X_FORWARDED_FOR--" + context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
-                            Logger.WriteLogggerTest(urlCheck + ":Proxy-Client-IP--" + context.Request.ServerVariables["Proxy-Client-IP"] );
-                            Logger.WriteLogggerTest(urlCheck + ":WL-Proxy-Client-IP--" + context.Request.ServerVariables["WL-Proxy-Client-IP"] );
-                            Logger.WriteLogggerTest(urlCheck + ":HTTP_CLIENT_IP--" + context.Request.ServerVariables["HTTP_CLIENT_IP"] );
-                            Logger.WriteLogggerTest(urlCheck + ":HTTP_VIA--" + context.Request.ServerVariables["HTTP_VIA"] );
-                            Logger.WriteLogggerTest(urlCheck + ":REMOTE_ADDR--" + context.Request.ServerVariables["REMOTE_ADDR"] );
+                            Logger.WriteLogggerTest(urlCheck + ":Proxy-Client-IP--" + context.Request.ServerVariables["Proxy-Client-IP"]);
+                            Logger.WriteLogggerTest(urlCheck + ":WL-Proxy-Client-IP--" + context.Request.ServerVariables["WL-Proxy-Client-IP"]);
+                            Logger.WriteLogggerTest(urlCheck + ":HTTP_CLIENT_IP--" + context.Request.ServerVariables["HTTP_CLIENT_IP"]);
+                            Logger.WriteLogggerTest(urlCheck + ":HTTP_VIA--" + context.Request.ServerVariables["HTTP_VIA"]);
+                            Logger.WriteLogggerTest(urlCheck + ":REMOTE_ADDR--" + context.Request.ServerVariables["REMOTE_ADDR"]);
 
                             Logger.WriteLogggerTest("==================================================");
-                            
-                           
+
+
                         }
                         catch (Exception ex)
                         {
@@ -98,8 +99,8 @@ namespace WeChatTools.Web
             }
             else
             {
-                result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"测试接口,请在每天(09:00-18:00)时间段进行测试,需要讨论技术,进群交流 QQ群:41977413.\"}";
-              
+                result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"测试接口,请在每天(08:00-21:00)时间段进行测试,需要讨论技术,进群交流 QQ群:41977413.\"}";
+
 
             }
             if (!string.IsNullOrEmpty(context.Request.QueryString["callback"]))
@@ -119,6 +120,82 @@ namespace WeChatTools.Web
                 return false;
             }
         }
+
+        CookieContainer _cc = new CookieContainer();
+
+        public string PostHtml()
+        {
+            Random Rdm = new Random();
+            //产生0到100的随机数
+            int iRdm = Rdm.Next(423456789, 499999999);
+
+            string wxuin = iRdm.ToString();
+            string pass_ticket = "1KLZo5j/85JCXGrbyj5vH6Wn2Ek1qDqjqj2U5tik1232P47mLxmwM+avvXgfWjy5";
+            string appmsg_token = "954_1hcOzNorDwiokamoRrnyUm3rQ1fVwUQk-ZDN0s061MxSYtM-BH5313uQ0n5bDgdUat4FJSVA7RrhkCIN";
+
+            string postData = "action=vote&__biz=MzA4MDIzOTQ5OQ%3D%3D&uin=777&key=777&pass_ticket=" + pass_ticket + "&appmsg_token=" + appmsg_token + "&f=json&json=%7B%22super_vote_item%22%3A%5B%7B%22vote_id%22%3A495474521%2C%22item_idx_list%22%3A%7B%22item_idx%22%3A%5B%2216%22%5D%7D%7D%2C%7B%22vote_id%22%3A495474522%2C%22item_idx_list%22%3A%7B%22item_idx%22%3A%5B%2219%22%5D%7D%7D%5D%2C%22super_vote_id%22%3A495474497%7D&idx=2&mid=2653078119&wxtoken=777";
+            string cookieStr = "rewardsn=; wxuin=" + wxuin + "; devicetype=android-23; version=26060636; lang=zh_CN; pass_ticket=" + pass_ticket + "; wap_sid2=CLfb39UBElw3ZDlXaU5iNlVsYzB0UVlia3NvZktSWHpoM3FfVl9udFhBWlhJdlRrV0N4NVVwTUZ3V2ZCYW5aWUZrTkxMSVBZYlZyc2xUbTc0THZmWE16ZDNBWEkxYm9EQUFBfjCyyoTXBTgNQAE=; wxtokenkey=777";
+            string RefererURl = "https://mp.weixin.qq.com/mp/newappmsgvote?action=show&__biz=MzA4MDIzOTQ5OQ==&supervoteid=495474497&uin=777&key=777&pass_ticket=" + pass_ticket + "&wxtoken=777&mid=2653078119&idx=2&appmsg_token=" + appmsg_token ;
+            string URL = "https://mp.weixin.qq.com/mp/newappmsgvote";
+
+            string[] cookstr = cookieStr.Split(';');
+            foreach (string str in cookstr)
+            {
+                string[] cookieNameValue = str.Split('=');
+                Cookie ck = new Cookie(cookieNameValue[0].Trim().ToString(), cookieNameValue[1].Trim().ToString());
+                ck.Domain = "mp.weixin.qq.com";
+                _cc.Add(ck);
+            }
+           
+
+            ASCIIEncoding encoding = new ASCIIEncoding();
+            byte[] data = encoding.GetBytes(postData);//Encoding.UTF8.GetBytes(postData);
+
+            HttpWebRequest httpWebRequest;
+            HttpWebResponse webResponse;
+            Stream getStream;
+            StreamReader streamReader;
+
+            httpWebRequest = (HttpWebRequest)HttpWebRequest.Create(URL);
+            httpWebRequest.Host = "mp.weixin.qq.com";
+            httpWebRequest.ContentLength = data.Length;
+            httpWebRequest.Accept = "application/json";
+            httpWebRequest.Headers.Add("Origin", "https://mp.weixin.qq.com");
+            httpWebRequest.Headers.Add("X-Requested-With", "XMLHttpRequest");
+            httpWebRequest.UserAgent = "Mozilla/5.0 (Linux; Android 6.0; 1501-A02 Build/MRA58K; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/57.0.2987.132 MQQBrowser/6.2 TBS/044028 Mobile Safari/537.36 MicroMessenger/6.6.6.1300(0x26060636) NetType/WIFI Language/zh_CN";
+            httpWebRequest.ContentType = "application/x-www-form-urlencoded";
+            httpWebRequest.Referer = RefererURl;
+            httpWebRequest.Headers.Add("Accept-Encoding", "gzip, deflate");
+            httpWebRequest.Headers.Add("Accept-Language", "zh-CN,en-US;q=0.8");
+            httpWebRequest.Headers.Add("Q-UA2", "QV=3&PL=ADR&PR=WX&PP=com.tencent.mm&PPVN=6.6.6&TBSVC=43607&CO=BK&COVC=044028&PB=GE&VE=GA&DE=PHONE&CHID=0&LCID=9422&MO= 1501-A02 &RL=720*1280&OS=6.0&API=23");
+            httpWebRequest.Headers.Add("Q-GUID", "04dd8ef186bdc34bdedac5a413b788cb");
+            httpWebRequest.Headers.Add("Q-Auth", "31045b957cf33acf31e40be2f3e71c5217597676a9729f1b");
+            httpWebRequest.CookieContainer = _cc;
+            httpWebRequest.Method = "POST";
+
+
+
+
+            // httpWebRequest.AllowAutoRedirect = true;
+            Stream pReqStream = httpWebRequest.GetRequestStream();
+            // Send the data.
+            pReqStream.Write(data, 0, data.Length);
+            pReqStream.Close();
+
+            webResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            getStream = webResponse.GetResponseStream();
+            streamReader = new StreamReader(getStream, Encoding.UTF8);
+            string getString = "";
+            getString = streamReader.ReadToEnd();
+
+            streamReader.Close();
+            getStream.Close();
+            webResponse.Close();
+
+            return getString;
+        }
+
 
         /// <summary>  
         /// 将c# DateTime时间格式转换为Unix时间戳格式  
@@ -244,7 +321,15 @@ namespace WeChatTools.Web
                 customerIP = httpContext.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
                 if (!String.IsNullOrWhiteSpace(customerIP) && customerIP.Contains(","))
                 {
-                    customerIP = customerIP.Split(new char[] { ',' })[0];
+                    string[] xx = customerIP.Split(new char[] { ',' });
+                    if (xx.Length > 1)
+                    {
+                        customerIP = xx[xx.Length-2].Trim();
+                    }
+                    else {
+                        customerIP = xx[0];
+                    
+                    }
                 }
             }
             else
