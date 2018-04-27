@@ -3481,3 +3481,80 @@ div.struct-class {box-shadow: 0 7px 21px rgba(0, 0, 0, .1)}
 .foot a{
     padding:0 !important;
 }
+
+
+
+/*导航样式*/
+
+nav {
+    /*margin:100px auto;*/
+    text-align:center;
+    color:#fff;
+    font-size:16px;
+    width:55%;
+    float:left;
+}
+nav ul {
+    /*border-radius:10px;
+    background:linear-gradient(to bottom,#efefef,#bbbbbb);
+    padding:0 20px;
+    display:inline-table;
+    position:relative;  
+    box-shadow:1px 1px 3px #666;*/
+}
+nav ul ul {
+    display:none;
+}
+nav ul li {
+    float:left; 
+}
+nav ul::after {
+    content:"";
+    display:block;
+    clear:both;
+}
+nav ul li a {
+    display:block;
+    padding:25px 40px;
+    color:#fff;
+    text-decoration:none;
+    font-family:"微软雅黑";
+}
+nav ul li:hover > ul {
+    display:block;
+    
+}
+nav ul li:hover {
+    background:rgba(24, 193, 214, 0.58); 
+}
+nav ul li:hover a {
+    color:#674545;
+    
+}
+nav ul ul {
+    background:#fff;
+    border-radius:5 px;
+    position:absolute;
+    top:100%;
+    padding:0;
+}
+nav ul ul li {
+    float:none;
+    border-top:1px solid #6b727c;
+    border-bottom:1px solid #575f6a;
+}
+nav ul ul li a {
+   padding:10px 55px;
+   border-bottom: 1px solid #eee;
+
+}   
+nav ul ul li a:hover {
+   color:#00a3c1;
+   background:#ececec;
+}
+nav ul ul ul {
+    width:100%;
+    position:absolute;
+    left:100%;
+    top:50%;
+}
