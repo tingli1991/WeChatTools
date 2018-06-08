@@ -40,7 +40,10 @@ namespace WeChatTools.Web
                     {
                         //需要检测的网址
                         urlCheck = context.Request["url"]; //检测的值
-                        urlCheck = urlCheck.Replace("https://", "").Replace("http://", "");
+                        bool isTrue = urlCheck.StartsWith("http");
+                        if (!isTrue) { urlCheck = "http://" + urlCheck; }
+                        urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
+
                         string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + userKey + "\'}\"}";
 
                         ServiceApiClient SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi2");
