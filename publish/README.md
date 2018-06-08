@@ -39,7 +39,7 @@ Content-Length: 298
 }
 
 ```
-![请长按网址复制后使用浏览器访问](http://images.cnblogs.com/cnblogs_com/Gemgin/1221224/o_ruxuliulan.jpg)
+![请长按网址复制后使用浏览器访问](http://images.cnblogs.com/cnblogs_com/Gemgin/1221224/o_1ruxuliulan.jpg)
 
 > 将要访问`www.abc1234567.xyz`非微信官方网页,继续访问将转换成手机预览模式
 
@@ -63,7 +63,7 @@ Content-Length: 636
 }
 
 ``` 
-![非微信官方网页](http://images.cnblogs.com/cnblogs_com/Gemgin/1221224/o_jiangfangwen.jpg)
+![非微信官方网页](http://images.cnblogs.com/cnblogs_com/Gemgin/1221224/o_2jiangfangwen.jpg)
 
 > 在微信浏览站点部分链接,链接屏蔽,而域名没屏蔽
 
