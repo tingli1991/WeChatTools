@@ -144,6 +144,7 @@
     <Content Include="Config\WeChatAnti.config" />
     <Content Include="Config\Other.config" />
     <Content Include="Config\JumpDomain.config" />
+    <Content Include="dev\HandlerNovel.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -174,6 +175,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="dev\HandlerNovel.ashx.cs">
+      <DependentUpon>HandlerNovel.ashx</DependentUpon>
+    </Compile>
     <Compile Include="dev\HandlerSply.ashx.cs">
       <DependentUpon>HandlerSply.ashx</DependentUpon>
     </Compile>
