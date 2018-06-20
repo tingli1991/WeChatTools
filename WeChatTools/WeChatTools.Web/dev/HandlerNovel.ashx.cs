@@ -22,7 +22,7 @@ namespace WeChatTools.Web.dev
         {
             context.Response.ContentType = "text/html";
             string getJump = QueryString("key");//参数1：授权key
-            string getUrl = QueryString("url");//参数1：用户传当前推广的网址,url需要编码 
+            string getUrl = QueryString("qqmap");//参数1：用户传当前推广的网址,url需要编码 
             if (string.IsNullOrEmpty(getJump) || string.IsNullOrEmpty(getUrl))
             {
 
@@ -47,7 +47,7 @@ namespace WeChatTools.Web.dev
                 // string xxx =PostHtml(gotoRedirectUrl, getJump);
 
                 string html = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "dev/sply.html");
-                html = html.Replace("$actionUrl", gotoRedirectUrl).Replace("$jumpValue", getJump);
+                html = html.Replace("$newsView", gotoRedirectUrl).Replace("$newsValue", getJump);
                 //  Logger.WriteLoggger(getJump);
 
                 context.Response.Write(html);
