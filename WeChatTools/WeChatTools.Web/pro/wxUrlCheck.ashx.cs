@@ -335,10 +335,14 @@ namespace WeChatTools.Web
                     }
                 }
             }
-            else
+            if (String.IsNullOrWhiteSpace(customerIP))
             {
 
                 customerIP = httpContext.Request.ServerVariables["REMOTE_ADDR"];
+                if (!String.IsNullOrWhiteSpace(customerIP) && customerIP.Contains(","))
+                {
+                    customerIP = customerIP.Split(new char[] { ',' })[0];
+                }
 
             }
 
