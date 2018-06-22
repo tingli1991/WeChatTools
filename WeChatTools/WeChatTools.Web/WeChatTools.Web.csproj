@@ -60,6 +60,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="404.html" />
     <Content Include="css\hm.js" />
     <Content Include="css\home_step_icos.png" />
     <Content Include="css\icon.png" />
