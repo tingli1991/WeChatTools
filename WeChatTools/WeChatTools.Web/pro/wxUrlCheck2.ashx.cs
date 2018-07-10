@@ -62,7 +62,7 @@ namespace WeChatTools.Web
 
                         }
 
-                        Logger.WriteLoggger(userIP + ":" + userKey + ":" + result);
+                       
 
                         if (!string.IsNullOrEmpty(context.Request.QueryString["callback"]))
                         {
@@ -73,8 +73,10 @@ namespace WeChatTools.Web
                     catch (Exception ex)
                     {
                         result = "{\"State\":false,\"Data\":\"" + urlCheck + "\",\"Msg\":\"某服务暂停,请联系管理员!\"}";
+                        Logger.WriteLoggger(userIP + ":" + userKey + ":" + ex.Message);
                     }
                     context.Response.Write(result);
+                    Logger.WriteLoggger(userIP + ":" + userKey + ":" + result);
                 }
             }
             else
