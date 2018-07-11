@@ -20,6 +20,7 @@ namespace WeChatTools.Core
         public class Results
         {
             public bool State { get; set; }
+            public string Code { get; set; }
 
             public string Data { get; set; }
 
