@@ -147,6 +147,7 @@
     <Content Include="Config\JumpDomain.config" />
     <Content Include="dev\HandlerNovel.ashx" />
     <Content Include="test\HdNlsqpy.ashx" />
+    <Content Include="pro\qzoneH5.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -208,6 +209,9 @@
       <DependentUpon>hdShowImg.ashx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="pro\qzoneH5.ashx.cs">
+      <DependentUpon>qzoneH5.ashx</DependentUpon>
+    </Compile>
     <Compile Include="pro\urlTransfer.ashx.cs">
       <DependentUpon>urlTransfer.ashx</DependentUpon>
     </Compile>
