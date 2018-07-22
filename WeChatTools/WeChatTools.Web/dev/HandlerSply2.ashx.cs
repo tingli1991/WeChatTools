@@ -21,7 +21,8 @@ namespace WeChatTools.Web.dev
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/html";
-            string getJump = QueryString("jump");//参数1：用户传当前推广的网址 
+            string jump = QueryString("jump");//参数1：用户传当前推广的网址 
+            string getJump = jump;//参数1：用户传当前推广的网址 
             if (string.IsNullOrEmpty(getJump))
             {
 
@@ -47,6 +48,8 @@ namespace WeChatTools.Web.dev
                 string html = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "dev/sply.html");
                 html = html.Replace("$newsView", gotoRedirectUrl).Replace("$newsValue", getJump);
 
+                string jumpIsTitle = ConfigTool.ReadVerifyConfig("JumpIsTitle", "Other");
+                if (jumpIsTitle.Contains(jump)) { html = html.Replace("太阳湾软件", ""); }
 
                 context.Response.Write(html);
             }
