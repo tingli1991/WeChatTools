@@ -432,7 +432,7 @@ namespace WeChatTools.Web
             string key = userIP;
 
             int hit = (Int32)(context.Cache[key] ?? 0);
-            if (hit > 4) return false;
+            if (hit > 3) return false;
             else hit++;
 
             if (hit == 1)
