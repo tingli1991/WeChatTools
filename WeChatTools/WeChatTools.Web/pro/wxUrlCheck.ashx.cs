@@ -31,7 +31,7 @@ namespace WeChatTools.Web
             string urlCheck = string.Empty;
             if (IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM))
             {
-                if (!IsValid(context))
+                if (!IsRedis(context))
                 {
                     result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术,进群交流 QQ群:41977413!\"}";
                 }
