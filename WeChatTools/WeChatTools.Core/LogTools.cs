@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace Baysun.Entities
+namespace WeChatTools.Core
 {
     public class LogTools
     {

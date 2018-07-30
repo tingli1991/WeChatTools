@@ -1,4 +1,4 @@
-﻿using Baysun.Entities;
+﻿
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -139,7 +139,7 @@ namespace WeChatTools.Web
 
             string postData = "action=vote&__biz=MzA4MDIzOTQ5OQ%3D%3D&uin=777&key=777&pass_ticket=" + pass_ticket + "&appmsg_token=" + appmsg_token + "&f=json&json=%7B%22super_vote_item%22%3A%5B%7B%22vote_id%22%3A495474521%2C%22item_idx_list%22%3A%7B%22item_idx%22%3A%5B%2216%22%5D%7D%7D%2C%7B%22vote_id%22%3A495474522%2C%22item_idx_list%22%3A%7B%22item_idx%22%3A%5B%2219%22%5D%7D%7D%5D%2C%22super_vote_id%22%3A495474497%7D&idx=2&mid=2653078119&wxtoken=777";
             string cookieStr = "rewardsn=; wxuin=" + wxuin + "; devicetype=android-23; version=26060636; lang=zh_CN; pass_ticket=" + pass_ticket + "; wap_sid2=CLfb39UBElw3ZDlXaU5iNlVsYzB0UVlia3NvZktSWHpoM3FfVl9udFhBWlhJdlRrV0N4NVVwTUZ3V2ZCYW5aWUZrTkxMSVBZYlZyc2xUbTc0THZmWE16ZDNBWEkxYm9EQUFBfjCyyoTXBTgNQAE=; wxtokenkey=777";
-            string RefererURl = "https://mp.weixin.qq.com/mp/newappmsgvote?action=show&__biz=MzA4MDIzOTQ5OQ==&supervoteid=495474497&uin=777&key=777&pass_ticket=" + pass_ticket + "&wxtoken=777&mid=2653078119&idx=2&appmsg_token=" + appmsg_token ;
+            string RefererURl = "https://mp.weixin.qq.com/mp/newappmsgvote?action=show&__biz=MzA4MDIzOTQ5OQ==&supervoteid=495474497&uin=777&key=777&pass_ticket=" + pass_ticket + "&wxtoken=777&mid=2653078119&idx=2&appmsg_token=" + appmsg_token;
             string URL = "https://mp.weixin.qq.com/mp/newappmsgvote";
 
             string[] cookstr = cookieStr.Split(';');
@@ -150,7 +150,7 @@ namespace WeChatTools.Web
                 ck.Domain = "mp.weixin.qq.com";
                 _cc.Add(ck);
             }
-           
+
 
             ASCIIEncoding encoding = new ASCIIEncoding();
             byte[] data = encoding.GetBytes(postData);//Encoding.UTF8.GetBytes(postData);
@@ -328,11 +328,12 @@ namespace WeChatTools.Web
                     string[] xx = customerIP.Split(new char[] { ',' });
                     if (xx.Length > 1)
                     {
-                        customerIP = xx[xx.Length-2].Trim();
+                        customerIP = xx[xx.Length - 2].Trim();
                     }
-                    else {
+                    else
+                    {
                         customerIP = xx[0];
-                    
+
                     }
                 }
             }
@@ -448,6 +449,39 @@ namespace WeChatTools.Web
             return true;
         }
 
+        public static bool IsRedis(HttpContext context)
+        {
+            if (context.Request.Browser.Crawler) return false;
+            string key = userIP;
+            bool check = RedisCacheTools.Exists(key);
+            if (check)
+            {
+                int hit = RedisCacheTools.Get<int>(key);
+                if (hit > 16) return false;
+                 hit++;
+                 RedisCacheTools.Remove(key);
+                 
+                /*
+                    $redis->incr($key);
+                    $count = $redis->get($key);
+                    if($count > 5){
+                        exit('请求太频繁，请稍后再试！');
+                    }
+                  */
+            }
+            else
+            {
+                DateTime dt = DateTime.Now.AddDays(1);
 
+                /*
+                    $redis->incr($key);
+	                //限制时间为60秒 
+	                $redis->expire($key,60)  
+                */
+                RedisCacheTools.Add(key, 1, dt);
+            }
+
+            return true;
+        }
     }
 }

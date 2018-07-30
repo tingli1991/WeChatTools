@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WeChatTools.Web</RootNamespace>
     <AssemblyName>WeChatTools.Web</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -30,6 +30,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -38,6 +39,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -91,6 +93,13 @@
     <Content Include="libs\fontawesome\4.4.0\css\font-awesome.min.css" />
     <Content Include="libs\fontawesome\4.4.0\fonts\fontawesome-webfont.svg" />
     <Content Include="Lib\Newtonsoft.Json.dll" />
+    <Content Include="Lib\ServiceStack.Common.dll" />
+    <Content Include="Lib\ServiceStack.Common.xml" />
+    <Content Include="Lib\ServiceStack.Interfaces.dll" />
+    <Content Include="Lib\ServiceStack.Redis.dll" />
+    <Content Include="Lib\ServiceStack.Redis.xml" />
+    <Content Include="Lib\ServiceStack.Text.dll" />
+    <Content Include="Lib\ServiceStack.Text.xml" />
     <Content Include="price.html" />
     <Content Include="price2.html" />
     <Content Include="pro\hdShowImg.ashx" />
@@ -148,6 +157,7 @@
     <Content Include="dev\HandlerNovel.ashx" />
     <Content Include="test\HdNlsqpy.ashx" />
     <Content Include="pro\qzoneH5.ashx" />
+    <Content Include="Config\site.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
