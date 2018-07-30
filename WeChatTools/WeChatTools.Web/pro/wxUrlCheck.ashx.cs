@@ -476,7 +476,7 @@ namespace WeChatTools.Web
 	                //限制时间为60秒 
 	                $redis->expire($key,60)  
                 */
-                RedisCacheTools.Add(key, 1, dt);
+                RedisCacheTools.Expire(key, dt);
             }
 
             return true;

@@ -152,6 +152,7 @@ namespace WeChatTools.Core
                         {
                             r.SendTimeout = 1000;
                             r.IncrementValue(key);
+                           
                         }
                     }
                 }
@@ -165,6 +166,32 @@ namespace WeChatTools.Core
         }
         #endregion
 
+        #region 计算设置过期时间
+        public static void Expire(string key, DateTime expiry)
+        {
+            try
+            {
+                if (pool != null)
+                {
+                    using (var r = pool.GetClient())
+                    {
+                        if (r != null)
+                        {
+                            r.SendTimeout = 1000;
+                            r.ExpireEntryAt(key, expiry);
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string msg = string.Format(strErrorInfo, "cache", "存储", key, ex.Message);
+                LogTools.WriteLine("Add Key DateTime-->" + msg);
+            }
+
+        }
+        #endregion
         #region 获取
         public static IDictionary<string, T> Get<T>(out string errorMsg)
         {
