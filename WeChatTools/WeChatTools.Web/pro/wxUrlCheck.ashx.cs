@@ -456,11 +456,9 @@ namespace WeChatTools.Web
             bool check = RedisCacheTools.Exists(key);
             if (check)
             {
+                RedisCacheTools.Incr(key);
                 int hit = RedisCacheTools.Get<int>(key);
                 if (hit > 16) return false;
-                 hit++;
-                 RedisCacheTools.Remove(key);
-                 
                 /*
                     $redis->incr($key);
                     $count = $redis->get($key);
@@ -472,7 +470,7 @@ namespace WeChatTools.Web
             else
             {
                 DateTime dt = DateTime.Now.AddDays(1);
-
+                RedisCacheTools.Incr(key);
                 /*
                     $redis->incr($key);
 	                //限制时间为60秒 
