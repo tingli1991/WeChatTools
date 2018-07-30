@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Baysun.Entities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -73,10 +74,10 @@ namespace WeChatTools.Web
                     catch (Exception ex)
                     {
                         result = "{\"State\":false,\"Data\":\"" + urlCheck + "\",\"Msg\":\"某服务暂停,请联系管理员!\"}";
-                        Logger.WriteLoggger(userIP + ":" + userKey + ":" + ex.Message);
+                        LogTools.WriteLine(userIP + ":" + userKey + ":" + ex.Message);
                     }
                     context.Response.Write(result);
-                    Logger.WriteLoggger(userIP + ":" + userKey + ":" + result);
+                    LogTools.WriteLine(userIP + ":" + userKey + ":" + result);
                 }
             }
             else

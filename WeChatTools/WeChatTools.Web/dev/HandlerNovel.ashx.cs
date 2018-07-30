@@ -48,7 +48,7 @@ namespace WeChatTools.Web.dev
 
                 string html = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "dev/sply.html");
                 html = html.Replace("$newsView", gotoRedirectUrl).Replace("$newsValue", getJump);
-                //  Logger.WriteLoggger(getJump);
+                //  LogTools.WriteLine(getJump);
 
                 context.Response.Write(html);
             }

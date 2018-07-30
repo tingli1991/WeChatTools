@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Baysun.Entities;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -52,7 +53,7 @@ namespace WeChatTools.Web
                         {
                             //当前访问的用户不在黑名单
                             redirectUrl = pRedirectUrl;
-                            Logger.WriteLoggger("openid:" + pWecha_id);  //后续可以扩展,可以屏蔽一些恶意投诉的微信号
+                            LogTools.WriteLine("openid:" + pWecha_id);  //后续可以扩展,可以屏蔽一些恶意投诉的微信号
                         }
                     }
                     else
@@ -60,7 +61,7 @@ namespace WeChatTools.Web
                        
                         //修改投票状态
                         ConfigTool.WriteVerifyConfig("state", "false", "Other");
-                        Logger.WriteLoggger("恶意的openid:" + pWecha_id);  //后续可以扩展,可以屏蔽一些恶意投诉的微信号
+                        LogTools.WriteLine("恶意的openid:" + pWecha_id);  //后续可以扩展,可以屏蔽一些恶意投诉的微信号
                     }
                 }
 

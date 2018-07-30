@@ -56,7 +56,7 @@ namespace WeChatTools.Web.dev
 
                 string jumpIsTitle = ConfigTool.ReadVerifyConfig("JumpIsTitle", "Other");
                 if (jumpIsTitle.Contains(jump)) { html = html.Replace("太阳湾软件", ""); }
-              //  Logger.WriteLoggger(getJump);
+              //  LogTools.WriteLine(getJump);
 
                 context.Response.Write(html);
             }
