@@ -77,7 +77,7 @@ namespace WeChatTools.Web
                         LogTools.WriteLine(userIP + ":" + userKey + ":" + ex.Message);
                     }
                     context.Response.Write(result);
-                    LogTools.WriteLine(userIP + ":" + userKey + ":" + result);
+                   // LogTools.WriteLine(userIP + ":" + userKey + ":" + result);
                 }
             }
             else
