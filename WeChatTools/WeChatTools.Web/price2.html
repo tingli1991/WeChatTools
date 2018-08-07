@@ -232,40 +232,6 @@
 
     </div>
     <!--end: 底部友情链接 -->
-    <!--start: 支付方式 -->
-    <div id="div1">
-        <h5 style="text-align:center;font-size:2rem;">付款方式</h5>
-        <img src="img/webchat.png" style="width:180px" />
-        <img src="img/alipay.jpg" style="width:180px" />
-    </div>
-    <!--end: 支付方式 -->
-    <script>
-        window.onload = window.onscroll = window.onresize = function () {
-
-            var oDiv = document.getElementById('div1');
-            var scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
-            var t = (document.documentElement.clientHeight - oDiv.offsetHeight) / 4;
-            startMover(parseInt(t + scrolltop));
-        };
-
-        var timer = null;
-        function startMover(iTarget) {
-            var oDiv = document.getElementById('div1');
-            clearInterval(timer);
-            timer = setInterval(function () {
-                var ispeed = (iTarget - oDiv.offsetTop) / 8;
-
-                ispeed = ispeed > 0 ? Math.ceil(ispeed) : Math.floor(ispeed);
-
-                if (oDiv.offsetTop == iTarget) {
-                    clearInterval(timer);
-                }
-                else {
-                    oDiv.style.top = oDiv.offsetTop + ispeed + "px";
-                }
-
-            }, 30);
-        };
-    </script>
+    
 </body>
 </html>
