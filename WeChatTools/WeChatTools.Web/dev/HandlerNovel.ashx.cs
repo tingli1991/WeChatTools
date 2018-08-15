@@ -16,7 +16,7 @@ namespace WeChatTools.Web.dev
     public class HandlerNovel : IHttpHandler
     {
 
-        private string gotoRedirectUrl = ConfigTool.ReadVerifyConfig("DefaultUrl", "JumpDomain");//最终用户访问的网址
+        private string gotoRedirectUrl = "/404.html";//最终用户访问的网址
 
         public void ProcessRequest(HttpContext context)
         {
@@ -31,29 +31,23 @@ namespace WeChatTools.Web.dev
             }
             else
             {
-
                 getJump = getJump + "!" + getUrl;
-
-                string domainLeft = "http://";
-
-                string isHttps = ConfigTool.ReadVerifyConfig("IsSSL", "JumpDomain");//这些域名都需要指向用户最终要访问的站点
-
-                if (isHttps.ToLower() == "true")
+                string domainLeft = "https://";
+                string html = string.Empty;
+                try
                 {
-                    domainLeft = "https://";
+                    string domainCenter = GetRandHostUrl();
+                    gotoRedirectUrl = domainLeft + domainCenter + "/home/GoToNovel";
+                    // string xxx =PostHtml(gotoRedirectUrl, getJump);
+
+                    html = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "dev/sply.html");
+                    html = html.Replace("$newsView", gotoRedirectUrl).Replace("$newsValue", getJump);
+                    //  LogTools.WriteLine(getJump);
                 }
-
-                string domainCenter = GetRandHostUrl();
-                gotoRedirectUrl = domainLeft + domainCenter + "/home/GoToNovel";
-                // string xxx =PostHtml(gotoRedirectUrl, getJump);
-
-                string html = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "dev/sply.html");
-                html = html.Replace("$newsView", gotoRedirectUrl).Replace("$newsValue", getJump);
-                //  LogTools.WriteLine(getJump);
-
-                string jumpIsTitle = ConfigTool.ReadVerifyConfig("JumpIsTitle", "Other");
-                if (jumpIsTitle.Contains(jump)) { html = html.Replace("太阳湾软件", ""); }
-
+                catch (Exception ex)
+                {
+                    context.Response.Redirect("/404.html");
+                }
                 context.Response.Write(html);
             }
             context.Response.End();
