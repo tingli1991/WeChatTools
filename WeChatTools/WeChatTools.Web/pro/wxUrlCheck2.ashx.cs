@@ -12,7 +12,7 @@ using WeChatTools.Core;
 namespace WeChatTools.Web
 {
     /// <summary>
-    /// 微信域名检测工具
+    /// 微信域名检测工具--正式使用接口
     /// </summary>
     public class WXUrlCheck2 : IHttpHandler
     {
@@ -37,6 +37,8 @@ namespace WeChatTools.Web
                 }
                 else
                 {
+                    ServiceApiClient SpVoiceObj2 = null;
+                    ServiceApiClient SpVoiceObj = null;
                     try
                     {
                         //需要检测的网址
@@ -47,7 +49,7 @@ namespace WeChatTools.Web
 
                         string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + userKey + "\'}\"}";
 
-                        ServiceApiClient SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi2");
+                        SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi2");
                         SpVoiceObj2.Open();
                         result = SpVoiceObj2.Api(json2);
                         SpVoiceObj2.Close();
@@ -56,14 +58,12 @@ namespace WeChatTools.Web
                         if (aup.State == true)
                         {
                             string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + userKey + "\'}\"}";
-                            ServiceApiClient SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
+                            SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
                             SpVoiceObj.Open();
                             result = SpVoiceObj.Api(json);
                             SpVoiceObj.Close();
 
                         }
-
-                       
 
                         if (!string.IsNullOrEmpty(context.Request.QueryString["callback"]))
                         {
@@ -73,11 +73,13 @@ namespace WeChatTools.Web
                     }
                     catch (Exception ex)
                     {
-                        result = "{\"State\":false,\"Data\":\"" + urlCheck + "\",\"Msg\":\"某服务暂停,请联系管理员!\"}";
-                        LogTools.WriteLine(userIP + ":" + userKey + ":" + ex.Message);
+                        if (SpVoiceObj != null) SpVoiceObj.Abort();
+                        if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                        result = "{\"State\":false,\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
+                        // LogTools.WriteLine(userIP + ":" + userKey + ":" + ex.Message);
                     }
                     context.Response.Write(result);
-                   // LogTools.WriteLine(userIP + ":" + userKey + ":" + result);
+                    // LogTools.WriteLine(userIP + ":" + userKey + ":" + result);
                 }
             }
             else

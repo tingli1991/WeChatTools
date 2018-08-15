@@ -45,7 +45,8 @@ namespace WeChatTools.Web
                             wxCheckApiKey = context.Request["key"]; //key ,md5值
                         }
 
-
+                        ServiceApiClient SpVoiceObj2 = null;
+                        ServiceApiClient SpVoiceObj = null;
                         try
                         {
                             //需要检测的网址
@@ -56,7 +57,7 @@ namespace WeChatTools.Web
 
                             string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
 
-                            ServiceApiClient SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi2");
+                            SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi2");
                             SpVoiceObj2.Open();
                             result = SpVoiceObj2.Api(json2);
                             SpVoiceObj2.Close();
@@ -65,7 +66,7 @@ namespace WeChatTools.Web
                             if (aup.State == true)
                             {
                                 string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
-                                ServiceApiClient SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
+                                SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
                                 SpVoiceObj.Open();
                                 result = SpVoiceObj.Api(json);
                                 SpVoiceObj.Close();
@@ -90,7 +91,9 @@ namespace WeChatTools.Web
                         }
                         catch (Exception ex)
                         {
-                            result = "{\"State\":false,\"Data\":\"" + urlCheck + "\",\"Msg\":\"某服务暂停,请联系管理员!\"}";
+                            if (SpVoiceObj != null) SpVoiceObj.Abort();
+                            if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                            result = "{\"State\":false,\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
                         }
 
                     }
