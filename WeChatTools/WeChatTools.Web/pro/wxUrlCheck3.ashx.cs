@@ -41,11 +41,21 @@ namespace WeChatTools.Web
 
 
                 }
-                catch (Exception ex)
+                catch (System.ServiceModel.CommunicationException)
                 {
                     if (SpVoiceObj != null) SpVoiceObj.Abort();
-                    result = "{\"State\":false,\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
                     
+                }
+                catch (TimeoutException)
+                {
+                    if (SpVoiceObj != null) SpVoiceObj.Abort();
+                     
+                }
+                catch (Exception ex)
+                {
+                    if (SpVoiceObj != null) SpVoiceObj.Abort();                  
+                    result = "{\"State\":false,\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
+                    LogTools.WriteLine( ex.Message);
                 }
                 context.Response.Write(result);
 
