@@ -141,13 +141,15 @@ namespace WeChatTools.Web.dev
                     int RandKey1 = ran.Next(0, sArray.Length);//随机选中域名
                     randUrl = sArray[RandKey1];
 
+                    var all = HttpHelper.GetHtml2(wxCheckApi + "?key=" + wxCheckApiKey + "&url=http://" + randUrl);
+                        /*
                     WebRequest wr = (HttpWebRequest)WebRequest.Create(wxCheckApi + "?key=" + wxCheckApiKey + "&url=http://" + randUrl);
                     var stream = wr.GetResponse().GetResponseStream();
                     var sr = new StreamReader(stream, Encoding.GetEncoding("UTF-8"));
                     var all = sr.ReadToEnd();
                     sr.Close();
                     stream.Close();
-
+                    */
                     //读取网站的数据
                     if (all.Contains("屏蔽"))
                     {

@@ -127,6 +127,78 @@ namespace WeChatTools.Core
             if (objhttpitem.IsToLower) result.Html = result.Html.ToLower();
             return result;
         }
+
+        public static string GetHtml2(string URL)
+        {
+            string getString = "";
+            HttpWebRequest request = null;
+            HttpWebResponse response = null;
+            try
+            {
+                request = (HttpWebRequest)WebRequest.Create(URL);
+                request.Method = "GET";
+                request.ReadWriteTimeout = 5 * 1000;
+                request.Timeout = 5 * 1000;
+
+                response = request.GetResponse() as HttpWebResponse;
+                getString = Resp2String(response);
+
+            }
+            catch (Exception ex)
+            {
+                getString = "";
+                // return getString;
+            }
+            finally
+            {
+                if (response != null)
+                {
+                    response.Close();
+                    response = null;
+                }
+                if (request != null)
+                {
+                    request.Abort();
+                    request = null;
+                }
+            }
+
+
+            return getString;
+        }
+
+        public static string Resp2String(HttpWebResponse HttpWebResponse)
+        {
+            Stream responseStream = null;
+            StreamReader sReader = null;
+            String value = null;
+
+            try
+            {
+                responseStream = HttpWebResponse.GetResponseStream();
+
+                sReader = new StreamReader(responseStream, Encoding.UTF8);
+                value = sReader.ReadToEnd();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                if (sReader != null)
+                    sReader.Close();
+
+                if (responseStream != null)
+                    responseStream.Close();
+
+                if (HttpWebResponse != null)
+                    HttpWebResponse.Close();
+            }
+
+            return value;
+        }
+
         /// <summary>
         /// 4.0以下.net版本取数据使用
         /// </summary>
