@@ -48,7 +48,7 @@ namespace WeChatTools.Web.dev
 
                 string actionName = ConfigTool.ReadVerifyConfig("ActionName", "JumpDomain");//这些域名都需要指向用户最终要访问的站点
                 
-                gotoRedirectUrl = domainLeft + domainCenter + "/home/" + actionName;
+                gotoRedirectUrl = domainLeft + domainCenter + "/" + actionName;
                 // string xxx =PostHtml(gotoRedirectUrl, getJump);
 
                 string html = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "dev/sply.html");

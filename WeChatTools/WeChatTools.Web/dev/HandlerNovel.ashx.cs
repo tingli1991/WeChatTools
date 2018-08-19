@@ -37,7 +37,7 @@ namespace WeChatTools.Web.dev
                 try
                 {
                     string domainCenter = GetRandHostUrl();
-                    gotoRedirectUrl = domainLeft + domainCenter + "/home/GoToNovel";
+                    gotoRedirectUrl = domainLeft + domainCenter + "/HomeNovel.ashx";
                     // string xxx =PostHtml(gotoRedirectUrl, getJump);
 
                     html = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "dev/sply.html");
