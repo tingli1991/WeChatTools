@@ -15,7 +15,7 @@ namespace WeChatTools.Web.dev
     /// </summary>
     public class HandlerSply3 : IHttpHandler
     {
-        private string gotoRedirectUrl = ConfigTool.ReadVerifyConfig("DefaultUrl", "JumpDomain");//最终用户访问的网址
+        private string gotoRedirectUrl = "/404.html";//最终用户访问的网址
 
         public void ProcessRequest(HttpContext context)
         {
@@ -32,23 +32,11 @@ namespace WeChatTools.Web.dev
             else
             {
 
-                getJump = getJump + "!" + getUrl;
-              
-                string domainLeft = "http://";
-
-                string isHttps = ConfigTool.ReadVerifyConfig("IsSSL", "JumpDomain");//这些域名都需要指向用户最终要访问的站点
-
-                if (isHttps.ToLower() == "true")
-                {
-                        domainLeft = "https://";
-                }
+                getJump = getJump + "!" + getUrl;              
+                string domainLeft = "https://";                
 
                 string domainCenter = GetRandHostUrl();
-
-
-                string actionName = ConfigTool.ReadVerifyConfig("ActionName", "JumpDomain");//这些域名都需要指向用户最终要访问的站点
-                
-                gotoRedirectUrl = domainLeft + domainCenter + "/" + actionName;
+                gotoRedirectUrl = domainLeft + domainCenter + "/HomeHost.ashx";
                 // string xxx =PostHtml(gotoRedirectUrl, getJump);
 
                 string html = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "dev/sply.html");
