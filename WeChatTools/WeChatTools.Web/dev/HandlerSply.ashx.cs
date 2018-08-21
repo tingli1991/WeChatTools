@@ -61,12 +61,16 @@ namespace WeChatTools.Web.dev
                 {
                     gotoRedirectUrl = domainLeft + domainCenter + "/" + actionName;
                     // string xxx =PostHtml(gotoRedirectUrl, getJump);
-                   
-                    string html = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "dev/sply.html");                 
+
+                    string html = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "dev/sply.html");
                     html = html.Replace("$newsView", gotoRedirectUrl).Replace("$newsValue", getJump);
 
-                    string jumpIsTitle = ConfigTool.ReadVerifyConfig("JumpIsTitle", "Other");
-                    if (jumpIsTitle.Contains(jump)) { html = html.Replace("太阳湾软件", ""); }
+                    bool check = RedisCacheTools.Exists(jump + "IsTitle");
+                    if (check)
+                    {
+                        html = html.Replace("太阳湾软件", "");
+                    }
+
 
                     context.Response.Write(html);
                 }
@@ -130,40 +134,40 @@ namespace WeChatTools.Web.dev
         private string GetRandHostUrl()
         {
             string randUrl = "";
-          //  bool isBlacklist = true;
-          //  while (isBlacklist)
-          //  {
-                try
+            //  bool isBlacklist = true;
+            //  while (isBlacklist)
+            //  {
+            try
+            {
+                string hosturl = ConfigTool.ReadVerifyConfig("Domain", "WeChatAnti");//这些域名都需要指向用户最终要访问的站点
+                string[] sArray = hosturl.Split(',');
+                Random ran = new Random();
+                int RandKey1 = ran.Next(0, sArray.Length);//随机选中域名
+                randUrl = sArray[RandKey1];
+                /*
+                var all = HttpHelper.GetHtml2(wxCheckApi + "?key=" + wxCheckApiKey + "&url=http://" + randUrl);                       
+                //读取网站的数据
+                if (all.Contains("屏蔽"))
                 {
-                    string hosturl = ConfigTool.ReadVerifyConfig("Domain", "WeChatAnti");//这些域名都需要指向用户最终要访问的站点
-                    string[] sArray = hosturl.Split(',');
-                    Random ran = new Random();
-                    int RandKey1 = ran.Next(0, sArray.Length);//随机选中域名
-                    randUrl = sArray[RandKey1];
-                    /*
-                    var all = HttpHelper.GetHtml2(wxCheckApi + "?key=" + wxCheckApiKey + "&url=http://" + randUrl);                       
-                    //读取网站的数据
-                    if (all.Contains("屏蔽"))
-                    {
                        
-                        randUrl = "";
-                    }
-                    else
-                    {
-                       // isBlacklist = false;
-                        return randUrl;
-                    }
-
-                    */
-
-
-                }
-                catch (Exception ex)
-                {
                     randUrl = "";
+                }
+                else
+                {
+                   // isBlacklist = false;
                     return randUrl;
                 }
-           // }
+
+                */
+
+
+            }
+            catch (Exception ex)
+            {
+                randUrl = "";
+                return randUrl;
+            }
+            // }
 
             return randUrl;
 

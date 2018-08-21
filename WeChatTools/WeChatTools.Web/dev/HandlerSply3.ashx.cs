@@ -42,8 +42,11 @@ namespace WeChatTools.Web.dev
                 string html = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "dev/sply.html");
                 html = html.Replace("$newsView", gotoRedirectUrl).Replace("$newsValue", getJump);
 
-                string jumpIsTitle = ConfigTool.ReadVerifyConfig("JumpIsTitle", "Other");
-                if (jumpIsTitle.Contains(jump)) { html = html.Replace("太阳湾软件", ""); }
+                bool check = RedisCacheTools.Exists(jump + "IsTitle");
+                if (check)
+                {
+                    html = html.Replace("太阳湾软件", "");
+                }
               //  LogTools.WriteLine(getJump);
 
                 context.Response.Write(html);
