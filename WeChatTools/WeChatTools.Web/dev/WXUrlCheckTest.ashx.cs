@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,32 +15,82 @@ namespace WeChatTools.Web
     /// </summary>
     public class WXUrlCheckTest : IHttpHandler
     {
-        private ServiceApi _service = null;
         private const int DURATION = 24 * 60;
-        private static string  userIP="127.0.0.1";
+        private static string userIP = "127.0.0.1";
+        private string wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeChatCheck");
+
         public void ProcessRequest(HttpContext context)
         {
-            userIP = GetWebClientIp();
-
-
-
-
-            if (!IsValid(context))
+            //正式用
+            userIP = GetWebClientIp(context);
+            string urlCheck = string.Empty;
+            context.Response.ContentType = "text/plain";
+            string result = string.Empty;
+            if (!string.IsNullOrEmpty(context.Request["url"]) && !string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
             {
+                string userKey = context.Request["key"]; //key ,md5值
 
-                context.Response.Write(userIP + ":当天请求上限,请明天再试,需要讨论技术,进群交流 QQ群:41977413");
+                if (userKey.Trim() == wxCheckApiKey)
+                {
+                    context.Response.Write("参数错误,进qq群交流:41977413!");
+                }
+                else
+                {
+                    ServiceApiClient SpVoiceObj2 = null;
+                   
+                    try
+                    {
+                        //需要检测的网址
+                        urlCheck = context.Request["url"]; //检测的值
+                        bool isTrue = urlCheck.StartsWith("http");
+                        if (!isTrue) { urlCheck = "http://" + urlCheck; }
+                        urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
 
+                        string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + userKey + "\'}\"}";
+
+                        SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi");
+                        SpVoiceObj2.Open();
+                        result = SpVoiceObj2.Api(json2);
+                        SpVoiceObj2.Close();
+                       
+                        if (!string.IsNullOrEmpty(context.Request.QueryString["callback"]))
+                        {
+                            string callBack = context.Request.QueryString["callback"].ToString(); //回调
+                            result = callBack + "(" + result + ")";
+                        }
+                    }
+                    catch (System.ServiceModel.CommunicationException)
+                    {
+                       
+                        if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                    }
+                    catch (TimeoutException)
+                    {
+                      
+                        if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                    }
+                    catch (Exception ex)
+                    {
+                      
+                        if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                        result = "{\"State\":false,\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
+                        LogTools.WriteLine(userIP + ":" + userKey + ":" + ex.Message);
+                    }
+
+                    context.Response.Write(result);
+                    // LogTools.WriteLine(userIP + ":" + userKey + ":" + result);
+                }
             }
             else
             {
-
-                context.Response.Write(userIP + ":服务器压力太大,需要测试接口去码云留言,谢谢配合<br />");
-                context.Response.Write("码云地址：https://gitee.com/qqWebChat/WeChatTools <br />");
-                context.Response.Write("需要讨论技术,进群交流 QQ群:41977413");
-                 
+                context.Response.Write("参数错误,进qq群交流:41977413!");
 
             }
+
             context.Response.End();
+
+
+
         }
 
         public bool IsReusable
@@ -49,6 +100,20 @@ namespace WeChatTools.Web
                 return false;
             }
         }
+
+        /// <summary>  
+        /// 将c# DateTime时间格式转换为Unix时间戳格式  
+        /// </summary>  
+        /// <param name="time">时间</param>  
+        /// <returns>long</returns>  
+        public static long ConvertDateTimeToInt()
+        {
+            System.DateTime time = DateTime.Now;
+            System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1, 0, 0, 0, 0));
+            long t = (time.Ticks - startTime.Ticks) / 10000;   //除10000调整为13位      
+            return t;
+        }
+
 
 
         /// <summary>  
@@ -104,55 +169,75 @@ namespace WeChatTools.Web
         }
 
 
-        public static string GetWebClientIp()
+        public static string GetWebClientIp(HttpContext httpContext)
         {
-            string CustomerIP = "";
+            string customerIP = "127.0.0.1";
 
-            try
+            if (httpContext == null || httpContext.Request == null || httpContext.Request.ServerVariables == null) return customerIP;
+
+            customerIP = httpContext.Request.ServerVariables["HTTP_CDN_SRC_IP"];
+
+            if (String.IsNullOrWhiteSpace(customerIP) || "unknown".Equals(customerIP.ToLower()))
             {
-                if (System.Web.HttpContext.Current == null
-            || System.Web.HttpContext.Current.Request == null
-            || System.Web.HttpContext.Current.Request.ServerVariables == null)
-                    return "";
 
+                customerIP = httpContext.Request.ServerVariables["Proxy-Client-IP"];
+            }
+            if (String.IsNullOrWhiteSpace(customerIP) || "unknown".Equals(customerIP.ToLower()))
+            {
 
+                customerIP = httpContext.Request.ServerVariables["WL-Proxy-Client-IP"];
+            }
+            /*
+            if (String.IsNullOrWhiteSpace(customerIP) || "unknown".Equals(customerIP.ToLower()))
+            {
 
-                //CDN加速后取到的IP   
-                CustomerIP = System.Web.HttpContext.Current.Request.Headers["Cdn-Src-Ip"];
-                if (!string.IsNullOrEmpty(CustomerIP) && IsIP(CustomerIP))
+                customerIP = httpContext.Request.ServerVariables["HTTP_VIA"];
+            }
+            */
+            if (String.IsNullOrWhiteSpace(customerIP))
+            {
+
+                customerIP = httpContext.Request.ServerVariables["HTTP_CLIENT_IP"];
+                if (!String.IsNullOrWhiteSpace(customerIP) && customerIP.Contains(","))
                 {
-                    return CustomerIP;
-                }
-
-                CustomerIP = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-
-
-                if (!String.IsNullOrWhiteSpace(GetRealIP(CustomerIP)) && IsIP(CustomerIP))
-                    return CustomerIP;
-
-                if (System.Web.HttpContext.Current.Request.ServerVariables["HTTP_VIA"] != null)
-                {
-                    CustomerIP = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-                    if (CustomerIP == null)
-                        CustomerIP = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-                }
-                else
-                {
-                    CustomerIP = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-
-                }
-
-                if (string.Compare(CustomerIP, "unknown", true) == 0)
-                    CustomerIP = System.Web.HttpContext.Current.Request.UserHostAddress;
-
-                if (!IsIP(CustomerIP))
-                {
-                    CustomerIP = "127.0.0.1";
+                    customerIP = customerIP.Split(new char[] { ',' })[0];
                 }
             }
-            catch { }
 
-            return CustomerIP;
+            if (String.IsNullOrWhiteSpace(customerIP) || "unknown".Equals(customerIP.ToLower()))
+            {
+
+                customerIP = httpContext.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                if (!String.IsNullOrWhiteSpace(customerIP) && customerIP.Contains(","))
+                {
+                    string[] xx = customerIP.Split(new char[] { ',' });
+                    if (xx.Length > 1)
+                    {
+                        customerIP = xx[xx.Length - 2].Trim();
+                    }
+                    else
+                    {
+                        customerIP = xx[0];
+
+                    }
+                }
+            }
+            if (String.IsNullOrWhiteSpace(customerIP))
+            {
+
+                customerIP = httpContext.Request.ServerVariables["REMOTE_ADDR"];
+                if (!String.IsNullOrWhiteSpace(customerIP) && customerIP.Contains(","))
+                {
+                    customerIP = customerIP.Split(new char[] { ',' })[0];
+                }
+
+            }
+
+            if (!IsIP(customerIP))
+            {
+                customerIP = "127.0.0.1";
+            }
+            return customerIP;
         }
 
         public static string GetRealIP(string CustomerIP)
@@ -205,10 +290,10 @@ namespace WeChatTools.Web
                     }
                 }
             }
-             
+
 
             return result;
-        }  
+        }
 
         /// <summary>
         /// 检查IP地址格式
@@ -217,7 +302,14 @@ namespace WeChatTools.Web
         /// <returns></returns>
         public static bool IsIP(string ip)
         {
-            return System.Text.RegularExpressions.Regex.IsMatch(ip, @"^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$");
+            if (!String.IsNullOrWhiteSpace(ip))
+            {
+                return System.Text.RegularExpressions.Regex.IsMatch(ip, @"^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$");
+            }
+            else
+            {
+                return false;
+            }
 
         }
 
@@ -227,7 +319,7 @@ namespace WeChatTools.Web
             string key = userIP;
 
             int hit = (Int32)(context.Cache[key] ?? 0);
-            if (hit > 15) return false;
+            if (hit > 9) return false;
             else hit++;
 
             if (hit == 1)

@@ -46,7 +46,7 @@ namespace WeChatTools.Web
                         }
 
                         ServiceApiClient SpVoiceObj2 = null;
-                        ServiceApiClient SpVoiceObj = null;
+                    //    ServiceApiClient SpVoiceObj = null;
                         try
                         {
                             //需要检测的网址
@@ -57,21 +57,21 @@ namespace WeChatTools.Web
 
                             string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
 
-                            SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi2");
+                            SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi");
                             SpVoiceObj2.Open();
                             result = SpVoiceObj2.Api(json2);
                             SpVoiceObj2.Close();
-                            JsonObject.Results aup = JsonConvert.DeserializeObject<JsonObject.Results>(result);
+                            //JsonObject.Results aup = JsonConvert.DeserializeObject<JsonObject.Results>(result);
 
-                            if (aup.State == true)
-                            {
-                                string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
-                                SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
-                                SpVoiceObj.Open();
-                                result = SpVoiceObj.Api(json);
-                                SpVoiceObj.Close();
+                            //if (aup.State == true)
+                            //{
+                            //    string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
+                            //    SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
+                            //    SpVoiceObj.Open();
+                            //    result = SpVoiceObj.Api(json);
+                            //    SpVoiceObj.Close();
 
-                            }
+                            //}
                             Logger.WriteLogggerTest("#################################################");
                             Logger.WriteLogggerTest(userIP + ":" + wxCheckApiKey + ":" + result);
 
@@ -91,17 +91,17 @@ namespace WeChatTools.Web
                         }
                         catch (System.ServiceModel.CommunicationException)
                         {
-                            if (SpVoiceObj != null) SpVoiceObj.Abort();
+                          //  if (SpVoiceObj != null) SpVoiceObj.Abort();
                             if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
                         }
                         catch (TimeoutException)
                         {
-                            if (SpVoiceObj != null) SpVoiceObj.Abort();
+                         //   if (SpVoiceObj != null) SpVoiceObj.Abort();
                             if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
                         }
                         catch (Exception ex)
                         {
-                            if (SpVoiceObj != null) SpVoiceObj.Abort();
+                         //   if (SpVoiceObj != null) SpVoiceObj.Abort();
                             if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
                             result = "{\"State\":false,\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
                             LogTools.WriteLine(userIP + ":" + wxCheckApiKey + ":" + ex.Message);
