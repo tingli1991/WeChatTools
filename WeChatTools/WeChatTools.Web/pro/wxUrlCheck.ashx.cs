@@ -103,21 +103,21 @@ namespace WeChatTools.Web
                         {
                          //   if (SpVoiceObj != null) SpVoiceObj.Abort();
                             if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                            result = "{\"State\":false,\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
+                            result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
                             LogTools.WriteLine(userIP + ":" + wxCheckApiKey + ":" + ex.Message);
                         }
 
                     }
                     else
                     {
-                        result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"参数错误,进qq群交流:41977413!\"}";
+                        result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"参数错误,进qq群交流:41977413!\"}";
 
                     }
                 }
             }
             else
             {
-                result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"测试接口,请在每天(08:00-21:00)时间段进行测试,需要讨论技术,进群交流 QQ群:41977413.\"}";
+                result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"测试接口,请在每天(08:00-21:00)时间段进行测试,需要讨论技术,进群交流 QQ群:41977413.\"}";
 
 
             }

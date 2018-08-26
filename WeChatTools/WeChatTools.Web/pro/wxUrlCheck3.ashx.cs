@@ -53,20 +53,21 @@ namespace WeChatTools.Web
                 }
                 catch (Exception ex)
                 {
-                    if (SpVoiceObj != null) SpVoiceObj.Abort();                  
-                    result = "{\"State\":false,\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
+                    if (SpVoiceObj != null) SpVoiceObj.Abort();
+                    result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
                     LogTools.WriteLine( ex.Message);
                 }
-                context.Response.Write(result);
+                
 
 
             }
             else
             {
-                context.Response.Write("参数错误,进qq群交流:41977413!");
+                result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"参数错误,进qq群交流:41977413!\"}";
 
             }
 
+            context.Response.Write(result);
             context.Response.End();
 
 

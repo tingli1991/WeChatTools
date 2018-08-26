@@ -33,12 +33,12 @@ namespace WeChatTools.Web
 
                 if (userKey.Trim() == wxCheckApiKey)
                 {
-                    context.Response.Write("参数错误,进qq群交流:41977413!");
+                    result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"参数错误,进qq群交流:41977413!\"}";
                 }
                 else
                 {
                     ServiceApiClient SpVoiceObj2 = null;
-                  //  ServiceApiClient SpVoiceObj = null;
+                    //  ServiceApiClient SpVoiceObj = null;
                     try
                     {
                         //需要检测的网址
@@ -73,32 +73,32 @@ namespace WeChatTools.Web
                     }
                     catch (System.ServiceModel.CommunicationException)
                     {
-                     //   if (SpVoiceObj != null) SpVoiceObj.Abort();
+                        //   if (SpVoiceObj != null) SpVoiceObj.Abort();
                         if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
                     }
                     catch (TimeoutException)
                     {
-                       // if (SpVoiceObj != null) SpVoiceObj.Abort();
+                        // if (SpVoiceObj != null) SpVoiceObj.Abort();
                         if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
                     }
                     catch (Exception ex)
                     {
-                     //   if (SpVoiceObj != null) SpVoiceObj.Abort();
+                        //   if (SpVoiceObj != null) SpVoiceObj.Abort();
                         if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                        result = "{\"State\":false,\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
-                        LogTools.WriteLine(userIP + ":" + userKey + ":" + ex.Message);                      
+                        result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
+                        LogTools.WriteLine(userIP + ":" + userKey + ":" + ex.Message);
                     }
 
-                    context.Response.Write(result);
-                    // LogTools.WriteLine(userIP + ":" + userKey + ":" + result);
+
                 }
             }
             else
             {
-                context.Response.Write("参数错误,进qq群交流:41977413!");
+                result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"参数错误,进qq群交流:41977413!\"}";
 
             }
 
+            context.Response.Write(result);
             context.Response.End();
 
 
