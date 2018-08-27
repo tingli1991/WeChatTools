@@ -25,6 +25,7 @@ namespace WeChatTools.Core
 
                 if (redisHosts.Length > 0)
                 {
+                    RedisConfig.VerifyMasterConnections = false;//阿里云的 redis 服务目前不支持 redis 的 role 命令。
                     pool = new PooledRedisClientManager(redisHosts, redisHosts,
                         new RedisClientManagerConfig()
                         {
