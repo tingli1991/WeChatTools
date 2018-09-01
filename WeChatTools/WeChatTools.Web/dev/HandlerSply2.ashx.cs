@@ -14,9 +14,9 @@ namespace WeChatTools.Web.dev
     /// 手机浏览器唤起微信
     /// </summary>
     public class HandlerSply2 : IHttpHandler
-    { 
+    {
 
-        private string gotoRedirectUrl = ConfigTool.ReadVerifyConfig("DefaultUrl", "WapToWeiXin");//最终用户访问的网址
+        private string gotoRedirectUrl = "/404.html";//最终用户访问的网址
 
         public void ProcessRequest(HttpContext context)
         {
@@ -42,14 +42,17 @@ namespace WeChatTools.Web.dev
                 }
 
                 string domainCenter = GetRandHostUrl();
-                gotoRedirectUrl = domainLeft + domainCenter + "/home/GoToWX";
+                gotoRedirectUrl = domainLeft + domainCenter + "/HomeWX.aspx";
 
 
                 string html = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "dev/sply.html");
                 html = html.Replace("$newsView", gotoRedirectUrl).Replace("$newsValue", getJump);
 
-                string jumpIsTitle = ConfigTool.ReadVerifyConfig("JumpIsTitle", "Other");
-                if (jumpIsTitle.Contains(jump)) { html = html.Replace("太阳湾软件", ""); }
+                bool check = RedisCacheTools.Exists(jump + "IsTitle");
+                if (check)
+                {
+                    html = html.Replace("太阳湾软件", "");
+                }
 
                 context.Response.Write(html);
             }
