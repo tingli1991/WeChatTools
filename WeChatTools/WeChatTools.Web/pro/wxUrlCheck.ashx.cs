@@ -31,22 +31,21 @@ namespace WeChatTools.Web
             string urlCheck = string.Empty;
             if (IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM))
             {
-                if (!IsRedis(context))
+                if (!string.IsNullOrEmpty(context.Request["url"]))
                 {
-                    result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术,进群交流 QQ群:41977413!\"}";
-                }
-                else
-                {
-                    if (!string.IsNullOrEmpty(context.Request["url"]))
+                    if (!IsRedis(context))
                     {
-
+                        result = "{\"State\":false,\"Data\":\"" + userIP + "\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术,进群交流 QQ群:41977413!\"}";
+                    }
+                    else
+                    {
                         if (!string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
                         {
                             wxCheckApiKey = context.Request["key"]; //key ,md5值
                         }
 
                         ServiceApiClient SpVoiceObj2 = null;
-                    //    ServiceApiClient SpVoiceObj = null;
+                        //    ServiceApiClient SpVoiceObj = null;
                         try
                         {
                             //需要检测的网址
@@ -91,35 +90,34 @@ namespace WeChatTools.Web
                         }
                         catch (System.ServiceModel.CommunicationException)
                         {
-                          //  if (SpVoiceObj != null) SpVoiceObj.Abort();
+                            //  if (SpVoiceObj != null) SpVoiceObj.Abort();
                             if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
                         }
                         catch (TimeoutException)
                         {
-                         //   if (SpVoiceObj != null) SpVoiceObj.Abort();
+                            //   if (SpVoiceObj != null) SpVoiceObj.Abort();
                             if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
                         }
                         catch (Exception ex)
                         {
-                         //   if (SpVoiceObj != null) SpVoiceObj.Abort();
+                            //   if (SpVoiceObj != null) SpVoiceObj.Abort();
                             if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
                             result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
                             LogTools.WriteLine(userIP + ":" + wxCheckApiKey + ":" + ex.Message);
                         }
 
-                    }
-                    else
-                    {
-                        result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"参数错误,进qq群交流:41977413!\"}";
 
                     }
+                }
+                else
+                {
+                    result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"参数错误,进qq群交流:41977413!\"}";
+
                 }
             }
             else
             {
                 result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"测试接口,请在每天(08:00-21:00)时间段进行测试,需要讨论技术,进群交流 QQ群:41977413.\"}";
-
-
             }
             if (!string.IsNullOrEmpty(context.Request.QueryString["callback"]))
             {
