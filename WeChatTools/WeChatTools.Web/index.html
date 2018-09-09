@@ -247,9 +247,9 @@
                     success: function (data) {
 
                         layer.closeAll();
-                        if (data.Msg === "正常") {
+                        if (data.Code === "102") {
                             layer.msg('恭喜!该域名没被拦截', { icon: 6 });
-                        } else if (data.Msg == "屏蔽") {
+                        } else if (data.Code == "101") {
                             layer.msg('该域名已被拦截', { icon: 5 });
                         } else {
                             layer.msg(data.Msg, { icon: 4 });
