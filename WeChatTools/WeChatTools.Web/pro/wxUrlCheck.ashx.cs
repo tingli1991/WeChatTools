@@ -24,6 +24,9 @@ namespace WeChatTools.Web
         public void ProcessRequest(HttpContext context)
         {
             //PostHtml();
+            context.Response.Headers.Add("Access-Control-Allow-Origin","http://wx.rrbay.com");
+            context.Response.Headers.Add("Access-Control-Allow-Methods","GET");    
+
             userIP = GetWebClientIp(context);
             context.Response.ContentType = "text/plain";
             TimeSpan dspNow = DateTime.Now.TimeOfDay;

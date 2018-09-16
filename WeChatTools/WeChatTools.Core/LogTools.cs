@@ -18,6 +18,10 @@ namespace WeChatTools.Core
             {
                 CreateFile(absolutePath);
             }
+            else
+            {
+                EditorFile(absolutePath);
+            }
             logFileName = absolutePath;
         }
 
@@ -48,7 +52,18 @@ namespace WeChatTools.Core
                 myFs.Close();
             }
         }
-
+        /// <summary>
+        /// 编辑文件
+        /// </summary>
+        /// <param name="fileName"></param>
+        public static void EditorFile(string fileName)
+        {
+            if (File.Exists(fileName))
+            {
+                FileStream myFs = new FileStream(fileName, FileMode.Append, FileAccess.ReadWrite, FileShare.ReadWrite);
+                myFs.Close();
+            }
+        }
         /// <summary>
         /// 追加一条信息
         /// </summary>
