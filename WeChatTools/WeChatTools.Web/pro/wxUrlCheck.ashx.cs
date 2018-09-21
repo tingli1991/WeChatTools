@@ -324,16 +324,6 @@ namespace WeChatTools.Web
                 customerIP = httpContext.Request.ServerVariables["HTTP_VIA"];
             }
             */
-            if (String.IsNullOrWhiteSpace(customerIP))
-            {
-
-                customerIP = httpContext.Request.ServerVariables["HTTP_CLIENT_IP"];
-                if (!String.IsNullOrWhiteSpace(customerIP) && customerIP.Contains(","))
-                {
-                    customerIP = customerIP.Split(new char[] { ',' })[0];
-                }
-            }
-
             if (String.IsNullOrWhiteSpace(customerIP) || "unknown".Equals(customerIP.ToLower()))
             {
 
@@ -350,6 +340,15 @@ namespace WeChatTools.Web
                         customerIP = xx[0];
 
                     }
+                }
+            }
+            if (String.IsNullOrWhiteSpace(customerIP))
+            {
+
+                customerIP = httpContext.Request.ServerVariables["HTTP_CLIENT_IP"];
+                if (!String.IsNullOrWhiteSpace(customerIP) && customerIP.Contains(","))
+                {
+                    customerIP = customerIP.Split(new char[] { ',' })[0];
                 }
             }
             if (String.IsNullOrWhiteSpace(customerIP))
