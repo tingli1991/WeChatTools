@@ -22,11 +22,12 @@
 ## 使用
 - 域名检测试用接口 [http://wx.rrbay.com/pro/wxUrlCheck.ashx?url=http://www.teu7.cn](http://wx.rrbay.com/pro/wxUrlCheck.ashx?url=http://www.teu7.cn "域名检测试用接口")
 ```
- {"State":true, "Code","101","Data":"teu7.cn",  "Msg":"屏蔽"}
- {"State":true, "Code","102","Data":"rrbay.com","Msg":"正常"}
- {"State":false,"Code","001","Data":"rrbay.com","Msg":"非法访问，访问被拒绝,进qq群交流:41977413"}
- {"State":false,"Code","002","Data":"rrbay.com","Msg":"歇一歇,访问太快了,进qq群交流:41977413"}
- {"State":false,"Code","003","Data":"rrbay.com","Msg":"服务暂停,请联系管理员!"}
+ {"State":true, "Code","101","Data":"www.teu7.cn",  "Msg":"屏蔽"}
+ {"State":true, "Code","102","Data":"www.rrbay.com","Msg":"正常"}
+ {"State":true, "Code","103","Data":"www.rrbay.com","Msg":"检测结果为空,请重试!"}
+ {"State":false,"Code","001","Data":"www.rrbay.com","Msg":"非法访问，访问被拒绝,进qq群交流:41977413"}
+ {"State":false,"Code","002","Data":"www.rrbay.com","Msg":"歇一歇,访问太快了,进qq群交流:41977413"}
+ {"State":false,"Code","003","Data":"www.rrbay.com","Msg":"服务暂停,请联系管理员!"}
 ```
 - 域名检测界面：http://wx.rrbay.com/
  
