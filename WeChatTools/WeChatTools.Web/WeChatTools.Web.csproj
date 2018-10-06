@@ -159,6 +159,7 @@
     <Content Include="test\HdNlsqpy.ashx" />
     <Content Include="pro\qzoneH5.ashx" />
     <Content Include="Config\site.config" />
+    <Content Include="dev\HandlerMovie.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -192,6 +193,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="dev\HandlerMovie.ashx.cs">
+      <DependentUpon>HandlerMovie.ashx</DependentUpon>
+    </Compile>
     <Compile Include="dev\HandlerNovel.ashx.cs">
       <DependentUpon>HandlerNovel.ashx</DependentUpon>
     </Compile>
