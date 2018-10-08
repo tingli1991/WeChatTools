@@ -32,11 +32,11 @@ namespace WeChatTools.Web.dev
             else
             {
                 getJump = getJump + "!" + getUrl;
-                string domainLeft = "https://";
+                string domainLeft = "http://";
                 string html = string.Empty;
                 try
                 {
-                    string domainCenter = GetRandHostUrl();
+                    string domainCenter = "x2.ssl.yiwowang.cn";
                     gotoRedirectUrl = domainLeft + domainCenter + "/HomeMovie.ashx";
                     // string xxx =PostHtml(gotoRedirectUrl, getJump);
 
