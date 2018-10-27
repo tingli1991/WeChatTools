@@ -36,7 +36,7 @@ namespace WeChatTools.Web.dev
                 string html = string.Empty;
                 try
                 {
-                    string domainCenter = "x2.ssl.yiwowang.cn";
+                    string domainCenter = GetRandHostUrl();
                     gotoRedirectUrl = domainLeft + domainCenter + "/HomeMovie.ashx";
                     // string xxx =PostHtml(gotoRedirectUrl, getJump);
 
@@ -112,7 +112,7 @@ namespace WeChatTools.Web.dev
 
             string randUrl = "";
 
-            string hosturl = ConfigTool.ReadVerifyConfig("Domain", "JumpDomain");//这些域名都需要指向用户最终要访问的站点
+            string hosturl = ConfigTool.ReadVerifyConfig("Domain2", "JumpDomain");//这些域名都需要指向用户最终要访问的站点
             string[] sArray = hosturl.Split(',');
 
             int RandKey1 = ran.Next(0, sArray.Length);//随机选中域名

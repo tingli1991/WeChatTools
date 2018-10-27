@@ -161,6 +161,8 @@
     <Content Include="pro\qzoneH5.ashx" />
     <Content Include="Config\site.config" />
     <Content Include="dev\HandlerMovie.ashx" />
+    <Content Include="dev\HandlerNovel2.ashx" />
+    <Content Include="short_url\shortenapi.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -199,6 +201,9 @@
     </Compile>
     <Compile Include="dev\HandlerNovel.ashx.cs">
       <DependentUpon>HandlerNovel.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="dev\HandlerNovel2.ashx.cs">
+      <DependentUpon>HandlerNovel2.ashx</DependentUpon>
     </Compile>
     <Compile Include="dev\HandlerSply.ashx.cs">
       <DependentUpon>HandlerSply.ashx</DependentUpon>
@@ -239,6 +244,9 @@
     </Compile>
     <Compile Include="pro\wxUrlCheck3.ashx.cs">
       <DependentUpon>wxUrlCheck3.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="short_url\shortenapi.ashx.cs">
+      <DependentUpon>shortenapi.ashx</DependentUpon>
     </Compile>
     <Compile Include="test\HdNlsqpy.ashx.cs">
       <DependentUpon>HdNlsqpy.ashx</DependentUpon>
