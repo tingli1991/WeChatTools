@@ -21,25 +21,24 @@ namespace WeChatTools.Web.short_url
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/html";
-            string jump = QueryString("key");//参数1：授权key
-            string getJump = jump;//
+            string getJump = QueryString("key");//参数1：授权key         
             string getUrl = QueryString("qqmap");//参数1：用户传当前推广的网址,url需要编码 
-            if (string.IsNullOrEmpty(getJump) || string.IsNullOrEmpty(getUrl))
+            string purl = QueryString("purl");//post地址
+            string type = QueryString("type");//落地域名类型
+
+            if (string.IsNullOrEmpty(getJump) || string.IsNullOrEmpty(getUrl) || string.IsNullOrEmpty(purl) || string.IsNullOrEmpty(type))
             {
 
                 context.Response.Redirect(gotoRedirectUrl);
             }
             else
             {
-                getJump = getJump + "!" + getUrl;
-                string domainLeft = "http://";
+                getJump = getJump + "!" + getUrl + "!" + type;
                 string html = string.Empty;
                 try
                 {
-                    string domainCenter = GetRandHostUrl();
-                    gotoRedirectUrl = domainLeft + domainCenter + "/short_url/shortenRec.ashx";
+                    gotoRedirectUrl = purl + "/short_url/shortenRec.ashx";
                     // string xxx =PostHtml(gotoRedirectUrl, getJump);
-
                     html = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "dev/sply.html");
                     html = html.Replace("$newsView", gotoRedirectUrl).Replace("$newsValue", getJump);
                     //  LogTools.WriteLine(getJump);
