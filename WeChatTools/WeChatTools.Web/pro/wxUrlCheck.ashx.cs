@@ -34,7 +34,8 @@ namespace WeChatTools.Web
             string urlCheck = string.Empty;
             if (IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM))
             {
-                if (!string.IsNullOrEmpty(context.Request["url"]))
+                string referrer = context.Request.UrlReferrer != null ? context.Request.UrlReferrer.Host.ToLower() : "";
+                if (!string.IsNullOrEmpty(context.Request["url"]) && (referrer == "" || referrer == "wx.rrbay.com"))
                 {
                     if (!IsRedis(context))
                     {
