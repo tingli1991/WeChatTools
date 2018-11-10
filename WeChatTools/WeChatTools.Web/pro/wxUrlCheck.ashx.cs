@@ -18,24 +18,27 @@ namespace WeChatTools.Web
     {
         private const int DURATION = 24 * 60;
         private static string userIP = "127.0.0.1";
+
         private string wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeChatCheck");
         private TimeSpan _strWorkingDayAM = DateTime.Parse("08:00").TimeOfDay;//工作时间上午08:00
         private TimeSpan _strWorkingDayPM = DateTime.Parse("21:00").TimeOfDay;
         public void ProcessRequest(HttpContext context)
         {
             //PostHtml();
-            context.Response.Headers.Add("Access-Control-Allow-Origin","http://wx.rrbay.com");
-            context.Response.Headers.Add("Access-Control-Allow-Methods","GET");    
+            context.Response.Headers.Add("Access-Control-Allow-Origin", "http://wx.rrbay.com");
+            context.Response.Headers.Add("Access-Control-Allow-Methods", "GET");
 
             userIP = GetWebClientIp(context);
             context.Response.ContentType = "text/plain";
             TimeSpan dspNow = DateTime.Now.TimeOfDay;
             string result = string.Empty;
             string urlCheck = string.Empty;
+            string callBack = string.Empty;
             if (IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM))
             {
                 string referrer = context.Request.UrlReferrer != null ? context.Request.UrlReferrer.Host.ToLower() : "";
-                if (!string.IsNullOrEmpty(context.Request["url"]) && (referrer == "" || referrer == "wx.rrbay.com"))
+                callBack = string.IsNullOrEmpty(context.Request.QueryString["callback"]) ? "" : context.Request.QueryString["callback"].ToString(); //回调
+                if (!string.IsNullOrEmpty(context.Request["url"]) && string.IsNullOrEmpty(callBack) && string.IsNullOrEmpty(referrer))
                 {
                     if (!IsRedis(context))
                     {
@@ -123,10 +126,8 @@ namespace WeChatTools.Web
             {
                 result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"测试接口,请在每天(08:00-21:00)时间段进行测试,需要讨论技术,进群交流 QQ群:41977413.\"}";
             }
-            if (!string.IsNullOrEmpty(context.Request.QueryString["callback"]))
+            if (!string.IsNullOrEmpty(callBack))
             {
-                string callBack = context.Request.QueryString["callback"].ToString(); //回调
-
                 result = callBack + "(" + result + ")";
             }
             context.Response.Write(result);
