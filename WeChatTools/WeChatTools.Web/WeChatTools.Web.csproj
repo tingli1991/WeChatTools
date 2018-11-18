@@ -157,7 +157,6 @@
     <Content Include="Config\Other.config" />
     <Content Include="Config\JumpDomain.config" />
     <Content Include="dev\HandlerNovel.ashx" />
-    <Content Include="test\HdNlsqpy.ashx" />
     <Content Include="pro\qzoneH5.ashx" />
     <Content Include="Config\site.config" />
     <Content Include="dev\HandlerMovie.ashx" />
@@ -189,9 +188,6 @@
     <Content Include="static\styles\layer.css" />
     <Content Include="static\w1.png" />
     <Content Include="static\w2.png" />
-    <Content Include="test\2.html" />
-    <Content Include="test\3.html" />
-    <Content Include="test\index.html" />
     <Content Include="wap2wx.html" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -247,9 +243,6 @@
     </Compile>
     <Compile Include="short_url\shortenapi.ashx.cs">
       <DependentUpon>shortenapi.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="test\HdNlsqpy.ashx.cs">
-      <DependentUpon>HdNlsqpy.ashx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
