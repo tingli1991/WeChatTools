@@ -78,7 +78,6 @@
     <Content Include="doc.html" />
     <Content Include="doc2.html" />
     <Content Include="faq2.html" />
-    <Content Include="favicon.ico" />
     <Content Include="img\alipay.jpg" />
     <Content Include="img\webchat.png" />
     <Content Include="index.html" />
