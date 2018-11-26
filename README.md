@@ -20,7 +20,8 @@
 - 见 pro/hdShowImg.ashx.cs
 
 ## 使用
-- 域名检测试用接口 [http://wx.rrbay.com/pro/wxUrlCheck.ashx?url=http://www.teu7.cn](http://wx.rrbay.com/pro/wxUrlCheck.ashx?url=http://www.teu7.cn "域名检测试用接口")
+- 域名微信检测试用接口 [http://wx.rrbay.com/pro/wxUrlCheck.ashx?url=http://www.teu7.cn](http://wx.rrbay.com/pro/wxUrlCheck.ashx?url=http://www.teu7.cn "域名检测试用接口")
+- 域名QQ检测试用接口 [http://wx.rrbay.com/pro/qqUrlCheck.ashx?url=http://www.teu7.cn](http://wx.rrbay.com/pro/qqUrlCheck.ashx?url=http://www.teu7.cn "域名检测试用接口")
 ```
  {"State":true, "Code","101","Data":"www.teu7.cn",  "Msg":"屏蔽"}
  {"State":true, "Code","102","Data":"www.rrbay.com","Msg":"正常"}
