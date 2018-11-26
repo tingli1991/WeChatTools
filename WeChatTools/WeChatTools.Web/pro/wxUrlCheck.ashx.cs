@@ -25,6 +25,8 @@ namespace WeChatTools.Web
         public void ProcessRequest(HttpContext context)
         {
             //PostHtml();
+            //lppsd.zq6kcwhbpvg2twb.com
+            //vftkt.n06th8owuihzhhs.com
             context.Response.Headers.Add("Access-Control-Allow-Origin", "http://wx.rrbay.com");
             context.Response.Headers.Add("Access-Control-Allow-Methods", "GET");
 
@@ -40,80 +42,90 @@ namespace WeChatTools.Web
                 callBack = string.IsNullOrEmpty(context.Request.QueryString["callback"]) ? "" : context.Request.QueryString["callback"].ToString(); //回调
                 if (!string.IsNullOrEmpty(context.Request["url"]) && string.IsNullOrEmpty(callBack) && string.IsNullOrEmpty(referrer))
                 {
-                    if (!IsRedis(context))
+                    //需要检测的网址
+                    urlCheck = context.Request["url"]; //检测的值
+                    string[] sArray = urlCheck.Split('.');
+                    if (sArray.Length == 3 && sArray[1].Length == 15)
                     {
-                        result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术,进群交流 QQ群:41977413!\"}";
+                        result = "{\"State\":false,\"Code\":\"002\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"歇一歇,访问太快了,进qq群交流:41977413\"}";
                     }
                     else
                     {
-                        if (!string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
+                        if (!IsRedis(context))
                         {
-                            wxCheckApiKey = context.Request["key"]; //key ,md5值
+                            result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术,进群交流 QQ群:41977413!\"}";
                         }
-
-                        ServiceApiClient SpVoiceObj2 = null;
-                        //    ServiceApiClient SpVoiceObj = null;
-                        try
+                        else
                         {
-                            //需要检测的网址
-                            urlCheck = context.Request["url"]; //检测的值
-                            bool isTrue = urlCheck.StartsWith("http");
-                            if (!isTrue) { urlCheck = "http://" + urlCheck; }
-                            urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
 
-                            string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
 
-                            SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi");
-                            SpVoiceObj2.Open();
-                            result = SpVoiceObj2.Api(json2);
-                            SpVoiceObj2.Close();
-                            //JsonObject.Results aup = JsonConvert.DeserializeObject<JsonObject.Results>(result);
+                            if (!string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
+                            {
+                                wxCheckApiKey = context.Request["key"]; //key ,md5值
+                            }
 
-                            //if (aup.State == true)
-                            //{
-                            //    string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
-                            //    SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
-                            //    SpVoiceObj.Open();
-                            //    result = SpVoiceObj.Api(json);
-                            //    SpVoiceObj.Close();
+                            ServiceApiClient SpVoiceObj2 = null;
+                            //    ServiceApiClient SpVoiceObj = null;
+                            try
+                            {
 
-                            //}
-                            Logger.WriteLogggerTest("#################################################");
-                            Logger.WriteLogggerTest(userIP + ":" + wxCheckApiKey + ":" + result);
+                                bool isTrue = urlCheck.StartsWith("http");
+                                if (!isTrue) { urlCheck = "http://" + urlCheck; }
+                                urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
 
-                            Logger.WriteLogggerTest(urlCheck + ":HTTP_CDN_SRC_IP--" + context.Request.ServerVariables["HTTP_CDN_SRC_IP"]);
-                            Logger.WriteLogggerTest(urlCheck + ":HTTP_Cdn-Src-Ip--" + context.Request.ServerVariables["HTTP_Cdn-Src-Ip"]);
-                            Logger.WriteLogggerTest(urlCheck + ":Cdn-Src-Ip--" + context.Request.ServerVariables["Cdn-Src-Ip"]);
-                            Logger.WriteLogggerTest(urlCheck + ":HTTP_X_FORWARDED_FOR--" + context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
-                            Logger.WriteLogggerTest(urlCheck + ":Proxy-Client-IP--" + context.Request.ServerVariables["Proxy-Client-IP"]);
-                            Logger.WriteLogggerTest(urlCheck + ":WL-Proxy-Client-IP--" + context.Request.ServerVariables["WL-Proxy-Client-IP"]);
-                            Logger.WriteLogggerTest(urlCheck + ":HTTP_CLIENT_IP--" + context.Request.ServerVariables["HTTP_CLIENT_IP"]);
-                            Logger.WriteLogggerTest(urlCheck + ":HTTP_VIA--" + context.Request.ServerVariables["HTTP_VIA"]);
-                            Logger.WriteLogggerTest(urlCheck + ":REMOTE_ADDR--" + context.Request.ServerVariables["REMOTE_ADDR"]);
+                                string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
 
-                            Logger.WriteLogggerTest("==================================================");
+                                SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi");
+                                SpVoiceObj2.Open();
+                                result = SpVoiceObj2.Api(json2);
+                                SpVoiceObj2.Close();
+                                //JsonObject.Results aup = JsonConvert.DeserializeObject<JsonObject.Results>(result);
 
+                                //if (aup.State == true)
+                                //{
+                                //    string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
+                                //    SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
+                                //    SpVoiceObj.Open();
+                                //    result = SpVoiceObj.Api(json);
+                                //    SpVoiceObj.Close();
+
+                                //}
+                                Logger.WriteLogggerTest("#################################################");
+                                Logger.WriteLogggerTest(userIP + ":" + wxCheckApiKey + ":" + result);
+
+                                Logger.WriteLogggerTest(urlCheck + ":HTTP_CDN_SRC_IP--" + context.Request.ServerVariables["HTTP_CDN_SRC_IP"]);
+                                Logger.WriteLogggerTest(urlCheck + ":HTTP_Cdn-Src-Ip--" + context.Request.ServerVariables["HTTP_Cdn-Src-Ip"]);
+                                Logger.WriteLogggerTest(urlCheck + ":Cdn-Src-Ip--" + context.Request.ServerVariables["Cdn-Src-Ip"]);
+                                Logger.WriteLogggerTest(urlCheck + ":HTTP_X_FORWARDED_FOR--" + context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
+                                Logger.WriteLogggerTest(urlCheck + ":Proxy-Client-IP--" + context.Request.ServerVariables["Proxy-Client-IP"]);
+                                Logger.WriteLogggerTest(urlCheck + ":WL-Proxy-Client-IP--" + context.Request.ServerVariables["WL-Proxy-Client-IP"]);
+                                Logger.WriteLogggerTest(urlCheck + ":HTTP_CLIENT_IP--" + context.Request.ServerVariables["HTTP_CLIENT_IP"]);
+                                Logger.WriteLogggerTest(urlCheck + ":HTTP_VIA--" + context.Request.ServerVariables["HTTP_VIA"]);
+                                Logger.WriteLogggerTest(urlCheck + ":REMOTE_ADDR--" + context.Request.ServerVariables["REMOTE_ADDR"]);
+
+                                Logger.WriteLogggerTest("==================================================");
+
+
+                            }
+                            catch (System.ServiceModel.CommunicationException)
+                            {
+                                //  if (SpVoiceObj != null) SpVoiceObj.Abort();
+                                if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                            }
+                            catch (TimeoutException)
+                            {
+                                //   if (SpVoiceObj != null) SpVoiceObj.Abort();
+                                if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                            }
+                            catch (Exception ex)
+                            {
+                                //   if (SpVoiceObj != null) SpVoiceObj.Abort();
+                                if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                                result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
+                                LogTools.WriteLine(userIP + ":" + wxCheckApiKey + ":" + ex.Message);
+                            }
 
                         }
-                        catch (System.ServiceModel.CommunicationException)
-                        {
-                            //  if (SpVoiceObj != null) SpVoiceObj.Abort();
-                            if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                        }
-                        catch (TimeoutException)
-                        {
-                            //   if (SpVoiceObj != null) SpVoiceObj.Abort();
-                            if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                        }
-                        catch (Exception ex)
-                        {
-                            //   if (SpVoiceObj != null) SpVoiceObj.Abort();
-                            if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                            result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
-                            LogTools.WriteLine(userIP + ":" + wxCheckApiKey + ":" + ex.Message);
-                        }
-
-
                     }
                 }
                 else
