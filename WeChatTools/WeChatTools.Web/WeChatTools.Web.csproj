@@ -162,6 +162,7 @@
     <Content Include="dev\HandlerNovel2.ashx" />
     <Content Include="short_url\shortenapi.ashx" />
     <Content Include="pro\qqUrlCheck2.ashx" />
+    <Content Include="pro\qqUrlCheck.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -226,6 +227,9 @@
       <DependentUpon>hdShowImg.ashx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="pro\qqUrlCheck.ashx.cs">
+      <DependentUpon>qqUrlCheck.ashx</DependentUpon>
+    </Compile>
     <Compile Include="pro\qqUrlCheck2.ashx.cs">
       <DependentUpon>qqUrlCheck2.ashx</DependentUpon>
     </Compile>
