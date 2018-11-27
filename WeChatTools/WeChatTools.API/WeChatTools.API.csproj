@@ -70,13 +70,10 @@
     <Content Include="dev\urlTransfer.ashx" />
     <Content Include="pro\wxUrlCheck2.ashx" />
     <Content Include="pro\wxUrlCheck3.ashx" />
-    <Content Include="Config\WapToWeiXin.config" />
     <Content Include="Config\WeChatCheck.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Config\WeChatAnti.config" />
     <Content Include="Config\Other.config" />
-    <Content Include="Config\JumpDomain.config" />
     <Content Include="pro\qzoneH5.ashx" />
     <Content Include="Config\site.config" />
     <Content Include="pro\qqUrlCheck2.ashx" />
