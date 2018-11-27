@@ -34,16 +34,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ServiceStack.Common">
-      <HintPath>..\WeChatTools.Web\Lib\ServiceStack.Common.dll</HintPath>
+      <HintPath>..\WeChatTools.API\Lib\ServiceStack.Common.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Interfaces">
-      <HintPath>..\WeChatTools.Web\Lib\ServiceStack.Interfaces.dll</HintPath>
+      <HintPath>..\WeChatTools.API\Lib\ServiceStack.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Redis">
-      <HintPath>..\WeChatTools.Web\Lib\ServiceStack.Redis.dll</HintPath>
+      <HintPath>..\WeChatTools.API\Lib\ServiceStack.Redis.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Text">
-      <HintPath>..\WeChatTools.Web\Lib\ServiceStack.Text.dll</HintPath>
+      <HintPath>..\WeChatTools.API\Lib\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
