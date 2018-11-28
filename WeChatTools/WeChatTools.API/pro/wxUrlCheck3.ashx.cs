@@ -23,7 +23,7 @@ namespace WeChatTools.Web
         public void ProcessRequest(HttpContext context)
         {
             //PostHtml();
-            context.Response.Headers.Add("Access-Control-Allow-Origin", "http://wx.rrbay.com");
+            context.Response.Headers.Add("Access-Control-Allow-Origin", "http://www.rrbay.xyz");
             context.Response.Headers.Add("Access-Control-Allow-Methods", "GET");
 
             userIP = GetWebClientIp(context);
@@ -36,7 +36,7 @@ namespace WeChatTools.Web
             {
                 string referrer = context.Request.UrlReferrer != null ? context.Request.UrlReferrer.Host.ToLower() : "";
                 callBack = string.IsNullOrEmpty(context.Request.QueryString["callback"]) ? "" : context.Request.QueryString["callback"].ToString(); //回调
-                if (!string.IsNullOrEmpty(context.Request["url"]) && !string.IsNullOrEmpty(callBack)  && referrer == "wx.rrbay.com")
+                if (!string.IsNullOrEmpty(context.Request["url"]) && !string.IsNullOrEmpty(callBack) && referrer == "www.rrbay.xyz")
                 {
                     if (!IsRedis(context))
                     {
