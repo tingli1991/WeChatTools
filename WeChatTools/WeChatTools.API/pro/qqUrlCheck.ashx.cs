@@ -39,7 +39,7 @@ namespace WeChatTools.Web.pro
             {
                 string referrer = context.Request.UrlReferrer != null ? context.Request.UrlReferrer.Host.ToLower() : "";
                 callBack = string.IsNullOrEmpty(context.Request.QueryString["callback"]) ? "" : context.Request.QueryString["callback"].ToString(); //回调
-                if (!string.IsNullOrEmpty(context.Request["url"]) && string.IsNullOrEmpty(callBack) && string.IsNullOrEmpty(referrer))
+                if (!string.IsNullOrEmpty(context.Request["url"]) && string.IsNullOrEmpty(callBack) && (string.IsNullOrEmpty(referrer) || referrer.ToLower().Contains("v2ex.com") || referrer.ToLower().Contains("hexun.com") || referrer.ToLower().Contains("cnblogs.com") || referrer.ToLower().Contains("zhihu.com") || referrer.ToLower().Contains("csdn.net") || referrer.ToLower().Contains("rrbay.xyz")))
                 {
                     //需要检测的网址
                     urlCheck = context.Request["url"]; //检测的值
