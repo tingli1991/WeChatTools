@@ -8,7 +8,7 @@ using System.Text;
 using System.Web;
 using WeChatTools.Core;
 
-namespace WeChatTools.Web.pro
+namespace WeChatTools.API.pro
 {
     /// <summary>
     /// qq管家拦截检测

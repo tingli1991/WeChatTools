@@ -7,7 +7,7 @@ using System.Text;
 using System.Web;
 using WeChatTools.Core;
 
-namespace WeChatTools.Web
+namespace WeChatTools.API
 {
     /// <summary>
     ///  专用前台访问

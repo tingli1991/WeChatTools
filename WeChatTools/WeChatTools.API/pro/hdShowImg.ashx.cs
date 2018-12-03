@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using WeChatTools.Core;
 
-namespace WeChatTools.Web
+namespace WeChatTools.API
 {
     /// <summary>
     ///  微信公众号文章图片中转,突破微信反盗链限制

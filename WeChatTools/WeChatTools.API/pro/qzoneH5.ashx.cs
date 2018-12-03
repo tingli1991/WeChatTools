@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using WeChatTools.Core;
 
-namespace WeChatTools.Web.pro
+namespace WeChatTools.API.pro
 {
     /// <summary>
     /// qzoneH5 的摘要说明

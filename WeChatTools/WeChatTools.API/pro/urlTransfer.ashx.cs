@@ -8,7 +8,7 @@ using System.Text;
 using System.Web;
 using WeChatTools.Core;
 
-namespace WeChatTools.Web
+namespace WeChatTools.API
 {
     /// <summary>
     /// 域名中转工具,随机切换域名,保证活动正常进行

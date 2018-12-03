@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="wxUrlCheck.ashx.cs" Class="WeChatTools.Web.WXUrlCheck" %>
+﻿<%@ WebHandler Language="C#" CodeBehind="wxUrlCheck.ashx.cs" Class="WeChatTools.API.WXUrlCheck" %>

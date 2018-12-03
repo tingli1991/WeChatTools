@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace WeChatTools.Web.dev
+namespace WeChatTools.API.dev
 {
     /// <summary>
     /// ZhiHu 的摘要说明

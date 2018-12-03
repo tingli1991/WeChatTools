@@ -9,7 +9,7 @@ using System.Text;
 using System.Web;
 using WeChatTools.Core;
 
-namespace WeChatTools.Web
+namespace WeChatTools.API
 {
     /// <summary>
     /// 微信域名检测工具--公共测试

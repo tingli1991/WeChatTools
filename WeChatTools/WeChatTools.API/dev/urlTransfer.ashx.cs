@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using WeChatTools.Core;
 
-namespace WeChatTools.Web.dev
+namespace WeChatTools.API.dev
 {
     /// <summary>
     /// urlTransfer 的摘要说明
