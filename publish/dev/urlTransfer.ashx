@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="urlTransfer.ashx.cs" Class="WeChatTools.Web.dev.urlTransfer" %>
+﻿<%@ WebHandler Language="C#" CodeBehind="urlTransfer.ashx.cs" Class="WeChatTools.API.dev.urlTransfer" %>

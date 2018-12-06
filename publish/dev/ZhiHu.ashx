@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="ZhiHu.ashx.cs" Class="WeChatTools.Web.dev.ZhiHu" %>
+﻿<%@ WebHandler Language="C#" CodeBehind="ZhiHu.ashx.cs" Class="WeChatTools.API.dev.ZhiHu" %>
