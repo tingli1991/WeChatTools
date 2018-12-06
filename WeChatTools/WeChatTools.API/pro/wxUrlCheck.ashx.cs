@@ -18,129 +18,138 @@ namespace WeChatTools.API
     {
         private const int DURATION = 24 * 60;
         private static string userIP = "127.0.0.1";
-
+        protected const string GET = "GET";
         private string wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeChatCheck");
         private TimeSpan _strWorkingDayAM = DateTime.Parse("08:00").TimeOfDay;//工作时间上午08:00
         private TimeSpan _strWorkingDayPM = DateTime.Parse("21:00").TimeOfDay;
         public void ProcessRequest(HttpContext context)
         {
-            //PostHtml();
-            //lppsd.zq6kcwhbpvg2twb.com
-            //vftkt.n06th8owuihzhhs.com
-            context.Response.Headers.Add("Access-Control-Allow-Origin", "http://wx.rrbay.com");
-            context.Response.Headers.Add("Access-Control-Allow-Methods", "GET");
-
-            userIP = GetWebClientIp(context);
-            context.Response.ContentType = "text/plain";
-            TimeSpan dspNow = DateTime.Now.TimeOfDay;
             string result = string.Empty;
-            string urlCheck = string.Empty;
-            string callBack = string.Empty;
-            if (IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM))
+            if (context.Request.HttpMethod.ToUpper().Equals(GET))
             {
-                string referrer = context.Request.UrlReferrer != null ? context.Request.UrlReferrer.Host.ToLower() : "";
-                callBack = string.IsNullOrEmpty(context.Request.QueryString["callback"]) ? "" : context.Request.QueryString["callback"].ToString(); //回调
-                if (!string.IsNullOrEmpty(context.Request["url"]) && string.IsNullOrEmpty(callBack) && (string.IsNullOrEmpty(referrer) || referrer.ToLower().Contains("v2ex.com") || referrer.ToLower().Contains("hexun.com") || referrer.ToLower().Contains("cnblogs.com") || referrer.ToLower().Contains("zhihu.com") || referrer.ToLower().Contains("csdn.net") || referrer.ToLower().Contains("rrbay.xyz")))
+
+                //PostHtml();
+                //lppsd.zq6kcwhbpvg2twb.com
+                //vftkt.n06th8owuihzhhs.com
+                context.Response.Headers.Add("Access-Control-Allow-Origin", "http://wx.rrbay.com");
+                context.Response.Headers.Add("Access-Control-Allow-Methods", "GET");
+
+                userIP = GetWebClientIp(context);
+                context.Response.ContentType = "text/plain";
+                TimeSpan dspNow = DateTime.Now.TimeOfDay;
+                 
+                string urlCheck = string.Empty;
+                string callBack = string.Empty;
+                if (IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM))
                 {
-                    //需要检测的网址
-                    urlCheck = context.Request["url"]; //检测的值
-                    string[] sArray = urlCheck.Split('.');
-                    if (sArray.Length == 3 && sArray[1].Length == 15)
+                    string referrer = context.Request.UrlReferrer != null ? context.Request.UrlReferrer.Host.ToLower() : "";
+                    callBack = string.IsNullOrEmpty(context.Request.QueryString["callback"]) ? "" : context.Request.QueryString["callback"].ToString(); //回调
+                    if (!string.IsNullOrEmpty(context.Request["url"]) && string.IsNullOrEmpty(callBack) && (string.IsNullOrEmpty(referrer) || referrer.ToLower().Contains("v2ex.com") || referrer.ToLower().Contains("hexun.com") || referrer.ToLower().Contains("cnblogs.com") || referrer.ToLower().Contains("zhihu.com") || referrer.ToLower().Contains("csdn.net") || referrer.ToLower().Contains("rrbay.xyz")))
                     {
-                        result = "{\"State\":false,\"Code\":\"002\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"歇一歇,访问太快了,进qq群交流:41977413\"}";
-                    }
-                    else
-                    {
-                        if (!IsRedis(context))
+                        //需要检测的网址
+                        urlCheck = context.Request["url"]; //检测的值
+                        string[] sArray = urlCheck.Split('.');
+                        if (sArray.Length == 3 && sArray[1].Length == 15)
                         {
-                            result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术,进群交流 QQ群:41977413!\"}";
+                            result = "{\"State\":false,\"Code\":\"002\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"歇一歇,访问太快了,进qq群交流:41977413\"}";
                         }
                         else
                         {
-
-
-                            if (!string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
+                            if (!IsRedis(context))
                             {
-                                wxCheckApiKey = context.Request["key"]; //key ,md5值
+                                result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术,进群交流 QQ群:41977413!\"}";
                             }
-
-                            ServiceApiClient SpVoiceObj2 = null;
-                            //    ServiceApiClient SpVoiceObj = null;
-                            try
+                            else
                             {
 
-                                bool isTrue = urlCheck.StartsWith("http");
-                                if (!isTrue) { urlCheck = "http://" + urlCheck; }
-                                urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
 
-                                string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
+                                if (!string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
+                                {
+                                    wxCheckApiKey = context.Request["key"]; //key ,md5值
+                                }
 
-                                SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi");
-                                SpVoiceObj2.Open();
-                                result = SpVoiceObj2.Api(json2);
-                                SpVoiceObj2.Close();
-                                //JsonObject.Results aup = JsonConvert.DeserializeObject<JsonObject.Results>(result);
+                                ServiceApiClient SpVoiceObj2 = null;
+                                //    ServiceApiClient SpVoiceObj = null;
+                                try
+                                {
 
-                                //if (aup.State == true)
-                                //{
-                                //    string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
-                                //    SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
-                                //    SpVoiceObj.Open();
-                                //    result = SpVoiceObj.Api(json);
-                                //    SpVoiceObj.Close();
+                                    bool isTrue = urlCheck.StartsWith("http");
+                                    if (!isTrue) { urlCheck = "http://" + urlCheck; }
+                                    urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
 
-                                //}
-                                Logger.WriteLogggerTest("#################################################");
-                                Logger.WriteLogggerTest(userIP + ":" + wxCheckApiKey + ":" + result);
+                                    string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
 
-                                Logger.WriteLogggerTest(urlCheck + ":HTTP_CDN_SRC_IP--" + context.Request.ServerVariables["HTTP_CDN_SRC_IP"]);
-                                Logger.WriteLogggerTest(urlCheck + ":HTTP_Cdn-Src-Ip--" + context.Request.ServerVariables["HTTP_Cdn-Src-Ip"]);
-                                Logger.WriteLogggerTest(urlCheck + ":Cdn-Src-Ip--" + context.Request.ServerVariables["Cdn-Src-Ip"]);
-                                Logger.WriteLogggerTest(urlCheck + ":HTTP_X_FORWARDED_FOR--" + context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
-                                Logger.WriteLogggerTest(urlCheck + ":Proxy-Client-IP--" + context.Request.ServerVariables["Proxy-Client-IP"]);
-                                Logger.WriteLogggerTest(urlCheck + ":WL-Proxy-Client-IP--" + context.Request.ServerVariables["WL-Proxy-Client-IP"]);
-                                Logger.WriteLogggerTest(urlCheck + ":HTTP_CLIENT_IP--" + context.Request.ServerVariables["HTTP_CLIENT_IP"]);
-                                Logger.WriteLogggerTest(urlCheck + ":HTTP_VIA--" + context.Request.ServerVariables["HTTP_VIA"]);
-                                Logger.WriteLogggerTest(urlCheck + ":REMOTE_ADDR--" + context.Request.ServerVariables["REMOTE_ADDR"]);
+                                    SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi");
+                                    SpVoiceObj2.Open();
+                                    result = SpVoiceObj2.Api(json2);
+                                    SpVoiceObj2.Close();
+                                    //JsonObject.Results aup = JsonConvert.DeserializeObject<JsonObject.Results>(result);
 
-                                Logger.WriteLogggerTest("==================================================");
+                                    //if (aup.State == true)
+                                    //{
+                                    //    string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
+                                    //    SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
+                                    //    SpVoiceObj.Open();
+                                    //    result = SpVoiceObj.Api(json);
+                                    //    SpVoiceObj.Close();
 
+                                    //}
+                                    Logger.WriteLogggerTest("#################################################");
+                                    Logger.WriteLogggerTest(userIP + ":" + wxCheckApiKey + ":" + result);
+
+                                    Logger.WriteLogggerTest(urlCheck + ":HTTP_CDN_SRC_IP--" + context.Request.ServerVariables["HTTP_CDN_SRC_IP"]);
+                                    Logger.WriteLogggerTest(urlCheck + ":HTTP_Cdn-Src-Ip--" + context.Request.ServerVariables["HTTP_Cdn-Src-Ip"]);
+                                    Logger.WriteLogggerTest(urlCheck + ":Cdn-Src-Ip--" + context.Request.ServerVariables["Cdn-Src-Ip"]);
+                                    Logger.WriteLogggerTest(urlCheck + ":HTTP_X_FORWARDED_FOR--" + context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
+                                    Logger.WriteLogggerTest(urlCheck + ":Proxy-Client-IP--" + context.Request.ServerVariables["Proxy-Client-IP"]);
+                                    Logger.WriteLogggerTest(urlCheck + ":WL-Proxy-Client-IP--" + context.Request.ServerVariables["WL-Proxy-Client-IP"]);
+                                    Logger.WriteLogggerTest(urlCheck + ":HTTP_CLIENT_IP--" + context.Request.ServerVariables["HTTP_CLIENT_IP"]);
+                                    Logger.WriteLogggerTest(urlCheck + ":HTTP_VIA--" + context.Request.ServerVariables["HTTP_VIA"]);
+                                    Logger.WriteLogggerTest(urlCheck + ":REMOTE_ADDR--" + context.Request.ServerVariables["REMOTE_ADDR"]);
+
+                                    Logger.WriteLogggerTest("==================================================");
+
+
+                                }
+                                catch (System.ServiceModel.CommunicationException)
+                                {
+                                    //  if (SpVoiceObj != null) SpVoiceObj.Abort();
+                                    if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                                }
+                                catch (TimeoutException)
+                                {
+                                    //   if (SpVoiceObj != null) SpVoiceObj.Abort();
+                                    if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                                }
+                                catch (Exception ex)
+                                {
+                                    //   if (SpVoiceObj != null) SpVoiceObj.Abort();
+                                    if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                                    result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
+                                    LogTools.WriteLine(userIP + ":" + wxCheckApiKey + ":" + ex.Message);
+                                }
 
                             }
-                            catch (System.ServiceModel.CommunicationException)
-                            {
-                                //  if (SpVoiceObj != null) SpVoiceObj.Abort();
-                                if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                            }
-                            catch (TimeoutException)
-                            {
-                                //   if (SpVoiceObj != null) SpVoiceObj.Abort();
-                                if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                            }
-                            catch (Exception ex)
-                            {
-                                //   if (SpVoiceObj != null) SpVoiceObj.Abort();
-                                if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                                result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
-                                LogTools.WriteLine(userIP + ":" + wxCheckApiKey + ":" + ex.Message);
-                            }
-
                         }
+                    }
+                    else
+                    {
+                        result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"参数错误,进qq群交流:41977413!\"}";
+
                     }
                 }
                 else
                 {
-                    result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"参数错误,进qq群交流:41977413!\"}";
-
+                    result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"测试接口,请在每天(08:00-21:00)时间段进行测试,需要讨论技术,进群交流 QQ群:41977413.\"}";
+                }
+                if (!string.IsNullOrEmpty(callBack))
+                {
+                    result = callBack + "(" + result + ")";
                 }
             }
             else
             {
-                result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"测试接口,请在每天(08:00-21:00)时间段进行测试,需要讨论技术,进群交流 QQ群:41977413.\"}";
-            }
-            if (!string.IsNullOrEmpty(callBack))
-            {
-                result = callBack + "(" + result + ")";
+                result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"QQ:2365370565 \",\"Msg\":\"参数错误,进qq群交流:41977413!\"}";
             }
             context.Response.Write(result);
             context.Response.End();
