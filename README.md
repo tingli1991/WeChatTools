@@ -4,7 +4,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/gemgin/WeChatTools.svg?style=social&label=Stars)](https://github.com/gemgin/WeChatTools)
 [![GitHub forks](https://img.shields.io/github/forks/gemgin/WeChatTools.svg?style=social&label=Fork)](https://github.com/gemgin/WeChatTools)
 
-交流QQ群：41977413
+交流QQ群：41977413,QQ:391502069
 
 ## 项目介绍
 > 微信域名网址检测
@@ -26,8 +26,8 @@
  {"State":true, "Code","101","Data":"www.teu7.cn",  "Msg":"屏蔽"}
  {"State":true, "Code","102","Data":"www.rrbay.com","Msg":"正常"}
  {"State":true, "Code","103","Data":"www.rrbay.com","Msg":"检测结果为空,请重试!"}
- {"State":false,"Code","001","Data":"www.rrbay.com","Msg":"非法访问，访问被拒绝,进qq群交流:41977413"}
- {"State":false,"Code","002","Data":"www.rrbay.com","Msg":"歇一歇,访问太快了,进qq群交流:41977413"}
+ {"State":false,"Code","001","Data":"www.rrbay.com","Msg":"非法访问，访问被拒绝,联系管理员qq:391502069"}
+ {"State":false,"Code","002","Data":"www.rrbay.com","Msg":"歇一歇,访问太快了,联系管理员qq:391502069"}
  {"State":false,"Code","003","Data":"www.rrbay.com","Msg":"服务暂停,请联系管理员!"}
 ```
 - 域名检测界面：http://wx.rrbay.com/
