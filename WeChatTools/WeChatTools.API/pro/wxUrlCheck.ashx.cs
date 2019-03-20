@@ -51,13 +51,13 @@ namespace WeChatTools.API
                         string[] sArray = urlCheck.Split('.');
                         if (sArray.Length == 3 && sArray[1].Length == 15)
                         {
-                            result = "{\"State\":false,\"Code\":\"002\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"歇一歇,访问太快了,进qq群交流:41977413\"}";
+                            result = "{\"State\":false,\"Code\":\"002\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"歇一歇,访问太快了,联系管理员qq:391502069\"}";
                         }
                         else
                         {
                             if (!IsRedis(context))
                             {
-                                result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术,进群交流 QQ群:41977413!\"}";
+                                result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术,联系管理员qq:391502069!\"}";
                             }
                             else
                             {
@@ -134,13 +134,13 @@ namespace WeChatTools.API
                     }
                     else
                     {
-                        result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"参数错误,进qq群交流:41977413!\"}";
+                        result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"参数错误,联系管理员qq:391502069!\"}";
 
                     }
                 }
                 else
                 {
-                    result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"测试接口,请在每天(08:00-21:00)时间段进行测试,需要讨论技术,进群交流 QQ群:41977413.\"}";
+                    result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"测试接口,请在每天(08:00-21:00)时间段进行测试,需要讨论技术,联系管理员qq:391502069.\"}";
                 }
                 if (!string.IsNullOrEmpty(callBack))
                 {
@@ -149,7 +149,7 @@ namespace WeChatTools.API
             }
             else
             {
-                result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"QQ:2365370565 \",\"Msg\":\"参数错误,进qq群交流:41977413!\"}";
+                result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"QQ:391502069 \",\"Msg\":\"参数错误,联系管理员qq:391502069!\"}";
             }
             context.Response.Write(result);
             context.Response.End();

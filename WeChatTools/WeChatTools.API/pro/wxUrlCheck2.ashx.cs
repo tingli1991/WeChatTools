@@ -36,7 +36,7 @@ namespace WeChatTools.API
 
                     if (userKey.Trim() == wxCheckApiKey)
                     {
-                        result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"参数错误,进qq群交流:41977413!\"}";
+                        result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"参数错误,联系管理员qq:391502069!\"}";
                     }
                     else
                     {
@@ -97,13 +97,13 @@ namespace WeChatTools.API
                 }
                 else
                 {
-                    result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"参数错误,进qq群交流:41977413!\"}";
+                    result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"参数错误,联系管理员qq:391502069!\"}";
 
                 }
             }
             else
             {
-                result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"QQ:2365370565 \",\"Msg\":\"参数错误,进qq群交流:41977413!\"}";
+                result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"QQ:391502069 \",\"Msg\":\"参数错误,联系管理员qq:391502069!\"}";
             }
             context.Response.Write(result);
             context.Response.End();
