@@ -17,7 +17,9 @@ namespace WeChatTools.API
         private const int DURATION = 24 * 60;
         private static string userIP = "127.0.0.1";
         protected const string GET = "GET";
-        private string wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey3", "WeChatCheck");
+        private string wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeChatCheck");
+        private string wxCheckApiKey3 = ConfigTool.ReadVerifyConfig("wxCheckApiKey3", "WeChatCheck");
+        private string wxKey = string.Empty;
         private TimeSpan _strWorkingDayAM = DateTime.Parse("08:00").TimeOfDay;//工作时间上午08:00
         private TimeSpan _strWorkingDayPM = DateTime.Parse("21:00").TimeOfDay;
         public void ProcessRequest(HttpContext context)
@@ -32,7 +34,7 @@ namespace WeChatTools.API
                 userIP = GetWebClientIp(context);
                 context.Response.ContentType = "text/plain";
                 TimeSpan dspNow = DateTime.Now.TimeOfDay;
-                
+
                 string urlCheck = string.Empty;
                 string callBack = string.Empty;
                 if (IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM))
@@ -41,16 +43,21 @@ namespace WeChatTools.API
                     callBack = string.IsNullOrEmpty(context.Request.QueryString["callback"]) ? "" : context.Request.QueryString["callback"].ToString(); //回调
                     if (!string.IsNullOrEmpty(context.Request["url"]) && !string.IsNullOrEmpty(callBack))
                     {
-                        if (!IsRedis(context))
+                        if (!string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
+                        {
+                            wxKey = context.Request["key"]; //key ,md5值
+                        }
+                        else
+                        {
+                            wxKey = wxCheckApiKey3;
+                        }
+
+                        if (!IsRedis(context) && (wxKey.Equals(wxCheckApiKey) || wxKey.Equals(wxCheckApiKey3)))
                         {
                             result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术,联系管理员qq:391502069!\"}";
                         }
                         else
                         {
-                            if (!string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
-                            {
-                                wxCheckApiKey = context.Request["key"]; //key ,md5值
-                            }
 
                             ServiceApiClient SpVoiceObj2 = null;
                             //    ServiceApiClient SpVoiceObj = null;
@@ -62,7 +69,7 @@ namespace WeChatTools.API
                                 if (!isTrue) { urlCheck = "http://" + urlCheck; }
                                 urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
 
-                                string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
+                                string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxKey + "\'}\"}";
 
                                 SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi");
                                 SpVoiceObj2.Open();
@@ -72,15 +79,16 @@ namespace WeChatTools.API
 
                                 //if (aup.State == true)
                                 //{
-                                //    string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
+                                //    string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxKey + "\'}\"}";
                                 //    SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
                                 //    SpVoiceObj.Open();
                                 //    result = SpVoiceObj.Api(json);
                                 //    SpVoiceObj.Close();
 
                                 //}
+
                                 Logger.WriteLogggerTest("#################################################");
-                                Logger.WriteLogggerTest(userIP + ":" + wxCheckApiKey + ":" + result);
+                                Logger.WriteLogggerTest(userIP + ":" + wxKey + ":" + result);
 
                                 Logger.WriteLogggerTest(urlCheck + ":HTTP_CDN_SRC_IP--" + context.Request.ServerVariables["HTTP_CDN_SRC_IP"]);
                                 Logger.WriteLogggerTest(urlCheck + ":HTTP_Cdn-Src-Ip--" + context.Request.ServerVariables["HTTP_Cdn-Src-Ip"]);
@@ -111,7 +119,7 @@ namespace WeChatTools.API
                                 //   if (SpVoiceObj != null) SpVoiceObj.Abort();
                                 if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
                                 result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
-                                LogTools.WriteLine(userIP + ":" + wxCheckApiKey + ":" + ex.Message);
+                                LogTools.WriteLine(userIP + ":" + wxKey + ":" + ex.Message);
                             }
 
 
