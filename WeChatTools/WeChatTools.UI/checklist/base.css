@@ -943,3 +943,6 @@ input {
     overflow: hidden;
     background: url(/static/images/bg_00.jpg) repeat;
 }
+.test .list .error1 a {
+    color: #ff3900;
+}

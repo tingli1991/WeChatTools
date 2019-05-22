@@ -228,26 +228,26 @@
                                             $('#ck_stop').append(domain);
                                             $('#ck_stop').append("\r\n");
                                             ck_stop++;
-                                            $('.list').prepend("<li class=\"error\"><a >" + gettime() + " >>" + domain + " ->已拦截</a></li>");
+                                            $('.list').prepend("<li class=\"error1\"><a >" + gettime() + " >>" + domain + " ->已拦截</a></li>");
                                         } else if (data.Code === "001") {
                                             $('#ck_err').append(domain);
                                             $('#ck_err').append("\r\n");
                                             domain_len = 0;
                                             add_complete_tips(succ_count, err_count, ck_stop); //处理完成提示
                                             err_count++;
-                                            $('.list').prepend("<li class=\"error\"><a >" + gettime() + " >> " + domain + "非法访问,访问被拒绝,联系管理员qq:391502069</a></li>");
+                                            $('.list').prepend("<li class=\"error1\"><a >" + gettime() + " >> " + domain + "非法访问,访问被拒绝,联系管理员qq:391502069</a></li>");
                                         } else if (data.Code === "002") {
                                             $('#ck_err').append(domain);
                                             $('#ck_err').append("\r\n");
                                             add_complete_tips(succ_count, err_count, ck_stop); //处理完成提示
                                             err_count++;
-                                            $('.list').prepend("<li class=\"error\"><a >" + gettime() + " >> " + domain + " 歇一歇,访问太快了,联系管理员qq:391502069</a></li>");
+                                            $('.list').prepend("<li class=\"error1\"><a >" + gettime() + " >> " + domain + " 歇一歇,访问太快了,联系管理员qq:391502069</a></li>");
                                         } else {
                                             $('#ck_err').append(domain);
                                             $('#ck_err').append("\r\n");
                                             add_complete_tips(succ_count, err_count, ck_stop); //处理完成提示
                                             err_count++;
-                                            $('.list').prepend("<li class=\"error\"><a >" + gettime() + " >> " + domain + "  " + data.Msg + "</a></li>");
+                                            $('.list').prepend("<li class=\"error1\"><a >" + gettime() + " >> " + domain + "  " + data.Msg + "</a></li>");
                                         }
                                         adding_tips(domain_len, succ_count, err_count, ck_stop); //处理过程中提示
                                         if (A == B && domain_len == err_count + succ_count + ck_stop) {
@@ -258,7 +258,7 @@
                             } else if (domain.length != 0) {
                                 $('#ck_err').append(domain);
                                 $('#ck_err').append("\r\n");
-                                $('.list').prepend("<li class=\"error\"><a >" + gettime() + " >>  " + domain + "   格式错误</a></li>");
+                                $('.list').prepend("<li class=\"error1\"><a >" + gettime() + " >>  " + domain + "   格式错误</a></li>");
                                 err_count++;
                                 adding_tips(domain_len, succ_count, err_count, ck_stop); //处理过程中提示
                                 if (err_count == domain_len || domain_len == err_count + succ_count + ck_stop) {
@@ -267,7 +267,7 @@
                             } else {
                                 //过滤空内容
                                 err_count++;
-                                $('.list').prepend("<li class=\"error\"><a >" + gettime() + " >>过滤空内容</a></li>");
+                                $('.list').prepend("<li class=\"error1\"><a >" + gettime() + " >>过滤空内容</a></li>");
                                 if (err_count == domain_len || domain_len == err_count + succ_count + ck_stop) {
                                     add_complete_tips(succ_count, err_count, ck_stop); //处理完成提示
                                 }
