@@ -69,8 +69,8 @@ input {
 .mauto {
   margin: 0 auto;
 }
-.mt100 {
-  margin-top: 100px;
+.mt101 {
+  margin-top: 60px;
 }
 .red {
   color: #ff3900;
@@ -923,4 +923,23 @@ input {
   .header1 li {
     margin-top: 0;
   }
+}
+
+
+/*新加css*/
+.yj1 {
+    padding: 5px;
+    width: 430px;
+    height: 35px;
+    border: 2px solid #13aeb5;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+}
+
+.page2 {
+    /* height: 820px; */
+    box-sizing: border-box;
+    overflow: hidden;
+    background: url(/static/images/bg_00.jpg) repeat;
 }
