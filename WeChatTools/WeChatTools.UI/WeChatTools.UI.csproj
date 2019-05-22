@@ -47,6 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="404.html" />
+    <Content Include="checklist.html" />
+    <Content Include="checklist\base.css" />
+    <Content Include="checklist\logo_word.png" />
     <Content Include="css\hm.js" />
     <Content Include="css\home_step_icos.png" />
     <Content Include="css\icon.png" />
@@ -66,7 +69,6 @@
     <Content Include="js\base.js" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\jquery.min.js" />
-    <Content Include="js\layer - 副本.js" />
     <Content Include="js\layer.js" />
     <Content Include="js\skin\layer.css" />
     <Content Include="libs\bootstrap\3.2.0\css\bootstrap.min.css" />
