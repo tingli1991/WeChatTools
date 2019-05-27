@@ -78,6 +78,7 @@
     <Content Include="Config\site.config" />
     <Content Include="pro\qqUrlCheck2.ashx" />
     <Content Include="pro\qqUrlCheck.ashx" />
+    <Content Include="pro\shorturl.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -109,6 +110,9 @@
     </Compile>
     <Compile Include="pro\qzoneH5.ashx.cs">
       <DependentUpon>qzoneH5.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="pro\shorturl.ashx.cs">
+      <DependentUpon>shorturl.ashx</DependentUpon>
     </Compile>
     <Compile Include="pro\urlTransfer.ashx.cs">
       <DependentUpon>urlTransfer.ashx</DependentUpon>
