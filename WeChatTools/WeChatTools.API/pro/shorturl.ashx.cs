@@ -40,10 +40,10 @@ namespace WeChatTools.API
                         ServiceApiClient SpVoiceObj = null;
                         try
                         {
-                            if (!url.Contains("%3a%2f%2f")) { url = System.Web.HttpUtility.UrlEncode(url); }
+                            if (type=="WURLCN") { url = System.Web.HttpUtility.UrlEncode(url); }
 
                             string json2 = "{\"Mode\":\"ShortUrl\",\"Param\":\"{\'CheckUrl\':\'" + url + "\',\'type\':\'" + type + "\',\'UserKey\':\'" + key + "\'}\"}";
-
+                            
                             SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
                             SpVoiceObj.Open();
                             result = SpVoiceObj.Api(json2);

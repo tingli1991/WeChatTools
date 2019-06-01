@@ -60,7 +60,7 @@ namespace WeChatTools.Core
         {
             if (File.Exists(fileName))
             {
-                FileStream myFs = new FileStream(fileName, FileMode.Append, FileAccess.ReadWrite, FileShare.ReadWrite);
+                FileStream myFs = new FileStream(fileName, FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
                 myFs.Close();
             }
         }
