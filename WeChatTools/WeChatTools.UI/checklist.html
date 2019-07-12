@@ -203,9 +203,9 @@
                     setTimeout(function () {
                         if (i < domain_len) {
                             var domain = domain_arr[i]
-                            domain = domain.toLowerCase();
+                            var lowerDomain = domain.toLowerCase();
 
-                            if (IsURL(domain) == true) {
+                            if (IsURL(lowerDomain) == true) {
                                 A++;
                                 $.ajax({
 
