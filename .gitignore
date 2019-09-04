@@ -188,3 +188,8 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+/WeChatTools/WeChatTools.UI/static/styles/head.css
+/WeChatTools/WeChatTools.UI/static/styles/foot.css
+/WeChatTools/WeChatTools.UI/static/styles/base1.css
+/WeChatTools/WeChatTools.UI/img/logo_word.png
+/WeChatTools/WeChatTools.UI/test.html
