@@ -88,19 +88,11 @@ namespace WeChatTools.API
                                 //}
 
                                 Logger.WriteLogggerTest("#################################################");
-                                Logger.WriteLogggerTest(userIP + ":" + wxKey + ":" + result);
+                                Logger.WriteLogggerTest(wxKey + ":" + userIP + ":" + result);
+                                Logger.WriteLogggerTest(wxKey + ":" + context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
+                                 
+                               
 
-                                Logger.WriteLogggerTest(urlCheck + ":HTTP_CDN_SRC_IP--" + context.Request.ServerVariables["HTTP_CDN_SRC_IP"]);
-                                Logger.WriteLogggerTest(urlCheck + ":HTTP_Cdn-Src-Ip--" + context.Request.ServerVariables["HTTP_Cdn-Src-Ip"]);
-                                Logger.WriteLogggerTest(urlCheck + ":Cdn-Src-Ip--" + context.Request.ServerVariables["Cdn-Src-Ip"]);
-                                Logger.WriteLogggerTest(urlCheck + ":HTTP_X_FORWARDED_FOR--" + context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
-                                Logger.WriteLogggerTest(urlCheck + ":Proxy-Client-IP--" + context.Request.ServerVariables["Proxy-Client-IP"]);
-                                Logger.WriteLogggerTest(urlCheck + ":WL-Proxy-Client-IP--" + context.Request.ServerVariables["WL-Proxy-Client-IP"]);
-                                Logger.WriteLogggerTest(urlCheck + ":HTTP_CLIENT_IP--" + context.Request.ServerVariables["HTTP_CLIENT_IP"]);
-                                Logger.WriteLogggerTest(urlCheck + ":HTTP_VIA--" + context.Request.ServerVariables["HTTP_VIA"]);
-                                Logger.WriteLogggerTest(urlCheck + ":REMOTE_ADDR--" + context.Request.ServerVariables["REMOTE_ADDR"]);
-
-                                Logger.WriteLogggerTest("==================================================");
 
 
                             }

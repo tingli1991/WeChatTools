@@ -64,17 +64,14 @@
     <Content Include="Lib\ServiceStack.Redis.xml" />
     <Content Include="Lib\ServiceStack.Text.dll" />
     <Content Include="Lib\ServiceStack.Text.xml" />
-    <Content Include="pro\hdShowImg.ashx" />
-    <Content Include="pro\urlTransfer.ashx" />
-    <Content Include="dev\ZhiHu.ashx" />
-    <Content Include="dev\urlTransfer.ashx" />
+    <Content Include="dev\hdShowImg.ashx" />
     <Content Include="pro\wxUrlCheck2.ashx" />
     <Content Include="pro\wxUrlCheck3.ashx" />
     <Content Include="Config\WeChatCheck.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Config\Other.config" />
-    <Content Include="pro\qzoneH5.ashx" />
+    <Content Include="dev\qzoneH5.ashx" />
     <Content Include="Config\site.config" />
     <Content Include="pro\qqUrlCheck2.ashx" />
     <Content Include="pro\qqUrlCheck.ashx" />
@@ -92,13 +89,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="dev\urlTransfer.ashx.cs">
-      <DependentUpon>urlTransfer.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="dev\ZhiHu.ashx.cs">
-      <DependentUpon>ZhiHu.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="pro\hdShowImg.ashx.cs">
+    <Compile Include="dev\hdShowImg.ashx.cs">
       <DependentUpon>hdShowImg.ashx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -108,14 +99,11 @@
     <Compile Include="pro\qqUrlCheck2.ashx.cs">
       <DependentUpon>qqUrlCheck2.ashx</DependentUpon>
     </Compile>
-    <Compile Include="pro\qzoneH5.ashx.cs">
+    <Compile Include="dev\qzoneH5.ashx.cs">
       <DependentUpon>qzoneH5.ashx</DependentUpon>
     </Compile>
     <Compile Include="pro\shorturl.ashx.cs">
       <DependentUpon>shorturl.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="pro\urlTransfer.ashx.cs">
-      <DependentUpon>urlTransfer.ashx</DependentUpon>
     </Compile>
     <Compile Include="pro\wxUrlCheck.ashx.cs">
       <DependentUpon>wxUrlCheck.ashx</DependentUpon>
