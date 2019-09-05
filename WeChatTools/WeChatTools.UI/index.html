@@ -41,7 +41,7 @@
 
                     </li>
                     <li>
-                        <a href="#" title="微信域名屏蔽检测">微信域名检测系统<span style="position: relative;top: 3px;left: 5px;">︾</span></a>
+                        <a href="#" title="微信域名屏蔽检测">微信域名检测系统<span style="position: relative;top: 3px;left: 5px;">▼</span></a>
                         <ul>
                             <li><a href="/doc.html" title="api接口文档介绍">接口文档</a></li>
                             <li><a href="/price.html" title="微信域名检测收费标准">收费标准</a></li>
@@ -49,7 +49,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#" title="微信链接防封系统">微信域名防封系统<span style="position: relative;top: 3px;left: 5px;">︾</span></a>
+                        <a href="#" title="微信链接防封系统">微信域名防封系统<span style="position: relative;top: 3px;left: 5px;">▼</span></a>
                         <ul>
                             <li><a href="/doc2.html" title="微信域名防封,微信域名屏蔽自动切换,手机浏览器跳转微信">系统介绍</a></li>
                             <li><a href="/price2.html" title="微信域名防封,微信域名屏蔽自动切换,手机浏览器跳转微信">收费标准</a></li>
@@ -80,7 +80,7 @@
 
                     </p>
                     <p>
-                        <font size="2" color="#ffffff">温馨提示：输入查询域名后点击检测按钮查询结果,如有疑问加QQ: <span style="color:#ff0000;font-weight:bold;">391502069</span></font>
+                        <font size="2" color="#ffffff">温馨提示：输入查询域名后直接回车查询结果,如有疑问加QQ: <span style="color:#ff0000;font-weight:bold;">391502069</span></font>
                         <br><font size="2" color="#ffffff">【每天08:00-21:00,免费接口查询额度15次】</font><a style="color:#ff0000;font-weight:bold;font-size:1.5rem;" href="/checklist.html" target="_blank" title="批量检测">批量检测</a>
                     </p>
                 </div>
@@ -223,7 +223,11 @@
     <script type="text/javascript" rel="nofollow" src="https://cdnjs.cloudflare.com/ajax/libs/layer/2.3/layer.js"></script>    
     <script>window.easyapi = { ctx: "" };</script>
     <script type="text/javascript">
-
+        $(document).keyup(function (event) {
+            if (event.keyCode == 13) {
+                click_fn();
+            }
+        });
         var btn = document.getElementById("btn_test");
         function click_fn() {
             $("#su").attr("disabled", "disabled");
