@@ -74,9 +74,13 @@
                     <p>微信域名检测接口,微信链接防封技术,浏览器跳转微信,微信域名屏蔽拦截自动切换跳转</p>
                     <p>
                         <font color="#23a9a0"><input id="kw" name="wd" class="yj" type="text" placeholder="请输入要检测的域名,如 www.rrbay.com" /></font>
+                        <button onclick="click_fn()" class="btn_one" id="btn_test">
+                            检测
+                        </button>
+
                     </p>
                     <p>
-                        <font size="2" color="#ffffff">温馨提示：输入查询域名后直接回车查询结果,如有疑问加QQ: <span style="color:#ff0000;font-weight:bold;">391502069</span></font>
+                        <font size="2" color="#ffffff">温馨提示：输入查询域名后点击检测按钮查询结果,如有疑问加QQ: <span style="color:#ff0000;font-weight:bold;">391502069</span></font>
                         <br><font size="2" color="#ffffff">【每天08:00-21:00,免费接口查询额度15次】</font><a style="color:#ff0000;font-weight:bold;font-size:1.5rem;" href="/checklist.html" target="_blank" title="批量检测">批量检测</a>
                     </p>
                 </div>
@@ -219,12 +223,9 @@
     <script type="text/javascript" rel="nofollow" src="https://cdnjs.cloudflare.com/ajax/libs/layer/2.3/layer.js"></script>    
     <script>window.easyapi = { ctx: "" };</script>
     <script type="text/javascript">
-        $(document).keyup(function (event) {
-            if (event.keyCode == 13) {
-                sub();
-            }
-        });
-        function sub() {
+
+        var btn = document.getElementById("btn_test");
+        function click_fn() {
             $("#su").attr("disabled", "disabled");
             $("#su").val("验证中...");
             $("#txtShow").html("&nbsp;");     //设置值
@@ -269,6 +270,7 @@
 
             }
         }
+
         function qingkong() {
             $("#txtShow").html("&nbsp;");     //设置值
         }
