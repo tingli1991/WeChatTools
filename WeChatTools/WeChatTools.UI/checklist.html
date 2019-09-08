@@ -5,7 +5,7 @@
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <title>微信域名批量检测 - 微信域名检测接口 - 太阳湾软件</title>
     <meta name="keywords" content="微信域名检测" />
-    <meta name="description" content="太阳湾软件提供微信域名实时检测拦截接口,微信域名批量检测接口微信域名拦截,返回查询结果实时邮件通知,准确率100%,API接口响应速度快,为您的微信项目保驾护航." />
+    <meta name="description" content="太阳湾软件提供微信域名实时检测接口,微信域名批量检测接口,返回查询结果实时邮件通知,准确率100%,API接口响应速度快,为您的微信项目保驾护航." />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta http-equiv="Cache-Control" content="no-siteapp">
@@ -47,10 +47,10 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#" title="微信域名防封技术">微信链接推广<span style="position: relative;left: 5px;">▼</span></a>
+                            <a href="#" title="微信域名推广技术">微信链接推广<span style="position: relative;left: 5px;">▼</span></a>
                             <ul>
-                                <li><a href="/doc2.html" title="微信域名防封,微信域名拦截自动跳转,手机微信跳转浏览器">系统介绍</a></li>
-                                <li><a href="/price2.html" title="微信域名防封,微信域名拦截自动跳转,手机微信跳转浏览器">收费标准</a></li>
+                                <li><a href="/doc2.html" title="微信域名自动切换跳转,微信跳转浏览器">系统介绍</a></li>
+                                <li><a href="/price2.html" title="微信域名自动切换跳转,微信跳转浏览器">收费标准</a></li>
                                 <li><a href="/faq2.html" title="常见问题解答-faq">问题解答</a></li>
                             </ul>
                         </li>
@@ -78,7 +78,7 @@
                 <!-- 检测进程 -->
                 <div class="title">
                     <h2>进程:</h2>
-                    <span class="res_tips">正常<a>[0]</a>个，拦截：<a>[0]</a>个，失败：<a>[0]</a>个</span>
+                    <span class="res_tips">正常<a>[0]</a>个，屏蔽：<a>[0]</a>个，失败：<a>[0]</a>个</span>
                 </div>
                 <ul class="list"></ul>
                 <!-- <h2>最近检测</h2>
@@ -107,10 +107,10 @@
                             <div>
                                 <ul>
                                     <li><a href="http://www.qqqao.com" target="_blank" title="信息无障碍">信息无障碍</a></li>
-                                    <li><a href="/doc.html" target="_blank" title="微信域名检测">微信域名检测</a></li>
-                                    <li><a href="http://www.rrbay.com/wxcheck" target="_blank" title="微信域名检测专栏,微信域名防封专栏">检测防封</a></li>
+                                    <li><a href="/doc.html" target="_blank" title="微信域名检测接口文档">微信域名检测</a></li>
+                                    <li><a href="http://www.rrbay.com/wxcheck" target="_blank" title="微信域名检测专栏">域名检测</a></li>
                                     <li><a href="http://www.rrbay.com/wza" target="_blank" title="信息无障碍专栏">无障碍专栏</a></li>
-                                    <li><a href="/doc2.html" target="_blank" title="拦截自动跳转">拦截自动跳转</a></li>
+                                    <li><a href="/doc2.html" target="_blank" title="自动切换跳转">自动切换跳转</a></li>
                                     <li><a href="http://www.rrbay.com/chanpin" target="_blank" title="产品中心">产品中心</a></li>
                                 </ul>
                             </div>
@@ -120,7 +120,7 @@
                             <div>
                                 <ul>
                                     <li><a href="http://www.rrbay.com/spec" target="_blank" title="技术专栏">技术专栏</a></li>
-                                    <li><a href="https://github.com/gemgin/WeChatTools" rel="nofollow" target="_blank" title="微信域名检测防封">检测源码</a></li>
+                                    <li><a href="https://github.com/gemgin/WeChatTools" rel="nofollow" target="_blank" title="微信域名检测">检测源码</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -230,7 +230,7 @@
                                             $('#ck_stop').append(domain);
                                             $('#ck_stop').append("\r\n");
                                             ck_stop++;
-                                            $('.list').prepend("<li class=\"error1\"><a >" + gettime() + " >>" + domain + " ->已拦截</a></li>");
+                                            $('.list').prepend("<li class=\"error1\"><a >" + gettime() + " >>" + domain + " ->已屏蔽</a></li>");
                                         } else if (data.Code === "001") {
                                             $('#ck_err').append(domain);
                                             $('#ck_err').append("\r\n");
@@ -283,7 +283,7 @@
         })
         //处理完成提示
         function add_complete_tips(succ_count, err_count, ck_stop) {
-            $('.res_tips').html('检测完成点击导出：正常：正常<a href="javascript:;" id="res_ok" onclick="res_ok()">[' + succ_count + ']</a>个,拦截：<a href="javascript:;" id="res_stop" onclick="res_stop()">[' + ck_stop + ']</a>个，失败：<a href="javascript:;" id="res_err" onclick="res_err()">[' + err_count + ']</a>个');
+            $('.res_tips').html('检测完成点击导出：正常：正常<a href="javascript:;" id="res_ok" onclick="res_ok()">[' + succ_count + ']</a>个,屏蔽：<a href="javascript:;" id="res_stop" onclick="res_stop()">[' + ck_stop + ']</a>个，失败：<a href="javascript:;" id="res_err" onclick="res_err()">[' + err_count + ']</a>个');
             $('#btn_check').html('开始检测');
             $("#btn_check").removeAttr("disabled");
             ck_status = 1;//检测状态
@@ -291,7 +291,7 @@
         }
         //处理列队提示
         function adding_tips(domain_len, succ_count, err_count, ck_stop) {
-            $('.res_tips').html('共' + domain_len + '条数据！列队处理中……正常<a href="javascript:;" id="res_ok" onclick="res_ok()">[' + succ_count + ']</a>个，拦截：<a href="javascript:;" id="res_stop" onclick="res_stop()">[' + ck_stop + ']</a>个，失败<a href="javascript:;" id="res_err" onclick="res_err()">[' + err_count + ']</a>个');
+            $('.res_tips').html('共' + domain_len + '条数据！列队处理中……正常<a href="javascript:;" id="res_ok" onclick="res_ok()">[' + succ_count + ']</a>个，屏蔽：<a href="javascript:;" id="res_stop" onclick="res_stop()">[' + ck_stop + ']</a>个，失败<a href="javascript:;" id="res_err" onclick="res_err()">[' + err_count + ']</a>个');
         }
         //时间获取
         function gettime() {
@@ -320,7 +320,7 @@
                     title: '正常[' + succ_count + ']',
                     content: '<textarea style="margin: 5px 10px; width: 94%; height: 239px;">' + ok + '</textarea>'
                 }, {
-                    title: '拦截[' + ck_stop + ']',
+                    title: '屏蔽[' + ck_stop + ']',
                     content: '<textarea style="margin: 5px 10px; width: 94%; height: 239px;">' + stop + '</textarea>'
                 }, {
                     title: '检测失败[' + err_count + ']',
@@ -335,7 +335,7 @@
             layer.tab({
                 area: ['380px', '300px'],
                 tab: [{
-                    title: '拦截[' + ck_stop + ']',
+                    title: '屏蔽[' + ck_stop + ']',
                     content: '<textarea style="margin: 5px 10px; width: 94%; height: 239px;">' + stop + '</textarea>'
                 }, {
                     title: '正常[' + succ_count + ']',
@@ -357,7 +357,7 @@
                     title: '检测失败[' + err_count + ']',
                     content: '<textarea style="margin: 5px 10px; width: 94%; height: 239px;">' + err + '</textarea>'
                 }, {
-                    title: '拦截[' + ck_stop + ']',
+                    title: '屏蔽[' + ck_stop + ']',
                     content: '<textarea style="margin: 5px 10px; width: 94%; height: 239px;">' + stop + '</textarea>'
                 }, {
                     title: '正常[' + succ_count + ']',
