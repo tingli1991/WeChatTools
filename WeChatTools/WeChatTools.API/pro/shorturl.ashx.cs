@@ -113,7 +113,7 @@ namespace WeChatTools.API
             }
             else
             {
-                DateTime dt = DateTime.Now.AddDays(1);
+                DateTime dt = DateTime.Now.Date.AddDays(1);
                 RedisCacheTools.Incr(key);
 
                 RedisCacheTools.Expire(key, dt);

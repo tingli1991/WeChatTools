@@ -330,7 +330,7 @@ namespace WeChatTools.API
         }
 
 
-        //每个key 24小时只能请求1000000次
+        //每个key 每天只能请求1000000次
         public static bool IsRedis(HttpContext context, string key)
         {
             if (context.Request.Browser.Crawler) return false;
@@ -344,7 +344,7 @@ namespace WeChatTools.API
             }
             else
             {
-                DateTime dt = DateTime.Now.AddDays(1);
+                DateTime dt = DateTime.Now.Date.AddDays(1);
                 RedisCacheTools.Incr(key);
 
                 RedisCacheTools.Expire(key, dt);
