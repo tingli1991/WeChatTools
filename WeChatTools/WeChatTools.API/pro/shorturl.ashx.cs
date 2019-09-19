@@ -103,7 +103,7 @@ namespace WeChatTools.API
         public static bool IsRedis(HttpContext context, string key)
         {
             if (context.Request.Browser.Crawler) return false;
-            if (RedisCacheTools.Exists(key))
+            if (RedisCacheTools.Exists("shorturl:"+key))
             {
                 string keycount = "keycount:" + key;
                 bool check = RedisCacheTools.Exists(keycount);
