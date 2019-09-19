@@ -29,7 +29,7 @@ namespace WeChatTools.API
                 userIP = GetWebClientIp(context);
                 string urlCheck = string.Empty;
                 context.Response.ContentType = "text/plain";
-                
+
                 if (!string.IsNullOrEmpty(context.Request["url"]) && !string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
                 {
                     string userKey = context.Request["key"]; //key ,md5值
@@ -40,59 +40,57 @@ namespace WeChatTools.API
                     }
                     else
                     {
-                        ServiceApiClient SpVoiceObj2 = null;
-                        //  ServiceApiClient SpVoiceObj = null;
-                        try
+
+                        if (!IsRedis(context, userKey))
                         {
-                            //需要检测的网址
-                            urlCheck = context.Request["url"]; //检测的值
-                            bool isTrue = urlCheck.StartsWith("http");
-                            if (!isTrue) { urlCheck = "http://" + urlCheck; }
-                            urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
+                            result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userKey + "\",\"Msg\":\"当天此key超过间隔24小时100万次请求上限,请稍后再试或者购买新的key!\"}";
+                        }
+                        else
+                        {
 
-                            string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + userKey + "\'}\"}";
-
-                            SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi");
-                            SpVoiceObj2.Open();
-                            result = SpVoiceObj2.Api(json2);
-                            SpVoiceObj2.Close();
-                            ////JsonObject.Results aup = JsonConvert.DeserializeObject<JsonObject.Results>(result);
-
-                            ////if (aup.State == true)
-                            ////{
-                            ////    string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + userKey + "\'}\"}";
-                            ////    SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
-                            ////    SpVoiceObj.Open();
-                            ////    result = SpVoiceObj.Api(json);
-                            ////    SpVoiceObj.Close();
-
-                            ////}
-
-                            if (!string.IsNullOrEmpty(context.Request.QueryString["callback"]))
+                            ServiceApiClient SpVoiceObj2 = null;
+                            //  ServiceApiClient SpVoiceObj = null;
+                            try
                             {
-                                string callBack = context.Request.QueryString["callback"].ToString(); //回调
-                                result = callBack + "(" + result + ")";
+                                //需要检测的网址
+                                urlCheck = context.Request["url"]; //检测的值
+                                bool isTrue = urlCheck.StartsWith("http");
+                                if (!isTrue) { urlCheck = "http://" + urlCheck; }
+                                urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
+
+                                string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + userKey + "\'}\"}";
+
+                                SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi");
+                                SpVoiceObj2.Open();
+                                result = SpVoiceObj2.Api(json2);
+                                SpVoiceObj2.Close();
+
+
+                                if (!string.IsNullOrEmpty(context.Request.QueryString["callback"]))
+                                {
+                                    string callBack = context.Request.QueryString["callback"].ToString(); //回调
+                                    result = callBack + "(" + result + ")";
+                                }
                             }
-                        }
-                        catch (System.ServiceModel.CommunicationException)
-                        {
-                            //   if (SpVoiceObj != null) SpVoiceObj.Abort();
-                            if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                        }
-                        catch (TimeoutException)
-                        {
-                            // if (SpVoiceObj != null) SpVoiceObj.Abort();
-                            if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                        }
-                        catch (Exception ex)
-                        {
-                            //   if (SpVoiceObj != null) SpVoiceObj.Abort();
-                            if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                            result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
-                            LogTools.WriteLine(userIP + ":" + userKey + ":" + ex.Message);
-                        }
+                            catch (System.ServiceModel.CommunicationException)
+                            {
+                                //   if (SpVoiceObj != null) SpVoiceObj.Abort();
+                                if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                            }
+                            catch (TimeoutException)
+                            {
+                                // if (SpVoiceObj != null) SpVoiceObj.Abort();
+                                if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                            }
+                            catch (Exception ex)
+                            {
+                                //   if (SpVoiceObj != null) SpVoiceObj.Abort();
+                                if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                                result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
+                                LogTools.WriteLine(userIP + ":" + userKey + ":" + ex.Message);
+                            }
 
-
+                        }
                     }
                 }
                 else
@@ -331,26 +329,30 @@ namespace WeChatTools.API
 
         }
 
-        public static bool IsValid(HttpContext context)
+
+        //每个key 24小时只能请求1000000次
+        public static bool IsRedis(HttpContext context, string key)
         {
             if (context.Request.Browser.Crawler) return false;
-            string key = userIP;
-
-            int hit = (Int32)(context.Cache[key] ?? 0);
-            if (hit > 9) return false;
-            else hit++;
-
-            if (hit == 1)
+            key = "keycount:" + key;
+            bool check = RedisCacheTools.Exists(key);
+            if (check)
             {
-                context.Cache.Add(key, hit, null, DateTime.Now.AddMinutes(DURATION), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
-
+                RedisCacheTools.Incr(key);
+                int hit = RedisCacheTools.Get<int>(key);
+                if (hit > 1000000) return false;
             }
             else
             {
-                context.Cache[key] = hit;
+                DateTime dt = DateTime.Now.AddDays(1);
+                RedisCacheTools.Incr(key);
+
+                RedisCacheTools.Expire(key, dt);
             }
+
             return true;
         }
+
 
 
     }
