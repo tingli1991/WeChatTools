@@ -43,7 +43,7 @@ namespace WeChatTools.API
 
                         if (!IsRedis(context, userKey))
                         {
-                            result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userKey + "\",\"Msg\":\"当天此key超过间隔24小时100万次请求上限,请稍后再试或者购买新的key!\"}";
+                            result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userKey + "\",\"Msg\":\"当天此key超过70万次请求上限,请隔天再试或者购买新的key!\"}";
                         }
                         else
                         {
