@@ -11,7 +11,7 @@ using WeChatTools.Core;
 namespace WeChatTools.API.pro
 {
     /// <summary>
-    /// qq管家拦截检测
+    ///  qq域名检测
     /// </summary>
     public class qqUrlCheck2 : IHttpHandler
     {

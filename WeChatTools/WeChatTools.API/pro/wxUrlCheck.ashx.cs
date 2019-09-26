@@ -12,7 +12,7 @@ using WeChatTools.Core;
 namespace WeChatTools.API
 {
     /// <summary>
-    /// 微信域名检测工具--公共测试
+    /// 微信域名检测接口--免费的
     /// </summary>
     public class WXUrlCheck : IHttpHandler
     {

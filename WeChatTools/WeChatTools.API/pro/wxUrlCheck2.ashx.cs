@@ -12,7 +12,7 @@ using WeChatTools.Core;
 namespace WeChatTools.API
 {
     /// <summary>
-    /// 微信域名检测工具--正式使用接口
+    /// 微信域名检测接口 --正式使用接口
     /// </summary>
     public class WXUrlCheck2 : IHttpHandler
     {
@@ -330,7 +330,7 @@ namespace WeChatTools.API
         }
 
 
-        //限制每个key每天请求上限，防止恶意请求
+        //防止恶意请求
         public static bool IsRedis(HttpContext context, string key)
         {
             if (context.Request.Browser.Crawler) return false;
