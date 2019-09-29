@@ -25,8 +25,7 @@ namespace WeChatTools.API
             string result = string.Empty;
             if (context.Request.HttpMethod.ToUpper().Equals(GET))
             {
-                //正式用
-                userIP = GetWebClientIp(context);
+               
                 string urlCheck = string.Empty;
                 context.Response.ContentType = "text/plain";
 
@@ -43,7 +42,7 @@ namespace WeChatTools.API
 
                         if (!IsRedis(context, userKey))
                         {
-                            result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userKey + "\",\"Msg\":\"当天此key超过70万次请求上限,请隔天再试或者购买新的key!\"}";
+                            result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userKey + "\",\"Msg\":\"当天此key超过请求上限,请隔天再试或者购买新的key!\"}";
                         }
                         else
                         {
@@ -84,9 +83,12 @@ namespace WeChatTools.API
                             }
                             catch (Exception ex)
                             {
+                                
                                 //   if (SpVoiceObj != null) SpVoiceObj.Abort();
                                 if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
                                 result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
+                                //正式用
+                                userIP = GetWebClientIp(context);
                                 LogTools.WriteLine(userIP + ":" + userKey + ":" + ex.Message);
                             }
 
@@ -117,71 +119,33 @@ namespace WeChatTools.API
             }
         }
 
-        /// <summary>  
-        /// 将c# DateTime时间格式转换为Unix时间戳格式  
-        /// </summary>  
-        /// <param name="time">时间</param>  
-        /// <returns>long</returns>  
-        public static long ConvertDateTimeToInt()
+        //防止恶意请求
+        public static bool IsRedis(HttpContext context, string key)
         {
-            System.DateTime time = DateTime.Now;
-            System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1, 0, 0, 0, 0));
-            long t = (time.Ticks - startTime.Ticks) / 10000;   //除10000调整为13位      
-            return t;
-        }
-
-
-
-        /// <summary>  
-        /// 获取外网ip地址  
-        /// </summary>  
-        public static string GetExtenalIpAddress()
-        {
-            String url = "http://city.ip138.com/ip2city.asp";
-            string IP = "未获取到外网ip";
-            try
+            if (context.Request.Browser.Crawler) return false;
+            if (RedisCacheTools.Exists(key))
             {
-                //从网址中获取本机ip数据    
-                System.Net.WebClient client = new System.Net.WebClient();
-                client.Encoding = System.Text.Encoding.Default;
-                string str = client.DownloadString(url);
-                client.Dispose();
+                string keycount = "keycount:" + key;
+                bool check = RedisCacheTools.Exists(keycount);
+                if (check)
+                {
+                    RedisCacheTools.Incr(keycount);
+                    int hit = RedisCacheTools.Get<int>(keycount);
+                    if (hit > 700000) return false;
+                }
+                else
+                {
+                    DateTime dt = DateTime.Now.Date.AddDays(1);
+                    RedisCacheTools.Incr(keycount);
 
-                //提取外网ip数据 [218.104.71.178]    
-                int i1 = str.IndexOf("["), i2 = str.IndexOf("]");
-
-                if (!str.Equals("")) IP = str.Substring(i1 + 1, i2 - 1 - i1);
-                else IP = GetExtenalIpAddress_0();
+                    RedisCacheTools.Expire(keycount, dt);
+                }
             }
-            catch (Exception) { }
-
-            return IP;
-        }
-
-        /// <summary>  
-        /// 获取外网ip地址  
-        /// </summary>  
-        public static string GetExtenalIpAddress_0()
-        {
-            var tempIp = "";
-            try
+            else
             {
-                WebRequest wr = (HttpWebRequest)WebRequest.Create("http://ip.chinaz.com/getip.aspx");
-                var stream = wr.GetResponse().GetResponseStream();
-                var sr = new StreamReader(stream, Encoding.GetEncoding("gb2312"));
-                var all = sr.ReadToEnd();
-                //读取网站的数据
-                int start = all.IndexOf("[") + 1;
-                int end = all.IndexOf("]", start);
-                tempIp = all.Substring(start, end - start);
-                sr.Close();
-                stream.Close();
+                return false;
             }
-            catch
-            {
-                // ignored
-            }
-            return tempIp;
+            return true;
         }
 
 
@@ -255,62 +219,7 @@ namespace WeChatTools.API
             }
             return customerIP;
         }
-
-        public static string GetRealIP(string CustomerIP)
-        {
-            string result = String.Empty;
-
-            result = CustomerIP;
-
-            //可能有代理   
-            if (!string.IsNullOrWhiteSpace(result))
-            {
-                //没有"." 肯定是非IP格式  
-                if (result.IndexOf(".") == -1)
-                {
-                    result = null;
-                }
-                else
-                {
-                    //有",",估计多个代理.取第一个不是内网的IP.  
-                    if (result.IndexOf(",") != -1)
-                    {
-                        result = result.Replace(" ", string.Empty).Replace("\"", string.Empty);
-
-                        string[] temparyip = result.Split(",;".ToCharArray());
-
-                        if (temparyip != null && temparyip.Length > 0)
-                        {
-                            for (int i = 0; i < temparyip.Length; i++)
-                            {
-                                //找到不是内网的地址  
-                                if (IsIP(temparyip[i])
-                                    && temparyip[i].Substring(0, 3) != "10."
-                                    && temparyip[i].Substring(0, 7) != "192.168"
-                                    && temparyip[i].Substring(0, 7) != "172.16.")
-                                {
-                                    return temparyip[i];
-                                }
-                            }
-                        }
-                    }
-                    //代理即是IP格式  
-                    else if (IsIP(result))
-                    {
-                        return result;
-                    }
-                    //代理中的内容非IP  
-                    else
-                    {
-                        result = "";
-                    }
-                }
-            }
-
-
-            return result;
-        }
-
+         
         /// <summary>
         /// 检查IP地址格式
         /// </summary>
@@ -328,38 +237,6 @@ namespace WeChatTools.API
             }
 
         }
-
-
-        //防止恶意请求
-        public static bool IsRedis(HttpContext context, string key)
-        {
-            if (context.Request.Browser.Crawler) return false;
-            if (RedisCacheTools.Exists(key))
-            {
-                string keycount = "keycount:" + key;
-                bool check = RedisCacheTools.Exists(keycount);
-                if (check)
-                {
-                    RedisCacheTools.Incr(keycount);
-                    int hit = RedisCacheTools.Get<int>(keycount);
-                    if (hit > 700000) return false;
-                }
-                else
-                {
-                    DateTime dt = DateTime.Now.Date.AddDays(1);
-                    RedisCacheTools.Incr(keycount);
-
-                    RedisCacheTools.Expire(keycount, dt);
-                }
-            }
-            else
-            {
-                return false;
-            }
-            return true;
-        }
-
-
 
     }
 }
