@@ -77,6 +77,7 @@
     <Content Include="pro\qqUrlCheck.ashx" />
     <Content Include="pro\shorturl.ashx" />
     <Content Include="pro\icpCheck2.ashx" />
+    <Content Include="pro\icpCheck.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -94,6 +95,9 @@
       <DependentUpon>hdShowImg.ashx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="pro\icpCheck.ashx.cs">
+      <DependentUpon>icpCheck.ashx</DependentUpon>
+    </Compile>
     <Compile Include="pro\icpCheck2.ashx.cs">
       <DependentUpon>icpCheck2.ashx</DependentUpon>
     </Compile>

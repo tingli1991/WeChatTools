@@ -1,5 +1,4 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,9 +11,9 @@ using WeChatTools.Core;
 namespace WeChatTools.API.pro
 {
     /// <summary>
-    /// 微信域名检测接口--免费的
+    /// qq域名检测 - 免费的
     /// </summary>
-    public class WXUrlCheck : IHttpHandler
+    public class icpCheck : IHttpHandler
     {
         private const int DURATION = 24 * 60;
         private static string userIP = "127.0.0.1";
@@ -27,7 +26,6 @@ namespace WeChatTools.API.pro
             string result = string.Empty;
             if (context.Request.HttpMethod.ToUpper().Equals(GET))
             {
-
                 //PostHtml();
                 //lppsd.zq6kcwhbpvg2twb.com
                 //vftkt.n06th8owuihzhhs.com
@@ -37,7 +35,7 @@ namespace WeChatTools.API.pro
                 userIP = GetWebClientIp(context);
                 context.Response.ContentType = "text/plain";
                 TimeSpan dspNow = DateTime.Now.TimeOfDay;
-                 
+               
                 string urlCheck = string.Empty;
                 string callBack = string.Empty;
                 if (IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM))
@@ -77,7 +75,7 @@ namespace WeChatTools.API.pro
                                     if (!isTrue) { urlCheck = "http://" + urlCheck; }
                                     urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
 
-                                    string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
+                                    string json2 = "{\"Mode\":\"AuthQQGJICPKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
 
                                     SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi");
                                     SpVoiceObj2.Open();
@@ -152,7 +150,7 @@ namespace WeChatTools.API.pro
                 return false;
             }
         }
-
+         
         private bool IsInTimeInterval(TimeSpan time, TimeSpan startTime, TimeSpan endTime)
         {
             //判断时间段开始时间是否小于时间段结束时间,如果不是就交换
@@ -291,7 +289,5 @@ namespace WeChatTools.API.pro
             }
 
         }
-         
-
     }
 }

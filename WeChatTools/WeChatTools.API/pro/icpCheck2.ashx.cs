@@ -9,7 +9,7 @@ using System.Text;
 using System.Web;
 using WeChatTools.Core;
 
-namespace WeChatTools.API
+namespace WeChatTools.API.pro
 {
     /// <summary>
     /// 微信域名检测接口 --正式使用接口

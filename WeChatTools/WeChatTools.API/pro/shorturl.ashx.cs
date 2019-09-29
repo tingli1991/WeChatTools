@@ -9,7 +9,7 @@ using System.Text;
 using System.Web;
 using WeChatTools.Core;
 
-namespace WeChatTools.API
+namespace WeChatTools.API.pro
 {
     /// <summary>
     /// 短链接生成接口--正式使用接口
