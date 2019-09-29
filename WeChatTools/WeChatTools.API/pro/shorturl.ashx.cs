@@ -98,8 +98,7 @@ namespace WeChatTools.API
             }
         }
 
-
-        //每个key 24小时只能请求5000次
+        //防止恶意请求
         public static bool IsRedis(HttpContext context, string key)
         {
             if (context.Request.Browser.Crawler) return false;
