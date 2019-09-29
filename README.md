@@ -12,8 +12,9 @@
 
 
 ## 使用
-- 域名微信检测试用接口 [http://wx.rrbay.com/pro/wxUrlCheck.ashx?url=http://www.teu7.cn](http://wx.rrbay.com/pro/wxUrlCheck.ashx?url=http://www.teu7.cn "域名检测试用接口")
-- 域名QQ检测试用接口 [http://wx.rrbay.com/pro/qqUrlCheck.ashx?url=http://www.teu7.cn](http://wx.rrbay.com/pro/qqUrlCheck.ashx?url=http://www.teu7.cn "域名检测试用接口")
+- 微信域名检测试用接口 [http://wx.rrbay.com/pro/wxUrlCheck.ashx?url=http://www.teu7.cn](http://wx.rrbay.com/pro/wxUrlCheck.ashx?url=http://www.teu7.cn "微信域名检测试用接口")
+- QQ管家域名检测试用接口 [http://wx.rrbay.com/pro/qqUrlCheck.ashx?url=http://www.teu7.cn](http://wx.rrbay.com/pro/qqUrlCheck.ashx?url=http://www.teu7.cn "QQ管家域名检测试用接口")
+- 域名icp备案查询接口 [http://wx.rrbay.com/pro/icpCheck.ashx?url=http://www.teu7.cn](http://wx.rrbay.com/pro/icpCheck.ashx?url=http://www.teu7.cn "域名备案查询接口")
 ```
  {"State":true, "Code","101","Data":"www.teu7.cn",  "Msg":"屏蔽"}
  {"State":true, "Code","102","Data":"www.rrbay.com","Msg":"正常"}
@@ -62,3 +63,7 @@
 - 微信域名监测服务上线
 - 域名qq检测上线
 - 同一个key可以微信检测，qq检测以及微信域名监测结果微信通知
+
+## 2019-09-29 微信域名检测系统升级说明
+- 域名icp备案信息查询服务上线
+- 同一个key可以微信检测，qq检测以及域名icp备案信息查询
