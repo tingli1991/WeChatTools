@@ -27,13 +27,6 @@ namespace WeChatTools.API.pro
             string result = string.Empty;
             if (context.Request.HttpMethod.ToUpper().Equals(GET))
             {
-
-                //PostHtml();
-                //lppsd.zq6kcwhbpvg2twb.com
-                //vftkt.n06th8owuihzhhs.com
-                context.Response.Headers.Add("Access-Control-Allow-Origin", "http://wx.rrbay.com");
-                context.Response.Headers.Add("Access-Control-Allow-Methods", "GET");
-
                 userIP = GetWebClientIp(context);
                 context.Response.ContentType = "text/plain";
                 TimeSpan dspNow = DateTime.Now.TimeOfDay;
@@ -42,9 +35,8 @@ namespace WeChatTools.API.pro
                 string callBack = string.Empty;
                 if (IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM))
                 {
-                    string referrer = context.Request.UrlReferrer != null ? context.Request.UrlReferrer.Host.ToLower() : "";
                     callBack = string.IsNullOrEmpty(context.Request.QueryString["callback"]) ? "" : context.Request.QueryString["callback"].ToString(); //回调
-                    if (!string.IsNullOrEmpty(context.Request["url"]) && string.IsNullOrEmpty(callBack) && (string.IsNullOrEmpty(referrer) || referrer.ToLower().Contains("v2ex.com") || referrer.ToLower().Contains("hexun.com") || referrer.ToLower().Contains("cnblogs.com") || referrer.ToLower().Contains("zhihu.com") || referrer.ToLower().Contains("csdn.net") || referrer.ToLower().Contains("gitee.com") || referrer.ToLower().Contains("github.com") || referrer.ToLower().Contains("rrbay.xyz")))
+                    if (!string.IsNullOrEmpty(context.Request["url"]))
                     {
                         //需要检测的网址
                         urlCheck = context.Request["url"]; //检测的值
