@@ -35,24 +35,17 @@ namespace WeChatTools.API.pro
                 context.Response.ContentType = "text/plain";
                 TimeSpan dspNow = DateTime.Now.TimeOfDay;
 
-                string urlCheck = string.Empty;
+                string urlCheck = context.Request["url"];
                 string callBack = string.Empty;
+                string model = context.Request["model"];
                 if (IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM))
                 {
                     // string referrer = context.Request.UrlReferrer != null ? context.Request.UrlReferrer.Host.ToLower() : "";
                     callBack = string.IsNullOrEmpty(context.Request.QueryString["callback"]) ? "" : context.Request.QueryString["callback"].ToString(); //回调
-                    if (!string.IsNullOrEmpty(context.Request["url"]) && !string.IsNullOrEmpty(callBack))
+                    if (!string.IsNullOrEmpty(urlCheck) && !string.IsNullOrEmpty(model) && !string.IsNullOrEmpty(callBack))
                     {
-                        if (!string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
-                        {
-                            wxKey = context.Request["key"]; //key ,md5值
-                        }
-                        else
-                        {
-                            wxKey = wxCheckApiKey3;
-                        }
-
-                        if (!IsRedis(context) && (wxKey.Equals(wxCheckApiKey) || wxKey.Equals(wxCheckApiKey3)))
+                        wxKey = wxCheckApiKey3;
+                        if (!IsRedis(context))
                         {
                             result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术,联系管理员qq:391502069!\"}";
                         }
@@ -63,35 +56,24 @@ namespace WeChatTools.API.pro
                             //    ServiceApiClient SpVoiceObj = null;
                             try
                             {
-                                //需要检测的网址
-                                urlCheck = context.Request["url"]; //检测的值
+                                //需要检测的网址                                
                                 bool isTrue = urlCheck.StartsWith("http");
                                 if (!isTrue) { urlCheck = "http://" + urlCheck; }
                                 urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
 
-                                string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxKey + "\'}\"}";
+                                string json2 = "{\"Mode\":\"" + model + "\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxKey + "\'}\"}";
 
                                 SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi");
                                 SpVoiceObj2.Open();
                                 result = SpVoiceObj2.Api(json2);
                                 SpVoiceObj2.Close();
-                                //JsonObject.Results aup = JsonConvert.DeserializeObject<JsonObject.Results>(result);
-
-                                //if (aup.State == true)
-                                //{
-                                //    string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxKey + "\'}\"}";
-                                //    SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
-                                //    SpVoiceObj.Open();
-                                //    result = SpVoiceObj.Api(json);
-                                //    SpVoiceObj.Close();
-
-                                //}
+                             
 
                                 Logger.WriteLogggerTest("#################################################");
                                 Logger.WriteLogggerTest(wxKey + ":" + userIP + ":" + result);
                                 Logger.WriteLogggerTest(wxKey + ":" + context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
-                                 
-                               
+
+
 
 
 
@@ -147,7 +129,7 @@ namespace WeChatTools.API.pro
                 return false;
             }
         }
-          
+
         private bool IsInTimeInterval(TimeSpan time, TimeSpan startTime, TimeSpan endTime)
         {
             //判断时间段开始时间是否小于时间段结束时间,如果不是就交换

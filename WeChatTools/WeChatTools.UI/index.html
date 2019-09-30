@@ -8,8 +8,8 @@
     <meta name="description" content="太阳湾提供微信域名实时检测接口,自动切换跳转接口,微信链接推广接口,手机浏览器或者qq跳转微信打开指定页面等各种推广技术方案,为您的微信项目保驾护航." />
     <link type="text/css" rel="stylesheet nofollow" href="https://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet nofollow" href="https://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css" />
-    <link type="text/css" rel="stylesheet nofollow" href="/static/styles/base.css" />    
-    <link type="text/css" rel="stylesheet nofollow" href="/static/layer.css" id="layui_layer_skinlayercss" style="">   
+    <link type="text/css" rel="stylesheet nofollow" href="/static/styles/base.css" />
+    <link type="text/css" rel="stylesheet nofollow" href="/static/layer.css" id="layui_layer_skinlayercss" style="">
     <link type="image/x-icon" rel="shortcut icon nofollow" href="https://res.wx.qq.com/a/wx_fed/assets/res/NTI4MWU5.ico" />
     <style>
         .toper {
@@ -53,11 +53,11 @@
                         <ul>
                             <li><a href="/doc2.html" title="微信域名推广">系统介绍</a></li>
                             <li><a href="/price2.html" title="微信域名自动切换跳转">收费标准</a></li>
-                            <li><a href="/faq2.html" title="常见问题解答-faq">问题解答</a></li>                         
+                            <li><a href="/faq2.html" title="常见问题解答-faq">问题解答</a></li>
                         </ul>
                     </li>
                 </ul>
-            </nav>   
+            </nav>
             <div class="navs pr" style="float:left;width:25%">
                 <a href="http://www.rrbay.com/pay.html" target="_blank" title="太阳湾官方QQ">支付方式</a>
                 <a href="https://w.url.cn/s/AAE74dc" rel="nofollow" target="_blank" title="注册登陆">注册登陆</a>
@@ -79,6 +79,11 @@
                         </button>
 
                     </p>
+                    <div>
+                        <label><input name="checkModel" id="checkModel" type="radio" value="AuthKey" checked style="vertical-align:middle; margin: -2px  5px  1px  8px" />微信域名安全检测</label>
+                        <label><input name="checkModel" id="checkModel" type="radio" value="AuthQQKey" style="vertical-align:middle; margin: -2px  5px  1px  8px" />QQ管家域名安全检测 </label>
+                        <label><input name="checkModel" id="checkModel" type="radio" value="AuthQQGJICPKey" style="vertical-align:middle; margin: -2px  5px  1px  8px" />域名备案信息查询</label>
+                    </div>
                     <p>
                         <font size="2" color="#ffffff">温馨提示：输入查询域名后直接回车查询结果,如有疑问加QQ: <span style="color:#ff0000;font-weight:bold;">391502069</span></font>
                         <br><font size="2" color="#ffffff">【每天08:00-21:00,免费接口查询额度15次】</font><a style="color:#ff0000;font-weight:bold;font-size:1.5rem;" href="/checklist.html" target="_blank" title="批量检测">批量检测</a>
@@ -168,9 +173,9 @@
                             <ul>
                                 <li><a href="http://www.qqqao.com" target="_blank" title="信息无障碍">信息无障碍</a></li>
                                 <li><a href="/doc.html" target="_blank" title="微信域名检测">微信域名检测</a></li>
-                                <li><a href="http://www.rrbay.com/wxcheck" target="_blank" title="微信域名检测专栏,微信域名推广专栏">检测推广</a></li>                              
-                                <li><a href="http://www.rrbay.com/wza" target="_blank" title="信息无障碍专栏">无障碍专栏</a></li>                               
-                                <li><a href="/doc2.html" target="_blank" title="自动切换跳转">自动切换跳转</a></li>                               
+                                <li><a href="http://www.rrbay.com/wxcheck" target="_blank" title="微信域名检测专栏,微信域名推广专栏">检测推广</a></li>
+                                <li><a href="http://www.rrbay.com/wza" target="_blank" title="信息无障碍专栏">无障碍专栏</a></li>
+                                <li><a href="/doc2.html" target="_blank" title="自动切换跳转">自动切换跳转</a></li>
                                 <li><a href="http://www.rrbay.com/chanpin" target="_blank" title="产品中心">产品中心</a></li>
                             </ul>
                         </div>
@@ -211,7 +216,7 @@
     <script type="text/javascript" rel="nofollow" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" rel="nofollow" src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" rel="nofollow" src="/js/base.js"></script>
-    <script type="text/javascript" rel="nofollow" src="https://cdnjs.cloudflare.com/ajax/libs/layer/2.3/layer.js"></script>    
+    <script type="text/javascript" rel="nofollow" src="https://cdnjs.cloudflare.com/ajax/libs/layer/2.3/layer.js"></script>
     <script>window.easyapi = { ctx: "" };</script>
     <script type="text/javascript">
         $(document).keyup(function (event) {
@@ -225,6 +230,7 @@
             $("#su").val("验证中...");
             $("#txtShow").html("&nbsp;");     //设置值
             var myvalue = $("#kw").val();   //取值
+            var modelValue = $('input[name="checkModel"]:checked').val();   //取值
             if (IsURL(myvalue)) {
                 var index = layer.load(1, {
                     shade: [0.1, '#fff'] //0.1透明度的白色背景
@@ -237,15 +243,18 @@
                     jsonp: 'callback',
                     data: {
                         url: myvalue,
+                        model: modelValue,
                     },
                     timeout: 2000,
                     success: function (data) {
 
                         layer.closeAll();
                         if (data.Code === "102") {
-                            layer.msg('恭喜!该域名没被屏蔽', { icon: 6 });
+                            //  layer.msg('恭喜!该域名没被屏蔽', { icon: 6 });
+                            layer.msg(data.Msg, { icon: 6 });
                         } else if (data.Code == "101") {
-                            layer.msg('该域名已被屏蔽', { icon: 5 });
+                            // layer.msg('该域名已被屏蔽', { icon: 5 });
+                            layer.msg(data.Msg, { icon: 5 });
                         } else {
                             layer.msg(data.Msg, { icon: 4 });
                         }
