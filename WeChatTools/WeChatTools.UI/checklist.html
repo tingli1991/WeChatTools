@@ -70,8 +70,10 @@
                 </div>
                 <!-- 输入要检测的域名 -->
                 <h2>
-                    请输入你要检测的域名
-
+                    请输入你要检测的域名:
+                    <label><input name="checkModel" id="checkModel" type="radio" value="AuthKey" checked style="vertical-align:middle; margin: -2px  5px  1px  8px" />微信域名安全检测</label>
+                    <label><input name="checkModel" id="checkModel" type="radio" value="AuthQQKey" style="vertical-align:middle; margin: -2px  5px  1px  8px" />QQ管家域名安全检测 </label>
+                    <label><input name="checkModel" id="checkModel" type="radio" value="AuthQQGJICPKey" style="vertical-align:middle; margin: -2px  5px  1px  8px" />域名备案信息查询</label>
                 </h2>
                 <textarea name="content" id="content" class="write-address" placeholder="可以输入多个域名，一行一个，回车换行"></textarea>
                 <div class="test-btn"><button id="btn_check">开始检测</button> </div>
@@ -149,7 +151,7 @@
         <!--end: 底部友情域名 -->
     </div>
     <script type="text/javascript" rel="nofollow" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script type="text/javascript" rel="nofollow" src="https://cdnjs.cloudflare.com/ajax/libs/layer/2.3/layer.js"></script>
+    <script type="text/javascript" rel="nofollow" src="http://apps.bdimg.com/libs/layer/2.1/layer.js"></script>
 
     <script type="text/javascript">
         yuliang = "";
@@ -175,6 +177,7 @@
             var content = $('#content').val();
             var content = content.replace(/ /g, ""); //去除文章中间空格
             var key = $("#kw").val();   //key
+            var modelValue = $('input[name="checkModel"]:checked').val();   //取值
             var domain_arr = new Array();
             var domain_arr = content.split("\n");
             var domain_len = domain_arr.length;
@@ -215,6 +218,7 @@
                                     jsonp: 'callback',
                                     data: {
                                         key: key,
+                                        model: modelValue,
                                         url: domain,
                                     },
                                     success: function (data) {
@@ -223,14 +227,14 @@
                                         if (data.Code === "102") {
 
                                             succ_count++;
-                                            $('.list').prepend("<li><a>" + gettime() + " >> " + domain + " -> 正常域名</a></li>");
+                                            $('.list').prepend("<li><a>" + gettime() + " >> " + domain + " -> " + data.Msg + "</a></li>");
                                             $('#ck_ok').append(domain);
                                             $('#ck_ok').append("\r\n");
                                         } else if (data.Code === "101") {
                                             $('#ck_stop').append(domain);
                                             $('#ck_stop').append("\r\n");
                                             ck_stop++;
-                                            $('.list').prepend("<li class=\"error1\"><a >" + gettime() + " >>" + domain + " ->已屏蔽</a></li>");
+                                            $('.list').prepend("<li class=\"error1\"><a >" + gettime() + " >>" + domain + " ->" + data.Msg + "</a></li>");
                                         } else if (data.Code === "001") {
                                             $('#ck_err').append(domain);
                                             $('#ck_err').append("\r\n");

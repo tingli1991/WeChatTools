@@ -17,9 +17,9 @@ namespace WeChatTools.API.pro
         private const int DURATION = 24 * 60;
         private static string userIP = "127.0.0.1";
         protected const string GET = "GET";
-        private string wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeChatCheck");
-        private string wxCheckApiKey3 = ConfigTool.ReadVerifyConfig("wxCheckApiKey3", "WeChatCheck");
-        private string wxKey = string.Empty;
+      
+        private string wxKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey3", "WeChatCheck");
+      
         private TimeSpan _strWorkingDayAM = DateTime.Parse("08:00").TimeOfDay;//工作时间上午08:00
         private TimeSpan _strWorkingDayPM = DateTime.Parse("21:00").TimeOfDay;
         public void ProcessRequest(HttpContext context)
@@ -43,8 +43,7 @@ namespace WeChatTools.API.pro
                     // string referrer = context.Request.UrlReferrer != null ? context.Request.UrlReferrer.Host.ToLower() : "";
                     callBack = string.IsNullOrEmpty(context.Request.QueryString["callback"]) ? "" : context.Request.QueryString["callback"].ToString(); //回调
                     if (!string.IsNullOrEmpty(urlCheck) && !string.IsNullOrEmpty(model) && !string.IsNullOrEmpty(callBack))
-                    {
-                        wxKey = wxCheckApiKey3;
+                    {                        
                         if (!IsRedis(context))
                         {
                             result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术,联系管理员qq:391502069!\"}";
