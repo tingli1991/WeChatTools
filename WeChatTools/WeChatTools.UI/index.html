@@ -74,9 +74,7 @@
                     <p>微信域名检测接口,微信跳转浏览器,微信域名自动切换跳转</p>
                     <p>
                         <font color="#23a9a0"><input id="kw" name="wd" class="yj" type="text" placeholder="请输入要检测的域名,如 www.rrbay.com" /></font>
-                        <button onclick="click_fn()" class="btn_one" id="btn_test">
-                            检测
-                        </button>
+                        <button class="btn_one" id="btn_check" name="btn_check">检测</button>
 
                     </p>
                     <div>
@@ -221,11 +219,11 @@
     <script type="text/javascript">
         $(document).keyup(function (event) {
             if (event.keyCode == 13) {
-                click_fn();
+                $("#btn_check").click();
             }
         });
          
-        function click_fn() {
+        $('#btn_check').click(function () {
             $("#su").attr("disabled", "disabled");
             $("#su").val("验证中...");
             $("#txtShow").html("&nbsp;");     //设置值
@@ -273,7 +271,7 @@
                 })
 
             }
-        }
+        })
 
         function qingkong() {
             $("#txtShow").html("&nbsp;");     //设置值
