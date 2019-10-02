@@ -51,6 +51,11 @@ namespace WeChatTools.API.pro
                         }
                         else
                         {
+                            if (!string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
+                            {
+                                wxKey = context.Request["key"]; //key ,md5值
+                            }
+
 
                             ServiceApiClient SpVoiceObj2 = null;
                             //    ServiceApiClient SpVoiceObj = null;

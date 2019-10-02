@@ -55,10 +55,6 @@ namespace WeChatTools.API.pro
                             {
 
 
-                                if (!string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
-                                {
-                                    wxCheckApiKey = context.Request["key"]; //key ,md5值
-                                }
 
                                 ServiceApiClient SpVoiceObj2 = null;
                                 //    ServiceApiClient SpVoiceObj = null;
@@ -75,20 +71,10 @@ namespace WeChatTools.API.pro
                                     SpVoiceObj2.Open();
                                     result = SpVoiceObj2.Api(json2);
                                     SpVoiceObj2.Close();
-                                    //JsonObject.Results aup = JsonConvert.DeserializeObject<JsonObject.Results>(result);
-
-                                    //if (aup.State == true)
-                                    //{
-                                    //    string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
-                                    //    SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
-                                    //    SpVoiceObj.Open();
-                                    //    result = SpVoiceObj.Api(json);
-                                    //    SpVoiceObj.Close();
-
-                                    //}
+                                    
                                     Logger.WriteLogggerTest("#################################################");
-                                    Logger.WriteLogggerTest(wxCheckApiKey + ":" + userIP + ":" + result);
-                                    Logger.WriteLogggerTest(wxCheckApiKey + ":" + context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
+                                    Logger.WriteLogggerTest( userIP + ":" + result);
+                                    Logger.WriteLogggerTest( context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
                                    
 
 
@@ -108,7 +94,7 @@ namespace WeChatTools.API.pro
                                     //   if (SpVoiceObj != null) SpVoiceObj.Abort();
                                     if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
                                     result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
-                                    LogTools.WriteLine(userIP + ":" + wxCheckApiKey + ":" + ex.Message);
+                                    LogTools.WriteLine(userIP + ":"  + ex.Message);
                                 }
 
                             }
