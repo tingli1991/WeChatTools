@@ -40,7 +40,7 @@ namespace WeChatTools.API.pro
                     {
                         if (!IsRedis(context, userKey))
                         {
-                            result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userKey + "\",\"Msg\":\"当天此key超过请求上限,请隔天再试或者购买新的key!\"}";
+                            result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userKey + "\",\"Msg\":\"非法访问，访问被拒绝,联系管理员qq:391502069!\"}";
                         }
                         else
                         {
