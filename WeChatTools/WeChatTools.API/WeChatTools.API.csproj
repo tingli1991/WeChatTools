@@ -53,6 +53,7 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="404.html" />
@@ -78,6 +79,7 @@
     <Content Include="pro\shorturl.ashx" />
     <Content Include="pro\icpCheck2.ashx" />
     <Content Include="pro\icpCheck.ashx" />
+    <Content Include="tools\hdUrlEncode.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -121,6 +123,9 @@
     </Compile>
     <Compile Include="pro\wxUrlCheck3.ashx.cs">
       <DependentUpon>wxUrlCheck3.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="tools\hdUrlEncode.ashx.cs">
+      <DependentUpon>hdUrlEncode.ashx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
