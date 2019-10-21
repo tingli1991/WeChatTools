@@ -81,7 +81,8 @@ namespace WeChatTools.API.tools
                 }
                 else
                 {
-                    builder.Append(c);
+                    int asc = (int)c;
+                    builder.Append("%" + asc.ToString("X2"));
                 }
             }
             return builder.ToString();
