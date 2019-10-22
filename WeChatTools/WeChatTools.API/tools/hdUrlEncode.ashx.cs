@@ -52,7 +52,7 @@ namespace WeChatTools.API.tools
             {
                 result = "参数错误,联系管理员qq:391502069!";
             }
-            context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            context.Response.Headers.Add("Access-Control-Allow-Origin", "www.rrbay.com");
             context.Response.Headers.Add("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
             context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
 
