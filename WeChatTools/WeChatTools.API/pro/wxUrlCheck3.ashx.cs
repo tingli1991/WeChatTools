@@ -115,7 +115,7 @@ namespace WeChatTools.API.pro
             }
             else
             {
-                result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"QQ:391502069 \",\"Msg\":\"参数错误,联系管理员qq:391502069!\"}";
+                result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"QQ:391502069 \",\"Msg\":\"参数错误,联系管理员qq:391502069!\"}";
             }
             context.Response.Headers.Add("Access-Control-Allow-Origin", "http://www.rrbay.xyz");
             context.Response.Headers.Add("Access-Control-Allow-Methods", "POST");            

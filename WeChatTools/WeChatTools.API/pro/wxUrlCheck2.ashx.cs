@@ -35,7 +35,7 @@ namespace WeChatTools.API.pro
 
                     if (userKey.Trim() == wxCheckApiKey)
                     {
-                        result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"参数错误,联系管理员qq:391502069!\"}";
+                        result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"参数错误,联系管理员qq:391502069!\"}";
                     }
                     else
                     {
@@ -85,7 +85,7 @@ namespace WeChatTools.API.pro
                             {
                                 //   if (SpVoiceObj != null) SpVoiceObj.Abort();
                                 if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                                result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
+                                result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
                                 //正式用
                                 userIP = GetWebClientIp(context);
                                 LogTools.WriteLine(userIP + ":" + userKey + ":" + ex.Message);
@@ -96,13 +96,13 @@ namespace WeChatTools.API.pro
                 }
                 else
                 {
-                    result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"参数错误,联系管理员qq:391502069!\"}";
+                    result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"参数错误,联系管理员qq:391502069!\"}";
 
                 }
             }
             else
             {
-                result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"QQ:391502069 \",\"Msg\":\"参数错误,联系管理员qq:391502069!\"}";
+                result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"QQ:391502069 \",\"Msg\":\"参数错误,联系管理员qq:391502069!\"}";
             }
             context.Response.Write(result);
             context.Response.End();
