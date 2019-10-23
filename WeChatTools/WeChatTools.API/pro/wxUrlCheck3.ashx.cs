@@ -34,13 +34,13 @@ namespace WeChatTools.API.pro
                 TimeSpan dspNow = DateTime.Now.TimeOfDay;
 
                 string urlCheck = context.Request["url"];
-                string callBack = string.Empty;
+             
                 string model = context.Request["model"];
                 if (IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM))
                 {
                     // string referrer = context.Request.UrlReferrer != null ? context.Request.UrlReferrer.Host.ToLower() : "";
-                    callBack = string.IsNullOrEmpty(context.Request.QueryString["callback"]) ? "" : context.Request.QueryString["callback"].ToString(); //回调
-                    if (!string.IsNullOrEmpty(urlCheck) && !string.IsNullOrEmpty(model) && !string.IsNullOrEmpty(callBack))
+                   
+                    if (!string.IsNullOrEmpty(urlCheck) && !string.IsNullOrEmpty(model))
                     {                        
                         if (!IsRedis(context))
                         {
@@ -111,16 +111,13 @@ namespace WeChatTools.API.pro
                 {
                     result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"测试接口,请在每天(08:00-21:00)时间段进行测试,需要讨论技术,联系管理员qq:391502069.\"}";
                 }
-                if (!string.IsNullOrEmpty(callBack))
-                {
-                    result = callBack + "(" + result + ")";
-                }
+               
             }
             else
             {
                 result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"QQ:391502069 \",\"Msg\":\"参数错误,联系管理员qq:391502069!\"}";
             }
-            context.Response.Headers.Add("Access-Control-Allow-Origin", "www.rrbay.xyz");
+            context.Response.Headers.Add("Access-Control-Allow-Origin", "http://www.rrbay.xyz");
             context.Response.Headers.Add("Access-Control-Allow-Methods", "POST");            
             context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
             context.Response.Write(result);

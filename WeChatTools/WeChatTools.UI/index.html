@@ -234,11 +234,11 @@
                     shade: [0.1, '#fff'] //0.1透明度的白色背景
                 });
                 $.ajax({
-                    async: false,
+                   // async: false,
                     url: "http://wx.rrbay.com/pro/wxUrlCheck3.ashx",
-                    type: "GET",
-                    dataType: 'jsonp',
-                    jsonp: 'callback',
+                    type: "POST",
+                    dataType: 'json',
+                   // jsonp: 'callback',
                     data: {
                         url: myvalue,
                         model: modelValue,

@@ -213,9 +213,9 @@
                                 $.ajax({
 
                                     url: "http://wx.rrbay.com/pro/wxUrlCheck3.ashx",
-                                    type: "GET",
-                                    dataType: 'jsonp',
-                                    jsonp: 'callback',
+                                    type: "POST",
+                                    dataType: 'json',
+                                  //  jsonp: 'callback',
                                     data: {
                                         key: key,
                                         model: modelValue,
