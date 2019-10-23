@@ -80,6 +80,7 @@
     <Content Include="pro\icpCheck2.ashx" />
     <Content Include="pro\icpCheck.ashx" />
     <Content Include="tools\hdUrlEncode.ashx" />
+    <Content Include="pro\shorturl3.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -114,6 +115,9 @@
     </Compile>
     <Compile Include="pro\shorturl.ashx.cs">
       <DependentUpon>shorturl.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="pro\shorturl3.ashx.cs">
+      <DependentUpon>shorturl3.ashx</DependentUpon>
     </Compile>
     <Compile Include="pro\wxUrlCheck.ashx.cs">
       <DependentUpon>wxUrlCheck.ashx</DependentUpon>

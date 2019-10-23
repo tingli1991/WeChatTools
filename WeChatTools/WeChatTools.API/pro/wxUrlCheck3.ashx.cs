@@ -16,7 +16,7 @@ namespace WeChatTools.API.pro
     {
         private const int DURATION = 24 * 60;
         private static string userIP = "127.0.0.1";
-        protected const string GET = "GET";
+        protected const string POST = "POST";
       
         private string wxKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey3", "WeChatCheck");
       
@@ -25,11 +25,9 @@ namespace WeChatTools.API.pro
         public void ProcessRequest(HttpContext context)
         {
             string result = string.Empty;
-            if (context.Request.HttpMethod.ToUpper().Equals(GET))
+            if (context.Request.HttpMethod.ToUpper().Equals(POST))
             {
                 //PostHtml();
-                context.Response.Headers.Add("Access-Control-Allow-Methods", "GET");
-                context.Response.Headers.Add("Access-Control-Allow-Origin", "http://www.rrbay.xyz");
 
                 userIP = GetWebClientIp(context);
                 context.Response.ContentType = "text/plain";
@@ -122,6 +120,9 @@ namespace WeChatTools.API.pro
             {
                 result = "{\"State\":false,\"Code\",\"003\",\"Data\":\"QQ:391502069 \",\"Msg\":\"参数错误,联系管理员qq:391502069!\"}";
             }
+            context.Response.Headers.Add("Access-Control-Allow-Origin", "www.rrbay.xyz");
+            context.Response.Headers.Add("Access-Control-Allow-Methods", "POST");            
+            context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
             context.Response.Write(result);
             context.Response.End();
         }
