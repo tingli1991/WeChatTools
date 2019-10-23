@@ -35,7 +35,7 @@ namespace WeChatTools.API.pro
                 {
                     if (!IsRedis(context))
                     {
-                        result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术,联系管理员qq:391502069!\"}";
+                        result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"https://url.cn/5mfnDv7\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术,联系管理员qq:391502069!\"}";
                     }
                     else
                     {
@@ -73,7 +73,7 @@ namespace WeChatTools.API.pro
                         catch (Exception ex)
                         {
                             if (SpVoiceObj != null) SpVoiceObj.Abort();
-                            result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + url + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
+                            result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"https://url.cn/5mfnDv7\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
                             LogTools.WriteLine(shorturlkey + ":" + ex.Message);
                         }
                     }
@@ -82,15 +82,15 @@ namespace WeChatTools.API.pro
                 }
                 else
                 {
-                    result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"测试接口,请在每天(08:00-21:00)时间段进行测试,需要讨论技术,联系管理员qq:391502069.\"}";
+                    result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"https://url.cn/5mfnDv7\",\"Msg\":\"测试接口,请在每天(08:00-21:00)时间段进行测试,需要讨论技术,联系管理员qq:391502069.\"}";
 
                 }
             }
             else
             {
-                result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"QQ:391502069 \",\"Msg\":\"参数错误,联系管理员qq:391502069!\"}";
+                result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"https://url.cn/5mfnDv7\",\"Msg\":\"参数错误,联系管理员qq:391502069!\"}";
             }
-            context.Response.Headers.Add("Access-Control-Allow-Origin", "http://www.rrbay.com");
+            context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
             context.Response.Headers.Add("Access-Control-Allow-Methods", "POST");
             context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
 
