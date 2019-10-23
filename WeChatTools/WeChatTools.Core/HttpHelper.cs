@@ -167,6 +167,54 @@ namespace WeChatTools.Core
             return getString;
         }
 
+        public static string GetLocation(string URL)
+        {
+            string getString = "";
+            HttpWebRequest request = null;
+            HttpWebResponse response = null;
+            try
+            {
+                request = (HttpWebRequest)WebRequest.Create(URL);
+                request.Method = "GET";
+                request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3";
+                request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36";
+
+                //443
+                request.ProtocolVersion = HttpVersion.Version11;
+                ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
+
+                request.MaximumAutomaticRedirections = 1;
+                request.AllowAutoRedirect = false;
+                request.ReadWriteTimeout = 5 * 1000;
+                request.Timeout = 5 * 1000;
+
+                response = request.GetResponse() as HttpWebResponse;
+                getString = response.Headers.Get("Location");
+
+            }
+            catch (Exception ex)
+            {
+                getString = "";
+                // return getString;
+            }
+            finally
+            {
+                if (response != null)
+                {
+                    response.Close();
+                    response = null;
+                }
+                if (request != null)
+                {
+                    request.Abort();
+                    request = null;
+                }
+            }
+
+
+            return getString;
+        }
+
         public static string Resp2String(HttpWebResponse HttpWebResponse)
         {
             Stream responseStream = null;
