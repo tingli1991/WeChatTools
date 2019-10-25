@@ -32,10 +32,10 @@ namespace WeChatTools.API.pro
                 TimeSpan dspNow = DateTime.Now.TimeOfDay;
                  
                 string urlCheck = string.Empty;
-                string callBack = string.Empty;
+                
                 if (IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM))
                 {
-                    callBack = string.IsNullOrEmpty(context.Request.QueryString["callback"]) ? "" : context.Request.QueryString["callback"].ToString(); //回调
+                     
                     if (!string.IsNullOrEmpty(context.Request["url"]))
                     {
                         //需要检测的网址
@@ -110,10 +110,7 @@ namespace WeChatTools.API.pro
                 {
                     result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"测试接口,请在每天(08:00-21:00)时间段进行测试,需要讨论技术,联系管理员qq:391502069.\"}";
                 }
-                if (!string.IsNullOrEmpty(callBack))
-                {
-                    result = callBack + "(" + result + ")";
-                }
+                
             }
             else
             {
