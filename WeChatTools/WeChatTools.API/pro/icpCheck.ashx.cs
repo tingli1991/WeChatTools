@@ -54,11 +54,7 @@ namespace WeChatTools.API.pro
                             else
                             {
 
-
-                                if (!string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
-                                {
-                                    wxCheckApiKey = context.Request["key"]; //key ,md5值
-                                }
+ 
 
                                 ServiceApiClient SpVoiceObj2 = null;
                                 //    ServiceApiClient SpVoiceObj = null;
@@ -87,8 +83,8 @@ namespace WeChatTools.API.pro
 
                                     //}
                                     Logger.WriteLogggerTest("#################################################");
-                                    Logger.WriteLogggerTest(wxCheckApiKey + ":" + userIP + ":" + result);
-                                    Logger.WriteLogggerTest(wxCheckApiKey + ":" + context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
+                                    Logger.WriteLogggerTest( userIP + ":" + result);
+                                    Logger.WriteLogggerTest( context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
                                    
 
 
