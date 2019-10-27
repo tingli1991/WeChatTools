@@ -17,7 +17,7 @@ namespace WeChatTools.API.pro
     {
         private const int DURATION = 24 * 60;
         private static string userIP = "127.0.0.1";
-        private string wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "WeChatCheck");
+        private string wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey", "site");
         protected const string GET = "GET";
         public void ProcessRequest(HttpContext context)
         {

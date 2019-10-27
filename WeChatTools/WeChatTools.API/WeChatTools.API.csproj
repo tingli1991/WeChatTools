@@ -68,9 +68,6 @@
     <Content Include="dev\hdShowImg.ashx" />
     <Content Include="pro\wxUrlCheck2.ashx" />
     <Content Include="pro\wxUrlCheck3.ashx" />
-    <Content Include="Config\WeChatCheck.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Config\Other.config" />
     <Content Include="dev\qzoneH5.ashx" />
     <Content Include="Config\site.config" />
