@@ -78,6 +78,7 @@
     <Content Include="pro\icpCheck.ashx" />
     <Content Include="tools\hdUrlEncode.ashx" />
     <Content Include="pro\shorturl3.ashx" />
+    <Content Include="Config\CheckKey.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

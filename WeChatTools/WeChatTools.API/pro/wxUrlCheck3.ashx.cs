@@ -18,7 +18,7 @@ namespace WeChatTools.API.pro
         private static string userIP = "127.0.0.1";
         protected const string POST = "POST";
         protected int IsFreeKey = 1;
-        private string wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey3", "site");
+        private string wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey3", "CheckKey");
 
 
         public void ProcessRequest(HttpContext context)

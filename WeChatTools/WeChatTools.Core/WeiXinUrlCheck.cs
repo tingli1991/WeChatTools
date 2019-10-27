@@ -34,7 +34,7 @@ namespace WeChatTools.Core
         /// <remarks/>
         public ServiceApi()
         {
-            string apiUrl = ConfigTool.ReadVerifyConfig("wxCheckService", "site");
+            string apiUrl = ConfigTool.ReadVerifyConfig("wxCheckService", "CheckKey");
             this.Url = apiUrl;
         }
 
