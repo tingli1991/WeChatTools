@@ -14,7 +14,7 @@ namespace WeChatTools.API.pro
     /// </summary>
     public class shorturl3 : IHttpHandler
     {
-         
+
         private static string userIP = "127.0.0.1";
         protected const string POST = "POST";
         private string shorturlkey = ConfigTool.ReadVerifyConfig("shorturlKey", "WeChatCheck");
@@ -26,7 +26,7 @@ namespace WeChatTools.API.pro
             string result = string.Empty;
             if (context.Request.HttpMethod.ToUpper().Equals(POST))
             {
-                string url = context.Request["url"];                   
+                string url = context.Request["url"];
                 string type = context.Request["type"]; //key ,md5值
                 string model = context.Request["model"]; //a,还原;b.生成
                 context.Response.ContentType = "text/plain";
@@ -37,50 +37,45 @@ namespace WeChatTools.API.pro
                     if (IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM) && !string.IsNullOrEmpty(url))
                     {
                         userIP = GetWebClientIp(context);
-                        if (!IsRedis(context))
+
+                        ServiceApiClient SpVoiceObj = null;
+                        try
                         {
-                            result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"https://url.cn/5mfnDv7\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术,联系管理员qq:391502069!\"}";
-                        }
-                        else
-                        {
-                            ServiceApiClient SpVoiceObj = null;
-                            try
+
+                            if (type.ToUpper() != "URLCN" && type.ToUpper() != "WURLCN")
                             {
-
-                                if (type.ToUpper() != "URLCN" && type.ToUpper() != "WURLCN")
-                                {
-                                    type = "URLCN";
-                                }
-                                url = System.Web.HttpUtility.UrlEncode(url);
-                                string json2 = "{\"Mode\":\"ShortUrl\",\"Param\":\"{\'CheckUrl\':\'" + url + "\',\'type\':\'" + type + "\',\'UserKey\':\'" + shorturlkey + "\'}\"}";
-
-                                SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
-                                SpVoiceObj.Open();
-                                result = SpVoiceObj.Api(json2);
-                                SpVoiceObj.Close();
-
-
-                                if (!string.IsNullOrEmpty(context.Request.QueryString["callback"]))
-                                {
-                                    string callBack = context.Request.QueryString["callback"].ToString(); //回调
-                                    result = callBack + "(" + result + ")";
-                                }
+                                type = "URLCN";
                             }
-                            catch (System.ServiceModel.CommunicationException)
+                            url = System.Web.HttpUtility.UrlEncode(url);
+                            string json2 = "{\"Mode\":\"ShortUrl\",\"Param\":\"{\'CheckUrl\':\'" + url + "\',\'type\':\'" + type + "\',\'UserKey\':\'" + shorturlkey + "\'}\"}";
+
+                            SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
+                            SpVoiceObj.Open();
+                            result = SpVoiceObj.Api(json2);
+                            SpVoiceObj.Close();
+
+
+                            if (!string.IsNullOrEmpty(context.Request.QueryString["callback"]))
                             {
-                                if (SpVoiceObj != null) SpVoiceObj.Abort();
-                            }
-                            catch (TimeoutException)
-                            {
-                                if (SpVoiceObj != null) SpVoiceObj.Abort();
-                            }
-                            catch (Exception ex)
-                            {
-                                if (SpVoiceObj != null) SpVoiceObj.Abort();
-                                result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"https://url.cn/5mfnDv7\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
-                                LogTools.WriteLine(shorturlkey + ":" + ex.Message);
+                                string callBack = context.Request.QueryString["callback"].ToString(); //回调
+                                result = callBack + "(" + result + ")";
                             }
                         }
+                        catch (System.ServiceModel.CommunicationException)
+                        {
+                            if (SpVoiceObj != null) SpVoiceObj.Abort();
+                        }
+                        catch (TimeoutException)
+                        {
+                            if (SpVoiceObj != null) SpVoiceObj.Abort();
+                        }
+                        catch (Exception ex)
+                        {
+                            if (SpVoiceObj != null) SpVoiceObj.Abort();
+                            result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"https://url.cn/5mfnDv7\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
+                            LogTools.WriteLine(shorturlkey + ":" + ex.Message);
+                        }
+
 
 
                     }
@@ -92,7 +87,7 @@ namespace WeChatTools.API.pro
                 }
                 else
                 { //短链接还原
-                    result = HttpHelper.GetLocation(url);                
+                    result = HttpHelper.GetLocation(url);
                 }
 
 
@@ -119,7 +114,7 @@ namespace WeChatTools.API.pro
             }
         }
 
-        
+
 
         private bool IsInTimeInterval(TimeSpan time, TimeSpan startTime, TimeSpan endTime)
         {
@@ -136,40 +131,6 @@ namespace WeChatTools.API.pro
                 return true;
             }
             return false;
-        }
-
-        //防止恶意请求
-        public static bool IsRedis(HttpContext context)
-        {
-            if (context.Request.Browser.Crawler) return false;
-            string key = userIP;
-            bool check = RedisCacheTools.Exists(key);
-            if (check)
-            {
-                RedisCacheTools.Incr(key);
-                int hit = RedisCacheTools.Get<int>(key);
-                if (hit > 5) return false;
-                /*
-                    $redis->incr($key);
-                    $count = $redis->get($key);
-                    if($count > 5){
-                        exit('请求太频繁，请稍后再试！');
-                    }
-                  */
-            }
-            else
-            {
-                DateTime dt = DateTime.Now.AddDays(1);
-                RedisCacheTools.Incr(key);
-                /*
-                    $redis->incr($key);
-	                //限制时间为60秒 
-	                $redis->expire($key,60)  
-                */
-                RedisCacheTools.Expire(key, dt);
-            }
-
-            return true;
         }
 
 

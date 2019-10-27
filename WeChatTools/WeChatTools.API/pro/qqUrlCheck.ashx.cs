@@ -48,12 +48,7 @@ namespace WeChatTools.API.pro
                         }
                         else
                         {
-                            if (!IsRedis(context))
-                            {
-                                result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术,联系管理员qq:391502069!\"}";
-                            }
-                            else
-                            {
+                           
  
 
                                 ServiceApiClient SpVoiceObj2 = null;
@@ -107,7 +102,7 @@ namespace WeChatTools.API.pro
                                     LogTools.WriteLine(userIP + ":" + wxCheckApiKey + ":" + ex.Message);
                                 }
 
-                            }
+                             
                         }
                     }
                     else
@@ -155,40 +150,7 @@ namespace WeChatTools.API.pro
             return false;
         }
 
-        //防止恶意请求
-        public static bool IsRedis(HttpContext context)
-        {
-            if (context.Request.Browser.Crawler) return false;
-            string key = userIP;
-            bool check = RedisCacheTools.Exists(key);
-            if (check)
-            {
-                RedisCacheTools.Incr(key);
-                int hit = RedisCacheTools.Get<int>(key);
-                if (hit > 16) return false;
-                /*
-                    $redis->incr($key);
-                    $count = $redis->get($key);
-                    if($count > 5){
-                        exit('请求太频繁，请稍后再试！');
-                    }
-                  */
-            }
-            else
-            {
-                DateTime dt = DateTime.Now.AddDays(1);
-                RedisCacheTools.Incr(key);
-                /*
-                    $redis->incr($key);
-	                //限制时间为60秒 
-	                $redis->expire($key,60)  
-                */
-                RedisCacheTools.Expire(key, dt);
-            }
-
-            return true;
-        }
-
+        
         public static string GetWebClientIp(HttpContext httpContext)
         {
             string customerIP = "127.0.0.1";

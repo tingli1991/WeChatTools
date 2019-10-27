@@ -29,13 +29,13 @@ namespace WeChatTools.API.pro
                 userIP = GetWebClientIp(context);
                 context.Response.ContentType = "text/plain";
                 TimeSpan dspNow = DateTime.Now.TimeOfDay;
-               
+
                 string urlCheck = string.Empty;
                 string callBack = string.Empty;
                 if (IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM))
                 {
-                    
-                   
+
+
                     if (!string.IsNullOrEmpty(context.Request["url"]))
                     {
                         //需要检测的网址
@@ -47,67 +47,61 @@ namespace WeChatTools.API.pro
                         }
                         else
                         {
-                            if (!IsRedis(context))
+
+
+
+                            ServiceApiClient SpVoiceObj2 = null;
+                            //    ServiceApiClient SpVoiceObj = null;
+                            try
                             {
-                                result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术,联系管理员qq:391502069!\"}";
-                            }
-                            else
-                            {
 
- 
+                                bool isTrue = urlCheck.StartsWith("http");
+                                if (!isTrue) { urlCheck = "http://" + urlCheck; }
+                                urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
 
-                                ServiceApiClient SpVoiceObj2 = null;
-                                //    ServiceApiClient SpVoiceObj = null;
-                                try
-                                {
+                                string json2 = "{\"Mode\":\"AuthQQGJICPKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
 
-                                    bool isTrue = urlCheck.StartsWith("http");
-                                    if (!isTrue) { urlCheck = "http://" + urlCheck; }
-                                    urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
+                                SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi");
+                                SpVoiceObj2.Open();
+                                result = SpVoiceObj2.Api(json2);
+                                SpVoiceObj2.Close();
+                                //JsonObject.Results aup = JsonConvert.DeserializeObject<JsonObject.Results>(result);
 
-                                    string json2 = "{\"Mode\":\"AuthQQGJICPKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
+                                //if (aup.State == true)
+                                //{
+                                //    string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
+                                //    SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
+                                //    SpVoiceObj.Open();
+                                //    result = SpVoiceObj.Api(json);
+                                //    SpVoiceObj.Close();
 
-                                    SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi");
-                                    SpVoiceObj2.Open();
-                                    result = SpVoiceObj2.Api(json2);
-                                    SpVoiceObj2.Close();
-                                    //JsonObject.Results aup = JsonConvert.DeserializeObject<JsonObject.Results>(result);
-
-                                    //if (aup.State == true)
-                                    //{
-                                    //    string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
-                                    //    SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
-                                    //    SpVoiceObj.Open();
-                                    //    result = SpVoiceObj.Api(json);
-                                    //    SpVoiceObj.Close();
-
-                                    //}
-                                    Logger.WriteLogggerTest("#################################################");
-                                    Logger.WriteLogggerTest( userIP + ":" + result);
-                                    Logger.WriteLogggerTest( context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
-                                   
+                                //}
+                                Logger.WriteLogggerTest("#################################################");
+                                Logger.WriteLogggerTest(userIP + ":" + result);
+                                Logger.WriteLogggerTest(context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
 
 
-                                }
-                                catch (System.ServiceModel.CommunicationException)
-                                {
-                                    //  if (SpVoiceObj != null) SpVoiceObj.Abort();
-                                    if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                                }
-                                catch (TimeoutException)
-                                {
-                                    //   if (SpVoiceObj != null) SpVoiceObj.Abort();
-                                    if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                                }
-                                catch (Exception ex)
-                                {
-                                    //   if (SpVoiceObj != null) SpVoiceObj.Abort();
-                                    if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                                    result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
-                                    LogTools.WriteLine(userIP + ":" + wxCheckApiKey + ":" + ex.Message);
-                                }
 
                             }
+                            catch (System.ServiceModel.CommunicationException)
+                            {
+                                //  if (SpVoiceObj != null) SpVoiceObj.Abort();
+                                if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                            }
+                            catch (TimeoutException)
+                            {
+                                //   if (SpVoiceObj != null) SpVoiceObj.Abort();
+                                if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                            }
+                            catch (Exception ex)
+                            {
+                                //   if (SpVoiceObj != null) SpVoiceObj.Abort();
+                                if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                                result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
+                                LogTools.WriteLine(userIP + ":" + wxCheckApiKey + ":" + ex.Message);
+                            }
+
+
                         }
                     }
                     else
@@ -120,7 +114,7 @@ namespace WeChatTools.API.pro
                 {
                     result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"测试接口,请在每天(08:00-21:00)时间段进行测试,需要讨论技术,联系管理员qq:391502069.\"}";
                 }
-                
+
             }
             else
             {
@@ -137,7 +131,7 @@ namespace WeChatTools.API.pro
                 return false;
             }
         }
-         
+
         private bool IsInTimeInterval(TimeSpan time, TimeSpan startTime, TimeSpan endTime)
         {
             //判断时间段开始时间是否小于时间段结束时间,如果不是就交换
@@ -155,39 +149,6 @@ namespace WeChatTools.API.pro
             return false;
         }
 
-        //防止恶意请求
-        public static bool IsRedis(HttpContext context)
-        {
-            if (context.Request.Browser.Crawler) return false;
-            string key = userIP;
-            bool check = RedisCacheTools.Exists(key);
-            if (check)
-            {
-                RedisCacheTools.Incr(key);
-                int hit = RedisCacheTools.Get<int>(key);
-                if (hit > 16) return false;
-                /*
-                    $redis->incr($key);
-                    $count = $redis->get($key);
-                    if($count > 5){
-                        exit('请求太频繁，请稍后再试！');
-                    }
-                  */
-            }
-            else
-            {
-                DateTime dt = DateTime.Now.AddDays(1);
-                RedisCacheTools.Incr(key);
-                /*
-                    $redis->incr($key);
-	                //限制时间为60秒 
-	                $redis->expire($key,60)  
-                */
-                RedisCacheTools.Expire(key, dt);
-            }
-
-            return true;
-        }
 
         public static string GetWebClientIp(HttpContext httpContext)
         {
@@ -258,7 +219,7 @@ namespace WeChatTools.API.pro
             }
             return customerIP;
         }
-         
+
         /// <summary>
         /// 检查IP地址格式
         /// </summary>

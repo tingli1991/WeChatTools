@@ -40,13 +40,7 @@ namespace WeChatTools.API.pro
                     else
                     {
 
-                        if (!IsRedis(context, userKey))
-                        {
-                            result = "{\"State\":false,\"Code\":\"001\",\"Data\":\"" + userKey + "\",\"Msg\":\"非法访问2，访问被拒绝,联系管理员qq:391502069!\"}";
-                        }
-                        else
-                        {
-
+                        
                             ServiceApiClient SpVoiceObj2 = null;
                             //  ServiceApiClient SpVoiceObj = null;
                             try
@@ -92,7 +86,7 @@ namespace WeChatTools.API.pro
                                 LogTools.WriteLine(userIP + ":" + userKey + ":" + ex.Message);
                             }
 
-                        }
+                        
                     }
                 }
                 else
@@ -119,36 +113,7 @@ namespace WeChatTools.API.pro
             }
         }
 
-        //防止恶意请求
-        public static bool IsRedis(HttpContext context, string key)
-        {
-            if (context.Request.Browser.Crawler) return false;
-            if (RedisCacheTools.Exists(key))
-            {
-                string keycount = "keycount:" + key;
-                bool check = RedisCacheTools.Exists(keycount);
-                if (check)
-                {
-                    RedisCacheTools.Incr(keycount);
-                    int hit = RedisCacheTools.Get<int>(keycount);
-                    if (hit > 700000) return false;
-                }
-                else
-                {
-                    DateTime dt = DateTime.Now.Date.AddDays(1);
-                    RedisCacheTools.Incr(keycount);
-
-                    RedisCacheTools.Expire(keycount, dt);
-                }
-            }
-            else
-            {
-                return false;
-            }
-            return true;
-        }
-
-
+       
         public static string GetWebClientIp(HttpContext httpContext)
         {
             string customerIP = "127.0.0.1";

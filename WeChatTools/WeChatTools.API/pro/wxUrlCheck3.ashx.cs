@@ -40,64 +40,58 @@ namespace WeChatTools.API.pro
 
                 if (!string.IsNullOrEmpty(urlCheck) && !string.IsNullOrEmpty(model))
                 {
-                    if (!IsRedis(context))
+
+                    if (!string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
                     {
-                        result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + userIP + "\",\"Msg\":\"当天请求上限,请明天再试,需要讨论技术,联系管理员qq:391502069!\"}";
+                        wxKey = context.Request["key"]; //key ,md5值
                     }
-                    else
+
+
+                    ServiceApiClient SpVoiceObj2 = null;
+                    //    ServiceApiClient SpVoiceObj = null;
+                    try
                     {
-                        if (!string.IsNullOrEmpty(context.Request["key"]) && context.Request["key"].Length == 32)
-                        {
-                            wxKey = context.Request["key"]; //key ,md5值
-                        }
+                        //需要检测的网址                                
+                        bool isTrue = urlCheck.StartsWith("http");
+                        if (!isTrue) { urlCheck = "http://" + urlCheck; }
+                        urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
+
+                        string json2 = "{\"Mode\":\"" + model + "\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxKey + "\'}\"}";
+
+                        SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi");
+                        SpVoiceObj2.Open();
+                        result = SpVoiceObj2.Api(json2);
+                        SpVoiceObj2.Close();
 
 
-                        ServiceApiClient SpVoiceObj2 = null;
-                        //    ServiceApiClient SpVoiceObj = null;
-                        try
-                        {
-                            //需要检测的网址                                
-                            bool isTrue = urlCheck.StartsWith("http");
-                            if (!isTrue) { urlCheck = "http://" + urlCheck; }
-                            urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
-
-                            string json2 = "{\"Mode\":\"" + model + "\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxKey + "\'}\"}";
-
-                            SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi");
-                            SpVoiceObj2.Open();
-                            result = SpVoiceObj2.Api(json2);
-                            SpVoiceObj2.Close();
-
-
-                            Logger.WriteLogggerTest("#################################################");
-                            Logger.WriteLogggerTest(wxKey + ":" + userIP + ":" + result);
-                            Logger.WriteLogggerTest(wxKey + ":" + context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
+                        Logger.WriteLogggerTest("#################################################");
+                        Logger.WriteLogggerTest(wxKey + ":" + userIP + ":" + result);
+                        Logger.WriteLogggerTest(wxKey + ":" + context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
 
 
 
-
-
-                        }
-                        catch (System.ServiceModel.CommunicationException)
-                        {
-                            //  if (SpVoiceObj != null) SpVoiceObj.Abort();
-                            if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                        }
-                        catch (TimeoutException)
-                        {
-                            //   if (SpVoiceObj != null) SpVoiceObj.Abort();
-                            if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                        }
-                        catch (Exception ex)
-                        {
-                            //   if (SpVoiceObj != null) SpVoiceObj.Abort();
-                            if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                            result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
-                            LogTools.WriteLine(userIP + ":" + wxKey + ":" + ex.Message);
-                        }
 
 
                     }
+                    catch (System.ServiceModel.CommunicationException)
+                    {
+                        //  if (SpVoiceObj != null) SpVoiceObj.Abort();
+                        if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                    }
+                    catch (TimeoutException)
+                    {
+                        //   if (SpVoiceObj != null) SpVoiceObj.Abort();
+                        if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                    }
+                    catch (Exception ex)
+                    {
+                        //   if (SpVoiceObj != null) SpVoiceObj.Abort();
+                        if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                        result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
+                        LogTools.WriteLine(userIP + ":" + wxKey + ":" + ex.Message);
+                    }
+
+
                 }
                 else
                 {
@@ -143,39 +137,6 @@ namespace WeChatTools.API.pro
             return false;
         }
 
-        //防止恶意请求
-        public static bool IsRedis(HttpContext context)
-        {
-            if (context.Request.Browser.Crawler) return false;
-            string key = userIP;
-            bool check = RedisCacheTools.Exists(key);
-            if (check)
-            {
-                RedisCacheTools.Incr(key);
-                int hit = RedisCacheTools.Get<int>(key);
-                if (hit > 16) return false;
-                /*
-                    $redis->incr($key);
-                    $count = $redis->get($key);
-                    if($count > 5){
-                        exit('请求太频繁，请稍后再试！');
-                    }
-                  */
-            }
-            else
-            {
-                DateTime dt = DateTime.Now.AddDays(1);
-                RedisCacheTools.Incr(key);
-                /*
-                    $redis->incr($key);
-	                //限制时间为60秒 
-	                $redis->expire($key,60)  
-                */
-                RedisCacheTools.Expire(key, dt);
-            }
-
-            return true;
-        }
 
         public static string GetWebClientIp(HttpContext httpContext)
         {
