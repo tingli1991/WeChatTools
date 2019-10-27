@@ -34,75 +34,53 @@ namespace WeChatTools.API.pro
                 string callBack = string.Empty;
                 if (IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM))
                 {
-
-
                     if (!string.IsNullOrEmpty(context.Request["url"]))
                     {
                         //需要检测的网址
                         urlCheck = context.Request["url"]; //检测的值
-                        string[] sArray = urlCheck.Split('.');
-                        if (sArray.Length == 3 && sArray[1].Length == 15)
-                        {
-                            result = "{\"State\":false,\"Code\":\"002\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"歇一歇,访问太快了,联系管理员qq:391502069\"}";
-                        }
-                        else
+                        ServiceApiClient SpVoiceObj2 = null;
+
+                        try
                         {
 
+                            bool isTrue = urlCheck.StartsWith("http");
+                            if (!isTrue) { urlCheck = "http://" + urlCheck; }
+                            urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
 
+                            string json2 = "{\"Mode\":\"AuthQQGJICPKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\',\'UserIP\':\'" + userIP + "\',\'IsFreeKey\':1}\"}";
 
-                            ServiceApiClient SpVoiceObj2 = null;
-                            //    ServiceApiClient SpVoiceObj = null;
-                            try
-                            {
+                            SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi");
+                            SpVoiceObj2.Open();
+                            result = SpVoiceObj2.Api(json2);
+                            SpVoiceObj2.Close();
+                        
+                            Logger.WriteLogggerTest("#################################################");
+                            Logger.WriteLogggerTest(userIP + ":" + result);
+                            Logger.WriteLogggerTest(context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
 
-                                bool isTrue = urlCheck.StartsWith("http");
-                                if (!isTrue) { urlCheck = "http://" + urlCheck; }
-                                urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
-
-                                string json2 = "{\"Mode\":\"AuthQQGJICPKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
-
-                                SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi");
-                                SpVoiceObj2.Open();
-                                result = SpVoiceObj2.Api(json2);
-                                SpVoiceObj2.Close();
-                                //JsonObject.Results aup = JsonConvert.DeserializeObject<JsonObject.Results>(result);
-
-                                //if (aup.State == true)
-                                //{
-                                //    string json = "{\"Mode\":\"WXCheckUrl\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\'}\"}";
-                                //    SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
-                                //    SpVoiceObj.Open();
-                                //    result = SpVoiceObj.Api(json);
-                                //    SpVoiceObj.Close();
-
-                                //}
-                                Logger.WriteLogggerTest("#################################################");
-                                Logger.WriteLogggerTest(userIP + ":" + result);
-                                Logger.WriteLogggerTest(context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
-
-
-
-                            }
-                            catch (System.ServiceModel.CommunicationException)
-                            {
-                                //  if (SpVoiceObj != null) SpVoiceObj.Abort();
-                                if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                            }
-                            catch (TimeoutException)
-                            {
-                                //   if (SpVoiceObj != null) SpVoiceObj.Abort();
-                                if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                            }
-                            catch (Exception ex)
-                            {
-                                //   if (SpVoiceObj != null) SpVoiceObj.Abort();
-                                if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                                result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
-                                LogTools.WriteLine(userIP + ":" + wxCheckApiKey + ":" + ex.Message);
-                            }
 
 
                         }
+                        catch (System.ServiceModel.CommunicationException)
+                        {
+                            //  if (SpVoiceObj != null) SpVoiceObj.Abort();
+                            if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                        }
+                        catch (TimeoutException)
+                        {
+                            //   if (SpVoiceObj != null) SpVoiceObj.Abort();
+                            if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                        }
+                        catch (Exception ex)
+                        {
+                            //   if (SpVoiceObj != null) SpVoiceObj.Abort();
+                            if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                            result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
+                            LogTools.WriteLine(userIP + ":" + wxCheckApiKey + ":" + ex.Message);
+                        }
+
+
+
                     }
                     else
                     {

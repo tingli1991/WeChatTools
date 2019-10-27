@@ -47,7 +47,7 @@ namespace WeChatTools.API.pro
                                 type = "URLCN";
                             }
                             url = System.Web.HttpUtility.UrlEncode(url);
-                            string json2 = "{\"Mode\":\"ShortUrl\",\"Param\":\"{\'CheckUrl\':\'" + url + "\',\'type\':\'" + type + "\',\'UserKey\':\'" + shorturlkey + "\'}\"}";
+                            string json2 = "{\"Mode\":\"ShortUrl\",\"Param\":\"{\'CheckUrl\':\'" + url + "\',\'type\':\'" + type + "\',\'UserKey\':\'" + shorturlkey + "\',\'UserIP\':\'" + userIP + "\',\'IsFreeKey\':1}\"}";
 
                             SpVoiceObj = new ServiceApiClient("NetTcpBinding_IServiceApi");
                             SpVoiceObj.Open();

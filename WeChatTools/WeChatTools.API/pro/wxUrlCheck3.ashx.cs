@@ -17,18 +17,19 @@ namespace WeChatTools.API.pro
         private const int DURATION = 24 * 60;
         private static string userIP = "127.0.0.1";
         protected const string POST = "POST";
-
-        private string wxKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey3", "site");
+        protected int IsFreeKey = 1;
+        private string wxCheckApiKey = ConfigTool.ReadVerifyConfig("wxCheckApiKey3", "site");
 
 
         public void ProcessRequest(HttpContext context)
         {
             string result = string.Empty;
+            string wxKey = wxCheckApiKey; //key ,md5值
             if (context.Request.HttpMethod.ToUpper().Equals(POST))
             {
                 //PostHtml();
 
-                userIP = GetWebClientIp(context);
+               
                 context.Response.ContentType = "text/plain";
                 TimeSpan dspNow = DateTime.Now.TimeOfDay;
 
@@ -36,7 +37,7 @@ namespace WeChatTools.API.pro
 
                 string model = context.Request["model"];
 
-                // string referrer = context.Request.UrlReferrer != null ? context.Request.UrlReferrer.Host.ToLower() : "";
+            
 
                 if (!string.IsNullOrEmpty(urlCheck) && !string.IsNullOrEmpty(model))
                 {
@@ -45,7 +46,15 @@ namespace WeChatTools.API.pro
                     {
                         wxKey = context.Request["key"]; //key ,md5值
                     }
-
+                    if (!wxKey.ToLower().Equals(wxCheckApiKey)) 
+                    {
+                        IsFreeKey = 0;
+                    }
+                    else
+                    {
+                        IsFreeKey = 1;
+                        userIP = GetWebClientIp(context);
+                    }
 
                     ServiceApiClient SpVoiceObj2 = null;
                     //    ServiceApiClient SpVoiceObj = null;
@@ -56,20 +65,16 @@ namespace WeChatTools.API.pro
                         if (!isTrue) { urlCheck = "http://" + urlCheck; }
                         urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
 
-                        string json2 = "{\"Mode\":\"" + model + "\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxKey + "\'}\"}";
+                        string json2 = "{\"Mode\":\"" + model + "\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxKey + "\',\'UserIP\':\'" + userIP + "\',\'IsFreeKey\':'" + IsFreeKey + "'}\"}";
 
                         SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi");
                         SpVoiceObj2.Open();
                         result = SpVoiceObj2.Api(json2);
                         SpVoiceObj2.Close();
 
-
                         Logger.WriteLogggerTest("#################################################");
                         Logger.WriteLogggerTest(wxKey + ":" + userIP + ":" + result);
                         Logger.WriteLogggerTest(wxKey + ":" + context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
-
-
-
 
 
                     }

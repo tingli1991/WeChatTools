@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="404.html" />
+    <Content Include="Config\site.config" />
     <Content Include="Lib\Newtonsoft.Json.dll" />
     <Content Include="Lib\ServiceStack.Common.dll" />
     <Content Include="Lib\ServiceStack.Common.xml" />
@@ -70,7 +71,6 @@
     <Content Include="pro\wxUrlCheck3.ashx" />
     <Content Include="Config\Other.config" />
     <Content Include="dev\qzoneH5.ashx" />
-    <Content Include="Config\site.config" />
     <Content Include="pro\qqUrlCheck2.ashx" />
     <Content Include="pro\qqUrlCheck.ashx" />
     <Content Include="pro\shorturl.ashx" />
