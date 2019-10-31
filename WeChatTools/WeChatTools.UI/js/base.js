@@ -96,7 +96,7 @@ $("input[qx]").on("click", function () {
 
 function deleteData(msg, table, id) {
     if (window.confirm(msg)) {
-        var url = easyapi.ctx + "/" + table + "!delete.action?id=" + id;
+        var url = easyapi.ctx + "/index.html" + table + "!delete.action?id=" + id;
         $.get(url, function (data) {
             $('#' + table + id).slideUp("slow");
         });
@@ -107,7 +107,7 @@ function deleteData(msg, table, id) {
 
 function state(msg, table, id, state) {
     if (window.confirm(msg)) {
-        var url = easyapi.ctx + "/" + table + "!state.action?id=" + id + "&" + table + ".state=" + state;
+        var url = easyapi.ctx + "/index.html" + table + "!state.action?id=" + id + "&" + table + ".state=" + state;
         $.get(url, function (data) {
             $('#' + table + id).slideUp("slow");
         });
@@ -120,7 +120,7 @@ function state(msg, table, id, state) {
 //用户的启用禁用
 function userEnabled(msg, table, id) {
     if (window.confirm(msg)) {
-        var url = easyapi.ctx + "/" + table + "!userEnabled.action?id=" + id;
+        var url = easyapi.ctx + "/index.html" + table + "!userEnabled.action?id=" + id;
         $.get(url, function (data) {
             $('#' + table + id).slideUp("slow");
         });
