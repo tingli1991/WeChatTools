@@ -58,6 +58,7 @@
     <Content Include="doc.html" />
     <Content Include="img\alipay.jpg" />
     <Content Include="img\webchat.png" />
+    <Content Include="img\wxbaysun.png" />
     <Content Include="index.html" />
     <Content Include="js\base.js" />
     <Content Include="js\bootstrap.min.js" />
