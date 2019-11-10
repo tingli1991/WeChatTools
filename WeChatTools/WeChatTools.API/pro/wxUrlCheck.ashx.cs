@@ -31,7 +31,7 @@ namespace WeChatTools.API.pro
                 context.Response.ContentType = "text/plain";
                 TimeSpan dspNow = DateTime.Now.TimeOfDay;
 
-                string urlCheck = string.Empty;
+                string urlCheck = "{\"State\":false,\"Code\":\"003\",\"Data\":\"QQ:391502069 \",\"Msg\":\"参数错误,联系管理员qq:391502069!\"}";
 
                 if (IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM))
                 {
@@ -41,47 +41,49 @@ namespace WeChatTools.API.pro
                         //需要检测的网址
                         urlCheck = context.Request["url"]; //检测的值
 
-                        ServiceApiClient SpVoiceObj2 = null;
-                        //    ServiceApiClient SpVoiceObj = null;
-                        try
-                        {
+                       // if (!urlCheck.ToLower().Contains(".casa") && !urlCheck.ToLower().Contains(".kuaizhan.com"))
+                       // {
+                            ServiceApiClient SpVoiceObj2 = null;
+                            //    ServiceApiClient SpVoiceObj = null;
+                            try
+                            {
 
-                            bool isTrue = urlCheck.StartsWith("http");
-                            if (!isTrue) { urlCheck = "http://" + urlCheck; }
-                            urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
+                                bool isTrue = urlCheck.StartsWith("http");
+                                if (!isTrue) { urlCheck = "http://" + urlCheck; }
+                                urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
 
-                            string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\',\'UserIP\':\'" + userIP + "\',\'IsFreeKey\':1}\"}";
+                                string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\',\'UserIP\':\'" + userIP + "\',\'IsFreeKey\':1}\"}";
 
-                            SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi");
-                            SpVoiceObj2.Open();
-                            result = SpVoiceObj2.Api(json2);
-                            SpVoiceObj2.Close();
+                                SpVoiceObj2 = new ServiceApiClient("NetTcpBinding_IServiceApi");
+                                SpVoiceObj2.Open();
+                                result = SpVoiceObj2.Api(json2);
+                                SpVoiceObj2.Close();
 
-                            Logger.WriteLogggerTest("#################################################");
-                            Logger.WriteLogggerTest(userIP + ":" + result);
-                            Logger.WriteLogggerTest(context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
+                                Logger.WriteLogggerTest("#################################################");
+                                Logger.WriteLogggerTest(userIP + ":" + result);
+                                Logger.WriteLogggerTest(context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
 
 
 
-                        }
-                        catch (System.ServiceModel.CommunicationException)
-                        {
-                            //  if (SpVoiceObj != null) SpVoiceObj.Abort();
-                            if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                        }
-                        catch (TimeoutException)
-                        {
-                            //   if (SpVoiceObj != null) SpVoiceObj.Abort();
-                            if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                        }
-                        catch (Exception ex)
-                        {
-                            //   if (SpVoiceObj != null) SpVoiceObj.Abort();
-                            if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
-                            result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
-                            LogTools.WriteLine(userIP + ":" + ex.Message);
-                        }
-
+                            }
+                            catch (System.ServiceModel.CommunicationException)
+                            {
+                                //  if (SpVoiceObj != null) SpVoiceObj.Abort();
+                                if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                            }
+                            catch (TimeoutException)
+                            {
+                                //   if (SpVoiceObj != null) SpVoiceObj.Abort();
+                                if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                            }
+                            catch (Exception ex)
+                            {
+                                //   if (SpVoiceObj != null) SpVoiceObj.Abort();
+                                if (SpVoiceObj2 != null) SpVoiceObj2.Abort();
+                                result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
+                                LogTools.WriteLine(userIP + ":" + ex.Message);
+                            }
+                       // }
 
 
                     }
@@ -97,10 +99,7 @@ namespace WeChatTools.API.pro
                 }
 
             }
-            else
-            {
-                result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"QQ:391502069 \",\"Msg\":\"参数错误,联系管理员qq:391502069!\"}";
-            }
+
             context.Response.Write(result);
             context.Response.End();
         }
