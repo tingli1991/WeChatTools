@@ -51,8 +51,8 @@ namespace WeChatTools.API.pro
                     TimeSpan dspNow = DateTime.Now.TimeOfDay;
                     if ((IsFreeKey == 1 && IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM)) || IsFreeKey == 0)
                     {
-                       // if (!urlCheck.ToLower().Contains(".casa") && !urlCheck.ToLower().Contains(".kuaizhan.com"))
-                       // {
+                        if (!urlCheck.ToLower().Contains(".kuaizhan.com"))
+                        {
                             ServiceApiClient SpVoiceObj2 = null;
                             //    ServiceApiClient SpVoiceObj = null;
                             try
@@ -92,7 +92,7 @@ namespace WeChatTools.API.pro
                                 result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
                                 LogTools.WriteLine(userIP + ":" + wxKey + ":" + ex.Message);
                             }
-                       // }
+                        }
                     }
                     else
                     {
@@ -108,8 +108,15 @@ namespace WeChatTools.API.pro
 
 
             }
-           
-            context.Response.Headers.Add("Access-Control-Allow-Origin", "http://www.rrbay.xyz");
+            string allowOrigin = "http://www.rrbay.xyz,http://www.abc.com";
+            string origin = context.Request.Headers.Get("Origin");
+            if (allowOrigin.Contains(origin)) {
+                context.Response.Headers.Add("Access-Control-Allow-Origin", origin);
+            }
+            else
+            {
+                context.Response.Headers.Add("Access-Control-Allow-Origin", "http://www.rrbay.xyz");
+            }
             context.Response.Headers.Add("Access-Control-Allow-Methods", "POST");
             context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
             context.Response.Write(result);
