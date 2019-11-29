@@ -13,7 +13,7 @@
 
 ## 使用
 - 微信域名检测试用接口 [http://wx.rrbay.com/pro/wxUrlCheck.ashx?url=http://www.teu7.cn](http://wx.rrbay.com/pro/wxUrlCheck.ashx?url=http://www.teu7.cn "微信域名检测试用接口")
-- QQ管家域名检测试用接口 [http://wx.rrbay.com/pro/qqUrlCheck.ashx?url=http://www.teu7.cn](http://wx.rrbay.com/pro/qqUrlCheck.ashx?url=http://www.teu7.cn "QQ管家域名检测试用接口")
+- QQ域名检测试用接口 [http://wx.rrbay.com/pro/qqUrlCheck.ashx?url=http://www.teu7.cn](http://wx.rrbay.com/pro/qqUrlCheck.ashx?url=http://www.teu7.cn "QQ域名检测试用接口")
 - 域名icp备案查询接口 [http://wx.rrbay.com/pro/icpCheck.ashx?url=http://www.teu7.cn](http://wx.rrbay.com/pro/icpCheck.ashx?url=http://www.teu7.cn "域名备案查询接口")
 ```
  {"State":true, "Code","101","Data":"www.teu7.cn",  "Msg":"屏蔽"}

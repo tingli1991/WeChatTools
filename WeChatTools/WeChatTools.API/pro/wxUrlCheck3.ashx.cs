@@ -108,7 +108,7 @@ namespace WeChatTools.API.pro
 
 
             }
-            string allowOrigin = "http://www.rrbay.xyz,http://www.abc.com";
+            string allowOrigin = "http://www.rrbay.xyz,http://www.rrbay.com";
             string origin = context.Request.Headers.Get("Origin");
             if (allowOrigin.Contains(origin)) {
                 context.Response.Headers.Add("Access-Control-Allow-Origin", origin);
@@ -181,9 +181,9 @@ namespace WeChatTools.API.pro
                 if (!String.IsNullOrWhiteSpace(customerIP) && customerIP.Contains(","))
                 {
                     string[] xx = customerIP.Split(new char[] { ',' });
-                    if (xx.Length > 1)
+                    if (xx.Length > 2)
                     {
-                        customerIP = xx[xx.Length - 2].Trim();
+                        customerIP = xx[xx.Length - 1].Trim();
                     }
                     else
                     {

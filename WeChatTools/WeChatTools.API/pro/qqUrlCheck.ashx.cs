@@ -166,9 +166,9 @@ namespace WeChatTools.API.pro
                 if (!String.IsNullOrWhiteSpace(customerIP) && customerIP.Contains(","))
                 {
                     string[] xx = customerIP.Split(new char[] { ',' });
-                    if (xx.Length > 1)
+                    if (xx.Length > 2)
                     {
-                        customerIP = xx[xx.Length - 2].Trim();
+                        customerIP = xx[xx.Length - 1].Trim();
                     }
                     else
                     {
