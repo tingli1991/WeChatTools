@@ -51,7 +51,7 @@ namespace WeChatTools.API.pro
                     TimeSpan dspNow = DateTime.Now.TimeOfDay;
                     if ((IsFreeKey == 1 && IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM)) || IsFreeKey == 0)
                     {
-                        if (!urlCheck.ToLower().Contains(".kuaizhan.com"))
+                        if (!urlCheck.ToLower().Contains(".kuaizhan.com") && !urlCheck.ToLower().Contains(".hatai678.top") && !urlCheck.ToLower().Contains(".jszkgs.top"))
                         {
                             ServiceApiClient SpVoiceObj2 = null;
                             //    ServiceApiClient SpVoiceObj = null;
@@ -92,7 +92,7 @@ namespace WeChatTools.API.pro
                                 result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
                                 LogTools.WriteLine(userIP + ":" + wxKey + ":" + ex.Message);
                             }
-                        }
+                         }
                     }
                     else
                     {
@@ -108,7 +108,7 @@ namespace WeChatTools.API.pro
 
 
             }
-            string allowOrigin = "http://www.rrbay.xyz,http://www.rrbay.com";
+            string allowOrigin = "http://www.rrbay.xyz,http://www.hhgzchina.com,http://www.gqwekk.cn,http://www.qqbf.xyz,http://www.qqbg.xyz,http://www.ggxz.xyz,http://www.rgjxyy.shop,http://www.rgjxyy.fun,http://www.rujcyy.store,http://www.rljdyy.store,http://www.rejayy.store,http://www.rgjxyy.store,http://www.xqjqiao.com,http://www.bbpp.xyz,http://www.bbhh.xyz,http://www.bbqq.xyz,http://www.bbkk.xyz,http://www.bbzz.xyz,http://www.bbtt.xyz";
             string origin = context.Request.Headers.Get("Origin");
             if (allowOrigin.Contains(origin)) {
                 context.Response.Headers.Add("Access-Control-Allow-Origin", origin);
