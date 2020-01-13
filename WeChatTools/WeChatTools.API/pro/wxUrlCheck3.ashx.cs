@@ -108,7 +108,7 @@ namespace WeChatTools.API.pro
 
 
             }
-            string allowOrigin = "http://www.rrbay.xyz,http://www.hhgzchina.com,http://www.gqwekk.cn,http://www.qqbf.xyz,http://www.qqbg.xyz,http://www.ggxz.xyz,http://www.rgjxyy.shop,http://www.rgjxyy.fun,http://www.rujcyy.store,http://www.rljdyy.store,http://www.rejayy.store,http://www.rgjxyy.store,http://www.xqjqiao.com,http://www.bbpp.xyz,http://www.bbhh.xyz,http://www.bbqq.xyz,http://www.bbkk.xyz,http://www.bbzz.xyz,http://www.bbtt.xyz";
+            string allowOrigin = "https://www.rrbay.com,http://www.rrbay.xyz,http://www.hhgzchina.com,http://www.gqwekk.cn,http://www.qqbf.xyz,http://www.qqbg.xyz,http://www.ggxz.xyz,http://www.rgjxyy.shop,http://www.rgjxyy.fun,http://www.rujcyy.store,http://www.rljdyy.store,http://www.rejayy.store,http://www.rgjxyy.store,http://www.xqjqiao.com,http://www.bbpp.xyz,http://www.bbhh.xyz,http://www.bbqq.xyz,http://www.bbkk.xyz,http://www.bbzz.xyz,http://www.bbtt.xyz";
             string origin = context.Request.Headers.Get("Origin");
             if (allowOrigin.Contains(origin)) {
                 context.Response.Headers.Add("Access-Control-Allow-Origin", origin);
