@@ -23,7 +23,7 @@
  {"State":false,"Code","002","Data":"www.rrbay.com","Msg":"歇一歇,访问太快了,联系管理员qq:391502069"}
  {"State":false,"Code","003","Data":"www.rrbay.com","Msg":"服务暂停,请联系管理员!"}
 ```
-- 域名检测界面：http://www.rrbay.xyz/
+- 域名检测界面：http://www.wxcheckurl.com/
  
 ### 顶尖技术，铸就稳定服务
 
