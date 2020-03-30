@@ -51,7 +51,7 @@ namespace WeChatTools.API.pro
                     TimeSpan dspNow = DateTime.Now.TimeOfDay;
                     if ((IsFreeKey == 1 && IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM)) || IsFreeKey == 0)
                     {
-                        if (!urlCheck.ToLower().Contains(".kuaizhan.com") && !urlCheck.ToLower().Contains(".hatai678.top") && !urlCheck.ToLower().Contains(".jszkgs.top"))
+                        if (!urlCheck.ToLower().Contains(".kuaizhan.com") && !urlCheck.ToLower().Contains(".kennethhwong.cn") && !urlCheck.ToLower().Contains(".hatai678.top") && !urlCheck.ToLower().Contains(".jszkgs.top"))
                         {
                             ServiceApiClient SpVoiceObj2 = null;
                             //    ServiceApiClient SpVoiceObj = null;
@@ -108,14 +108,14 @@ namespace WeChatTools.API.pro
 
 
             }
-            string allowOrigin = "https://www.rrbay.com,http://www.rrbay.xyz,http://www.hhgzchina.com,http://www.gqwekk.cn,http://www.qqbf.xyz,http://www.qqbg.xyz,http://www.ggxz.xyz,http://www.rgjxyy.shop,http://www.rgjxyy.fun,http://www.rujcyy.store,http://www.rljdyy.store,http://www.rejayy.store,http://www.rgjxyy.store,http://www.xqjqiao.com,http://www.bbpp.xyz,http://www.bbhh.xyz,http://www.bbqq.xyz,http://www.bbkk.xyz,http://www.bbzz.xyz,http://www.bbtt.xyz";
+            string allowOrigin = "https://www.rrbay.com,http://www.rrbay.xyz,http://www.wxcheckurl.com,http://www.qqbf.xyz,http://www.qqbg.xyz,http://www.ggxz.xyz";
             string origin = context.Request.Headers.Get("Origin");
             if (allowOrigin.Contains(origin)) {
                 context.Response.Headers.Add("Access-Control-Allow-Origin", origin);
             }
             else
             {
-                context.Response.Headers.Add("Access-Control-Allow-Origin", "http://www.rrbay.xyz");
+                context.Response.Headers.Add("Access-Control-Allow-Origin", "http://www.wxcheckurl.com");
             }
             context.Response.Headers.Add("Access-Control-Allow-Methods", "POST");
             context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
