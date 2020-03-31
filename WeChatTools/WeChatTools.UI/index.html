@@ -1,107 +1,110 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="referrer" content="same-origin" />
-    <title>太阳湾软件 - 微信域名检测</title>
-    <meta name="keywords" content="微信域名检测,qq管家域名检测,域名备案信息查询" />
-    <meta name="description" content="太阳湾提供微信域名实时检测接口,qq管家和qq浏览器域名检测接口,域名备案主体和备案号查询等各种推广技术方案,为您的微信项目保驾护航." />
-    <link type="text/css" rel="stylesheet nofollow" href="https://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css" />
-    <link type="text/css" rel="stylesheet nofollow" href="https://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css" />
-    <link type="text/css" rel="stylesheet nofollow" href="/static/styles/base.css" />
-    <link type="text/css" rel="stylesheet nofollow" href="/static/layer.css" id="layui_layer_skinlayercss" style="">
-    <link type="image/x-icon" rel="shortcut icon nofollow" href="https://res.wx.qq.com/a/wx_fed/assets/res/NTI4MWU5.ico" />
-    <style>
-        .toper {
-            background: rgba(0,178,200, .5);
-            position: absolute;
-            top: 0;
-            width: 100%;
-        }
-    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>雨燕软件 - 微信域名检测 - QQ域名检测</title>
+    <meta name="keywords" content="微信域名检测,qq域名检测,域名备案信息查询" />
+    <meta name="description" content="雨燕软件提供微信域名实时检测接口,qq管家和qq浏览器域名检测接口,域名备案主体和备案号查询等各种推广技术方案,为您的微信项目保驾护航." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet nofollow" href="https://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet nofollow" href="https://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet nofollow" href="css/main.css">
+    <link rel="Bookmark nofollow" href="https://res.wx.qq.com/a/wx_fed/assets/res/NTI4MWU5.ico">
+    <link rel="Shortcut Icon nofollow" href="https://res.wx.qq.com/a/wx_fed/assets/res/NTI4MWU5.ico">
     <script>
-        var _hmt = _hmt || [];
-        (function () {
-            var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?bcc7ae07f0ecdd5a1a8d3e8c13c1c794";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
-        })();
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?bcc7ae07f0ecdd5a1a8d3e8c13c1c794";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
     </script>
+
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
-    <!--start 网站导航栏 -->
-    <div class="toper">
-        <div class="wp">
-            <a href="/index.html" title="太阳湾官网" style="width:20%;float:left"><img class="logo pl" src="static/logo.png" alt="太阳湾软件官网" /></a>
-            <nav>
-                <ul>
-                    <li>
-                        <a href="/index.html" title="太阳湾软件">首页</a>
-                    </li>
-                    <li>
-                        <a href="/doc.html" title="api接口文档介绍">接口文档<span style="position: relative;left: 5px;"></span></a>
-                    </li>
-                    <li>
-                        <a href="/price.html" title="微信域名检测收费标准">收费标准<span style="position: relative;left: 5px;"></span></a>
-                    </li>  
-                    <li>
-                        <a href="/checklist.html" title="域名批量检测查询服务接口">批量检测<span style="position: relative;left: 5px;"></span></a>
-                    </li>                 
-                </ul>
-            </nav>
-            <div class="navs pr" style="float:left;width:25%">
-                <a href="/faq.html" title="常见问题解答-faq">FAQ</a>        
-            </div>
-        </div>
-    </div>
-    <!--end  网站导航栏 -->
-    <div class="main">
-        <!--start: 网站的标题 -->
-        <div class="page page1 clearfix" style="height:875px;">
-            <div class="main wp">
-                <div class="info">
-                    <h1>微信域名检测</h1>
-                    <p>微信域名安全检测,qq管家域名检测,域名备案号查询</p>
-                    <p>
-                        <font color="#23a9a0"><input id="kw" name="wd" class="yj" type="text" placeholder="请输入要检测的域名,如 www.rrbay.com" /></font>
-                        <button class="btn_one" id="btn_check" name="btn_check">检测</button>
-
-                    </p>
-                    <div>
-                        <label><input name="checkModel" id="checkModel" type="radio" value="AuthKey" checked style="vertical-align:middle; margin: -2px  5px  1px  8px" />微信域名安全检测</label>
-                        <label><input name="checkModel" id="checkModel" type="radio" value="AuthQQKey" style="vertical-align:middle; margin: -2px  5px  1px  8px" />QQ管家域名安全检测 </label>
-                        <label><input name="checkModel" id="checkModel" type="radio" value="AuthQQGJICPKey" style="vertical-align:middle; margin: -2px  5px  1px  8px" />域名备案信息查询</label>
+    <div id="page" class="page">
+        <!--start header -->
+        <header class="header8" id="home">
+            <!--start navigation -->
+            <nav role="navigation" class="navbar navbar-default">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button data-target="#navbar-collapse-02" data-toggle="collapse" class="navbar-toggle" type="button">
+                            <span class="sr-only">菜单</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a href="index.html" class="navbar-brand brand"><i class="fa fa-comments" aria-hidden="true"></i>雨燕软件</a>
                     </div>
-                    <p>
-                        <font size="2" color="#ffffff">温馨提示：输入查询域名后直接回车查询结果,如有疑问加QQ: <span style="color:#ff0000;font-weight:bold;">391502069</span></font>
-                        <br><font size="2" color="#ffffff">【每天08:00-21:00,免费接口查询额度15次】</font><a style="color:#ff0000;font-weight:bold;font-size:1.5rem;" href="/checklist.html" target="_blank" title="批量检测">批量检测</a>
-                    </p>
+                    <div id="navbar-collapse-02" class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="active"><a class="scroll" href="index.html">首页</a></li>
+                            <li><a class="scroll" title="api接口文档介绍" href="doc.html">接口文档</a></li>
+                            <li><a class="scroll" title="域名批量检测查询服务接口" href="checklist.html">批量检测</a></li>
+                            <li><a class="scroll" title="微信域名检测收费标准" href="price.html">收费标准</a></li>
+                            <li><a class="scroll" title="常见问题解答-faq" href="faq.html">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!--start navigation -->
+            <!--end content -->
+            <div class="intro center-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
+
+                            <h1 class="pull-stop text-center">微信域名检测</h1>
+                            <p class="text-center">微信域名安全检测,qq域名检测,域名备案号查询</p>
+                            <div class="login-reg subscribe text-center form-inline">
+                                <div class="row margin-bottom-0">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control input-lg" id="kw" name="kw" placeholder="请输入要检测的域名,如 www.qq.com">
+                                        </div>
+                                        <button type="submit" class="btn btn-info button" id="btn_check" name="btn_check">开始检测</button>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="check_box">
+                                            <label><input name="checkModel" id="checkModel" type="radio" value="AuthKey" checked style="vertical-align:middle; margin: -2px  5px  1px  8px" />微信域名安全检测</label>
+                                            <label><input name="checkModel" id="checkModel" type="radio" value="AuthQQKey" style="vertical-align:middle; margin: -2px  5px  1px  8px" />qq域名安全检测</label>
+                                            <label><input name="checkModel" id="checkModel" type="radio" value="AuthQQGJICPKey" style="vertical-align:middle; margin: -2px  5px  1px  8px" />域名备案信息查询</label>
+                                        </div>
+                                        <p>
+                                            <font size="2" color="#ffffff">温馨提示：输入查询域名后直接回车查询结果,如有疑问加QQ: <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=391502069&amp;site=qq&amp;menu=yes" style="color:#ff0000;font-weight:bold;" rel="nofollow" target="_blank" title="在线咨询">391502069</a></font>
+                                            <br><font size="2" color="#ffffff">【每天08:00-21:00,免费接口查询额度15次】</font>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            <!--end content -->
+        </header>
+        <!--end  header -->
+        <!--start footer -->
+        <footer class="footer8">
+            <div class="container">
+                <div class="col-md-12" style="color:#d8c7c7">
+                    Copyright &copy;
+                    <script type="text/javascript">var date = new Date; document.write(unescape(date.getFullYear()));</script> <a href="index.html" title="雨燕软件">雨燕软件</a>
+                    <p class="pull-right small">Made with <i class="fa fa-heart"></i> html5</p>
                 </div>
             </div>
-        </div>
-        <!--end: 网站的标题 -->
-
+        </footer>
+        <!--end footer --> 
     </div>
-    <!--start: 底部友情链接 -->
-
-    <div class="foot clearfix">
-        <div class="foot_main">
-            
-            <div class="main_bottom">
-                Copyright &copy;
-                <script type="text/javascript">var date = new Date; document.write(unescape(date.getFullYear()));</script> <a href="/index.html" target="_blank" title="太阳湾官方网站">太阳湾软件</a>
-            </div>
-        </div>
-
-    </div>
-
-
-    <!--end: 底部友情链接 -->
-
+    <!--=== Load JS here for cdn ====-->
     <script type="text/javascript" rel="nofollow" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" rel="nofollow" src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script type="text/javascript" rel="nofollow" src="/js/base.js"></script>
     <script type="text/javascript" rel="nofollow" src="http://apps.bdimg.com/libs/layer/2.1/layer.js"></script>
     <script>window.easyapi = { ctx: "" };</script>
     <script type="text/javascript">
@@ -110,11 +113,8 @@
                 $("#btn_check").click();
             }
         });
-
         $('#btn_check').click(function () {
-            $("#su").attr("disabled", "disabled");
-            $("#su").val("验证中...");
-            $("#txtShow").html("&nbsp;");     //设置值
+
             var myvalue = $("#kw").val();   //取值
             var modelValue = $('input[name="checkModel"]:checked').val();   //取值
             if (IsURL(myvalue)) {
@@ -144,8 +144,7 @@
                         } else {
                             layer.msg(data.Msg, { icon: 4 });
                         }
-                        $("#su").removeAttr("disabled");
-                        $("#su").val("免费检测");
+
                     }
                 });
             } else {
@@ -153,17 +152,14 @@
                     skin: 'layui-layer-molv' //样式类名
                   , closeBtn: 0
                 }, function () {
-                    $("#su").removeAttr("disabled");
-                    $("#su").val("免费检测");
+
                     layer.closeAll();
                 })
 
             }
         })
 
-        function qingkong() {
-            $("#txtShow").html("&nbsp;");     //设置值
-        }
+
         function IsURL(str_url) {
             var strRegex = "^((https|http|ftp|rtsp|mms)?://)"
             + "?(([0-9a-zA-Z_!~*'().&=+$%-]+: )?[0-9a-zA-Z_!~*'().&=+$%-]+@)?" //ftp的user@
