@@ -41,8 +41,8 @@ namespace WeChatTools.API.pro
                         //需要检测的网址
                         urlCheck = context.Request["url"]; //检测的值
 
-                        if (!urlCheck.ToLower().Contains(".kuaizhan.com") && !urlCheck.ToLower().Contains(".kennethhwong.cn") && !urlCheck.ToLower().Contains(".hatai678.top") && !urlCheck.ToLower().Contains(".jszkgs.top"))
-                          {
+                       // if (!urlCheck.ToLower().Contains(".kuaizhan.com") && !urlCheck.ToLower().Contains(".kennethhwong.cn") && !urlCheck.ToLower().Contains(".hatai678.top") && !urlCheck.ToLower().Contains(".jszkgs.top"))
+                       //   {
                             ServiceApiClient SpVoiceObj2 = null;
                             //    ServiceApiClient SpVoiceObj = null;
                             try
@@ -83,7 +83,7 @@ namespace WeChatTools.API.pro
                                 result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
                                 LogTools.WriteLine(userIP + ":" + ex.Message);
                             }
-                       }
+                     //  }
 
 
                     }
