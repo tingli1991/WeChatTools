@@ -108,14 +108,14 @@ namespace WeChatTools.API.pro
 
 
             }
-            string allowOrigin = "https://www.rrbay.com,http://www.rrbay.xyz,http://www.wxcheckurl.com,http://www.qqbf.xyz,http://www.qqbg.xyz,http://www.ggxz.xyz";
+            string allowOrigin = "https://www.rrbay.com,http://www.wxcheckurl.com";
             string origin = context.Request.Headers.Get("Origin");
             if (allowOrigin.Contains(origin)) {
                 context.Response.Headers.Add("Access-Control-Allow-Origin", origin);
             }
             else
             {
-                context.Response.Headers.Add("Access-Control-Allow-Origin", "http://www.wxcheckurl.com");
+                context.Response.Headers.Add("Access-Control-Allow-Origin", "https://www.rrbay.com");
             }
             context.Response.Headers.Add("Access-Control-Allow-Methods", "POST");
             context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
