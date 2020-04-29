@@ -51,8 +51,8 @@ namespace WeChatTools.API.pro
                     TimeSpan dspNow = DateTime.Now.TimeOfDay;
                     if ((IsFreeKey == 1 && IsInTimeInterval(dspNow, _strWorkingDayAM, _strWorkingDayPM)) || IsFreeKey == 0)
                     {
-                       // if (!urlCheck.ToLower().Contains(".kuaizhan.com") && !urlCheck.ToLower().Contains(".kennethhwong.cn") && !urlCheck.ToLower().Contains(".hatai678.top") && !urlCheck.ToLower().Contains(".jszkgs.top"))
-                       // {
+                        if (!urlCheck.ToLower().Contains(".kuaizhan.com") && !urlCheck.ToLower().Contains(".kennethhwong.cn") && !urlCheck.ToLower().Contains(".hatai678.top") && !urlCheck.ToLower().Contains(".jszkgs.top"))
+                        {
                             ServiceApiClient SpVoiceObj2 = null;
                             //    ServiceApiClient SpVoiceObj = null;
                             try
@@ -92,7 +92,11 @@ namespace WeChatTools.API.pro
                                 result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"" + urlCheck + "\",\"Msg\":\"请求操作在配置的超时,请联系管理员!\"}";
                                 LogTools.WriteLine(userIP + ":" + wxKey + ":" + ex.Message);
                             }
-                        // }
+                        }
+                        else
+                        {
+                            result = "{\"State\":false,\"Code\":\"002\",\"Data\":\"" + urlCheck + " \",\"Msg\":\"歇一歇,访问太快了,联系管理员qq:391502069!\"}";
+                        }
                     }
                     else
                     {
