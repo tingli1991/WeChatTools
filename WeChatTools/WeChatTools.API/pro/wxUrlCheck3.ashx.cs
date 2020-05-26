@@ -31,7 +31,7 @@ namespace WeChatTools.API.pro
             string origin = context.Request.Headers.Get("Origin");
             string referer = context.Request.Headers.Get("Referer");
 
-            if (origin != null && referer != null && allowOrigin.Contains(origin) && referer.Replace(origin, "") == "/" && context.Request.HttpMethod.ToUpper().Equals(POST))
+            if (origin != null && referer != null && (allowOrigin.Contains(origin) || origin.Contains("http://localhost:")) && referer.Length > origin.Length && context.Request.HttpMethod.ToUpper().Equals(POST))
             {
                 context.Response.ContentType = "text/plain";
                 string urlCheck = context.Request["url"];
@@ -117,8 +117,8 @@ namespace WeChatTools.API.pro
 
 
             }
-            
-            if (origin !=null && allowOrigin.Contains(origin))
+
+            if (origin != null && (allowOrigin.Contains(origin) || origin.Contains("http://localhost:")))
             {
                 context.Response.Headers.Add("Access-Control-Allow-Origin", origin);
             }
