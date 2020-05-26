@@ -26,7 +26,12 @@ namespace WeChatTools.API.pro
         {
             string result = "{\"State\":false,\"Code\":\"003\",\"Data\":\"QQ:391502069 \",\"Msg\":\"参数错误,联系管理员qq:391502069!\"}";
             string wxKey = wxCheckApiKey; //key ,md5值
-            if (context.Request.HttpMethod.ToUpper().Equals(POST))
+
+            string allowOrigin = "https://www.rrbay.com,http://www.wxcheckurl.com";
+            string origin = context.Request.Headers.Get("Origin");
+            string referer = context.Request.Headers.Get("Referer");
+
+            if (origin != null && referer != null && allowOrigin.Contains(origin) && referer.Replace(origin, "") == "/" && context.Request.HttpMethod.ToUpper().Equals(POST))
             {
                 context.Response.ContentType = "text/plain";
                 string urlCheck = context.Request["url"];
@@ -112,9 +117,9 @@ namespace WeChatTools.API.pro
 
 
             }
-            string allowOrigin = "https://www.rrbay.com,http://www.wxcheckurl.com";
-            string origin = context.Request.Headers.Get("Origin");
-            if (allowOrigin.Contains(origin)) {
+            
+            if (origin !=null && allowOrigin.Contains(origin))
+            {
                 context.Response.Headers.Add("Access-Control-Allow-Origin", origin);
             }
             else
