@@ -65,7 +65,10 @@ namespace WeChatTools.API.pro
                                 //需要检测的网址                                
                                 bool isTrue = urlCheck.StartsWith("http");
                                 if (!isTrue) { urlCheck = "http://" + urlCheck; }
-                                urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
+                                if (urlCheck.StartsWith("http://") || urlCheck.StartsWith("https://"))
+                                {
+                                    urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
+                                }
 
                                 string json2 = "{\"Mode\":\"" + model + "\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxKey + "\',\'UserIP\':\'" + userIP + "\',\'IsFreeKey\':'" + IsFreeKey + "'}\"}";
 

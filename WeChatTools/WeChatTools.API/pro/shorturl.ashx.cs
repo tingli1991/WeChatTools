@@ -33,7 +33,12 @@ namespace WeChatTools.API.pro
                         ServiceApiClient SpVoiceObj = null;
                         try
                         {
-                            if (type.ToUpper() != "DWZCN") { url = System.Web.HttpUtility.UrlEncode(url); }
+                            if (type.ToUpper() != "DWZCN") {
+                                if (url.StartsWith("http://") || url.StartsWith("https://"))
+                                {
+                                    url = System.Web.HttpUtility.UrlEncode(url);
+                                }                               
+                            }
 
                             string json2 = "{\"Mode\":\"ShortUrl\",\"Param\":\"{\'CheckUrl\':\'" + url + "\',\'type\':\'" + type + "\',\'UserKey\':\'" + key + "\'}\"}";
                             

@@ -47,7 +47,10 @@ namespace WeChatTools.API.pro
                                 urlCheck = context.Request["url"]; //检测的值
                                 bool isTrue = urlCheck.StartsWith("http");
                                 if (!isTrue) { urlCheck = "http://" + urlCheck; }
-                                urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
+                                if (urlCheck.StartsWith("http://") || urlCheck.StartsWith("https://"))
+                                {
+                                    urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
+                                }
 
                                 string json2 = "{\"Mode\":\"AuthQQKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + userKey + "\'}\"}";
 

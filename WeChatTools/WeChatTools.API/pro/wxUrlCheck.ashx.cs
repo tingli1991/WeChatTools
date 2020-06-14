@@ -50,7 +50,10 @@ namespace WeChatTools.API.pro
 
                                 bool isTrue = urlCheck.StartsWith("http");
                                 if (!isTrue) { urlCheck = "http://" + urlCheck; }
-                                urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
+                                if (urlCheck.StartsWith("http://") || urlCheck.StartsWith("https://"))
+                                {
+                                    urlCheck = System.Web.HttpUtility.UrlEncode(urlCheck);
+                                }
 
                                 string json2 = "{\"Mode\":\"AuthKey\",\"Param\":\"{\'CheckUrl\':\'" + urlCheck + "\',\'UserKey\':\'" + wxCheckApiKey + "\',\'UserIP\':\'" + userIP + "\',\'IsFreeKey\':1}\"}";
 
